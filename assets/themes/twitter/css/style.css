@@ -71,6 +71,8 @@ ul.share li{
   color:#eee;
   font-family: 'Droid Serif', serif;
   line-height:40px;
+  opacity: 0.5;
+  filter:Alpha(opacity=50); /* IE8 and earlier */
 }
 .brand{
   font-size: 40px;
@@ -131,9 +133,10 @@ border:2px solid #005F6B;
 	padding: 3px 6px;
 	margin: 2px;
 	color: #eee;
-	background:#005F6B;
+	background:#5f4339;
 	border-radius: 3px;
 	text-decoration:none;
+	font-size: 8pt;
 }
 .tag_box a span{
 	vertical-align:super;

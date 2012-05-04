@@ -2268,8 +2268,8 @@ button.btn.small,input[type="submit"].btn.small {
 	margin-bottom:18px;
 }
 .navbar-inner {
-	padding-left:0px;
-	padding-right:0px;
+	padding-left:20px;
+	padding-right:20px;
 	background-color:#47423a;
 	-webkit-box-shadow:0 10px 30px rgba(0,0,0,0.5),inset 0 -1px 0 rgba(0,0,0,0.1);
 	-moz-box-shadow:0 10px 30px rgba(0,0,0,0.5),inset 0 -1px 0 rgba(0,0,0,0.1);
