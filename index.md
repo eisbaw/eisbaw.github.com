@@ -1,7 +1,7 @@
 ---
 layout: page
 title: about:blog
-tagline: $\mathtt{this.blog}\subseteq\text{Notes}\cup\text{Programming}\cup\text{CS}\cup\text{HW}$ 
+tagline: $\mathtt{this.blog}\subseteq\text{Notes}\cup\text{Code}\cup\text{CS}\cup\text{HW}$ 
 ---
 {% include JB/setup %}
 
