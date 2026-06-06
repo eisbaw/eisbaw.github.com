@@ -1,0 +1,51 @@
+name: Build (Nix) and deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# Permissions required by actions/deploy-pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; newer pushes supersede in-flight ones
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Nix (flakes enabled)
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Build the site derivation
+        run: nix build .#default --print-build-logs
+
+      - name: Stage artifact (dereference the /nix/store symlink)
+        run: |
+          mkdir -p public
+          cp -rL result/. public/
+          ls -la public
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
