@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="post-list">
+  {% for p in posts %}
+  <article class="post-summary">
+    <h2><a href="/posts/{{ p.slug }}/">{{ p.title }}</a></h2>
+    <div class="post-meta">
+      <time datetime="{{ p.date }}">{{ p.date }}</time>
+      {% if p.tags %}
+      <ul class="tag-list">
+        {% for tag in p.tags %}
+        <li><a href="/tags/{{ tag | slugify_tag }}/">{{ tag }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    {% if p.summary %}
+    <p class="summary">{{ p.summary }}</p>
+    {% endif %}
+  </article>
+  {% endfor %}
+</div>
+
+{% if pagination.total_pages > 1 %}
+<nav class="pagination" aria-label="Page navigation">
+  {% if pagination.prev_url %}<a href="{{ pagination.prev_url }}">Newer</a>{% endif %}
+  <span>Page {{ pagination.current }} of {{ pagination.total_pages }}</span>
+  {% if pagination.next_url %}<a href="{{ pagination.next_url }}">Older</a>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}

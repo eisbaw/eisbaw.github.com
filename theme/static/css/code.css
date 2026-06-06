@@ -1,0 +1,98 @@
+/* ============================================================
+   code.css — Syntax highlighting for syntect ClassStyle::Spaced
+   Light and dark mode aware.
+   ============================================================ */
+
+/* === Light mode defaults === */
+.source          { color: #1a1a1a; }
+.comment,
+.comment.line,
+.comment.block   { color: #6a737d; font-style: italic; }
+.keyword,
+.keyword.control,
+.keyword.operator { color: #d73a49; }
+.storage,
+.storage.type,
+.storage.modifier { color: #d73a49; }
+.string,
+.string.quoted   { color: #032f62; }
+.constant,
+.constant.numeric,
+.constant.language,
+.constant.character { color: #005cc5; }
+.variable,
+.variable.parameter,
+.variable.other  { color: #e36209; }
+.support,
+.support.function,
+.support.class,
+.support.type    { color: #6f42c1; }
+.entity,
+.entity.name,
+.entity.name.function,
+.entity.name.type,
+.entity.name.tag { color: #6f42c1; }
+.entity.other.attribute-name { color: #005cc5; }
+.invalid,
+.invalid.illegal { color: #cb2431; background: rgba(203, 36, 49, 0.1); }
+.markup.bold     { font-weight: 700; }
+.markup.italic   { font-style: italic; }
+.markup.heading  { color: #005cc5; font-weight: 700; }
+.markup.list     { color: #e36209; }
+.markup.raw,
+.markup.inline.raw { color: #032f62; background: var(--color-code-bg); }
+.markup.inserted { color: #22863a; background: rgba(34, 134, 58, 0.1); }
+.markup.deleted  { color: #cb2431; background: rgba(203, 36, 49, 0.1); }
+.markup.changed  { color: #e36209; background: rgba(227, 98, 9, 0.1); }
+.meta,
+.meta.function-call { color: #005cc5; }
+.punctuation,
+.punctuation.definition,
+.punctuation.separator { color: #1a1a1a; }
+
+/* === Dark mode overrides === */
+@media (prefers-color-scheme: dark) {
+  .source          { color: #e5e5e5; }
+  .comment,
+  .comment.line,
+  .comment.block   { color: #8b949e; }
+  .keyword,
+  .keyword.control,
+  .keyword.operator { color: #ff7b72; }
+  .storage,
+  .storage.type,
+  .storage.modifier { color: #ff7b72; }
+  .string,
+  .string.quoted   { color: #a5d6ff; }
+  .constant,
+  .constant.numeric,
+  .constant.language,
+  .constant.character { color: #79c0ff; }
+  .variable,
+  .variable.parameter,
+  .variable.other  { color: #ffa657; }
+  .support,
+  .support.function,
+  .support.class,
+  .support.type    { color: #d2a8ff; }
+  .entity,
+  .entity.name,
+  .entity.name.function,
+  .entity.name.type,
+  .entity.name.tag { color: #d2a8ff; }
+  .entity.other.attribute-name { color: #79c0ff; }
+  .invalid,
+  .invalid.illegal { color: #ffa198; background: rgba(255, 161, 152, 0.15); }
+  .markup.heading  { color: #79c0ff; }
+  .markup.list     { color: #ffa657; }
+  .markup.raw,
+  .markup.inline.raw { color: #a5d6ff; }
+  .markup.inserted { color: #7ee787; background: rgba(126, 231, 135, 0.15); }
+  .markup.deleted  { color: #ffa198; background: rgba(255, 161, 152, 0.15); }
+  .markup.changed  { color: #ffa657; background: rgba(255, 166, 87, 0.15); }
+  .meta,
+  .meta.function-call { color: #79c0ff; }
+  .punctuation,
+  .punctuation.definition,
+  .punctuation.separator { color: #e5e5e5; }
+}

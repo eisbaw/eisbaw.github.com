@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Archive — {{ site.site_name }}{% endblock %}
+
+{% block content %}
+<h1>Archive</h1>
+
+{% for group in years %}
+<section class="archive-year">
+  <h2>{{ group.year }}</h2>
+  <ul class="archive-list">
+    {% for p in group.posts %}
+    <li>
+      <time datetime="{{ p.date }}">{{ p.date }}</time>
+      <a href="/posts/{{ p.slug }}/">{{ p.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endfor %}
+{% endblock %}

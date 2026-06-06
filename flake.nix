@@ -1,44 +1,31 @@
 {
-  description = "blog.radix63.dk — a Hello World site as a Nix derivation, deployed via GitHub Actions";
+  description = "blog.radix63.dk — eisbaw's blog, built on niche";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.niche.url = "github:eisbaw/niche";
+  inputs.nixpkgs.follows = "niche/nixpkgs";
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, niche, nixpkgs }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs { inherit system; };
 
-      indexHtml = pkgs.writeText "index.html" ''
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>Hello from Nix — radix63</title>
-          <style>
-            body { font-family: system-ui, sans-serif; display: grid; place-items: center;
-                   min-height: 100vh; margin: 0; background: #0e1116; color: #e6edf3; }
-            main { text-align: center; max-width: 40rem; padding: 1rem; }
-            h1 { font-size: 2.4rem; margin: 0 0 .6rem; line-height: 1.2; }
-            p  { opacity: .7; }
-            code { background: #1b2129; padding: .15em .4em; border-radius: 4px; }
-          </style>
-        </head>
-        <body>
-          <main>
-            <h1>hello world from nix built via gh actions</h1>
-            <p>This page is a <code>nix</code> derivation, built and deployed to
-               <code>blog.radix63.dk</code> by GitHub Actions.</p>
-          </main>
-        </body>
-        </html>
-      '';
+      site = niche.lib.mkSite {
+        inherit pkgs;
+        contentDir = ./content;
+        siteConfig = import ./site-config.nix;
+        themeDir = ./theme; # niche's fancy-sidebar + a MathJax include
+      };
     in {
-      packages.${system}.default = pkgs.runCommand "site" { } ''
+      # GitHub Pages serves this; wrap the niche output to add the
+      # custom-domain CNAME and the .nojekyll marker.
+      packages.${system}.default = pkgs.runCommand "blog" { } ''
         mkdir -p $out
-        cp ${indexHtml} $out/index.html
+        cp -rL ${site}/. $out/
+        chmod -R u+w $out
         printf 'blog.radix63.dk\n' > $out/CNAME
         touch $out/.nojekyll
       '';
+
+      devShells.${system}.default = niche.devShells.${system}.default;
     };
 }

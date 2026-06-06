@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ feed_title | xml_escape }}</title>
+  <subtitle>{{ feed_description | xml_escape }}</subtitle>
+  <link href="{{ site.base_url }}/feed.xml" rel="self" type="application/atom+xml"/>
+  <link href="{{ site.base_url }}/" rel="alternate" type="text/html"/>
+  <id>{{ site.base_url }}/</id>
+  <updated>{{ updated }}</updated>
+  <author>
+    <name>{{ author_name | xml_escape }}</name>
+    {% if author_email %}<email>{{ author_email }}</email>{% endif %}
+  </author>
+  {% for p in posts %}
+  <entry>
+    <title>{{ p.title | xml_escape }}</title>
+    <link href="{{ site.base_url }}/posts/{{ p.slug }}/" rel="alternate" type="text/html"/>
+    <id>{{ site.base_url }}/posts/{{ p.slug }}/</id>
+    <published>{{ p.date }}T00:00:00Z</published>
+    <updated>{{ p.date }}T00:00:00Z</updated>
+    {% if p.summary %}<summary>{{ p.summary | xml_escape }}</summary>{% endif %}
+  </entry>
+  {% endfor %}
+</feed>
