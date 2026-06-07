@@ -8,6 +8,7 @@
     { label = "Home"; url = "/"; }
     { label = "Archive"; url = "/archive/"; }
     { label = "About"; url = "/posts/about/"; }
+    { label = "Colophon"; url = "/posts/about-blog/"; }
     { label = "Source"; url = "https://github.com/eisbaw/eisbaw.github.com"; external = true; }
   ];
 
