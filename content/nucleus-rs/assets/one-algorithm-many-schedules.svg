@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" font-family="Inter, system-ui, sans-serif">
+  <!-- algorithm -->
+  <rect x="24" y="116" width="150" height="68" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+  <text x="99" y="146" text-anchor="middle" font-size="15" font-weight="700" fill="#312e81">algorithm</text>
+  <text x="99" y="165" text-anchor="middle" font-size="11" fill="#4338ca">what to compute</text>
+
+  <!-- schedules -->
+  <g text-anchor="middle">
+    <rect x="285" y="34"  width="160" height="58" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+    <text x="365" y="58" font-size="13" font-weight="700" fill="#92400e">schedule: 2 workers</text>
+    <text x="365" y="76" font-size="11" fill="#b45309">blocking transfers</text>
+
+    <rect x="285" y="121" width="160" height="58" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+    <text x="365" y="145" font-size="13" font-weight="700" fill="#92400e">schedule: 4 workers</text>
+    <text x="365" y="163" font-size="11" fill="#b45309">pipelined</text>
+
+    <rect x="285" y="208" width="160" height="58" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+    <text x="365" y="232" font-size="13" font-weight="700" fill="#92400e">schedule: DMA ring</text>
+    <text x="365" y="250" font-size="11" fill="#b45309">async, double-buffered</text>
+  </g>
+
+  <!-- targets -->
+  <g text-anchor="middle" font-size="13" fill="#374151">
+    <rect x="556" y="40"  width="140" height="46" rx="8" fill="#f9fafb" stroke="#9ca3af" stroke-width="1.5"/>
+    <text x="626" y="68" font-weight="600">threads</text>
+    <rect x="556" y="127" width="140" height="46" rx="8" fill="#f9fafb" stroke="#9ca3af" stroke-width="1.5"/>
+    <text x="626" y="155" font-weight="600">MPI cluster</text>
+    <rect x="556" y="214" width="140" height="46" rx="8" fill="#f9fafb" stroke="#9ca3af" stroke-width="1.5"/>
+    <text x="626" y="242" font-weight="600">microcontroller</text>
+  </g>
+
+  <!-- algorithm -> schedules -->
+  <g stroke="#c7d2fe" stroke-width="2" fill="none">
+    <path d="M174 150 C 230 150, 235 63,  285 63"/>
+    <path d="M174 150 L 285 150"/>
+    <path d="M174 150 C 230 150, 235 237, 285 237"/>
+  </g>
+  <!-- schedules -> targets -->
+  <g stroke="#fcd34d" stroke-width="2" fill="none">
+    <path d="M445 63 L 556 63"/>
+    <path d="M445 150 L 556 150"/>
+    <path d="M445 237 L 556 237"/>
+  </g>
+</svg>
