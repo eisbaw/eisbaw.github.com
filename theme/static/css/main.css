@@ -132,6 +132,14 @@ html, body {
   color: var(--ink);
   text-decoration: none;
   letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+}
+
+.site-name img {
+  height: 30px;
+  width: auto;
+  display: block;
 }
 
 .top-nav { margin-left: auto; }
