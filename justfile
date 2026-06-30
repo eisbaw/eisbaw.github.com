@@ -24,3 +24,16 @@ serve: stop build
 # Open the served site in the browser (serve must be running).
 open:
     xdg-open "http://127.0.0.1:{{port}}/" 2>/dev/null || true
+
+# Render URL in Brave with a throwaway, cache-disabled profile (fresh fetch; defaults to local server root — run `just serve` first).
+preview url=("http://127.0.0.1:" + port + "/"):
+    #!/usr/bin/env bash
+    set -euo pipefail
+    profile=$(mktemp -d /tmp/brave-fresh.XXXXXX)
+    setsid brave \
+      --user-data-dir="$profile" \
+      --disk-cache-dir=/dev/null --disk-cache-size=1 \
+      --no-first-run --no-default-browser-check \
+      --new-window "{{url}}" >"$profile/brave.log" 2>&1 < /dev/null &
+    disown
+    echo "Brave (fresh profile $profile) -> {{url}}"
