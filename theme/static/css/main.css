@@ -383,15 +383,6 @@ h1 { font-size: 2rem; margin: 0 0 16px; font-weight: 600; }
 /* Blog post title (Archive/tag page h1s keep the larger size). */
 .post-header h1 { font-size: 25px; font-weight: 400; }
 
-/* Optional per-post animated pixel sprite, shown before the title. Sized to
-   the title's font (1em) so it works in the post h1 and the index h2 alike. */
-.title-sprite {
-  height: 1em;
-  width: auto;
-  margin-right: 0.4em;
-  vertical-align: -0.16em;
-  image-rendering: pixelated;   /* keep the 8-bit edges crisp */
-}
 h2 { font-size: 1.5rem; margin: 40px 0 12px; font-weight: 600; }
 h3 { font-size: 1.1875rem; margin: 32px 0 8px; font-weight: 600; }
 
@@ -404,7 +395,17 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
 
 .post-list { display: flex; flex-direction: column; gap: 16px; }
 
+/* Card grid: the title sprite spans the title + meta rows; the summary spans
+   the full width below. With no sprite the icon column collapses to 0, so
+   iconless cards keep their title/meta/summary flush-left. */
 .post-summary {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "icon  title"
+    "icon  meta"
+    "summary summary";
+  align-items: start;
   background: var(--bg-card);
   border: 1px solid var(--rule-thin);
   border-radius: var(--radius-lg);
@@ -412,6 +413,10 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
   box-shadow: var(--shadow-sm);
   transition: box-shadow 0.15s ease-out, transform 0.15s ease-out;
 }
+.post-summary > .post-header-sprite { grid-area: icon; margin: 2px 18px 0 0; }
+.post-summary > h2 { grid-area: title; }
+.post-summary > .post-meta { grid-area: meta; }
+.post-summary > .summary { grid-area: summary; margin-top: 12px; }
 .post-summary:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);

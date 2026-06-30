@@ -4,7 +4,8 @@
 <div class="post-list">
   {% for p in posts %}
   <article class="post-summary">
-    <h2><a href="/posts/{{ p.slug }}/">{% if p.title_icon %}<img class="title-sprite" src="/posts/{{ p.slug }}/assets/{{ p.title_icon }}" alt="" aria-hidden="true">{% endif %}{{ p.title }}</a></h2>
+    {% if p.title_icon %}<img class="post-header-sprite" src="/posts/{{ p.slug }}/assets/{{ p.title_icon }}" alt="" aria-hidden="true">{% endif %}
+    <h2><a href="/posts/{{ p.slug }}/">{{ p.title }}</a></h2>
     <div class="post-meta">
       <time datetime="{{ p.date }}">{{ p.date }}</time>
       {% if p.tags %}
