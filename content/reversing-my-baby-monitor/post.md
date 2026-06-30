@@ -1,0 +1,66 @@
+**I own a Philips Avent Baby Monitor+, and under the badge it is a Chinese Tuya camera.** It works well. But it is locked to a phone app and a vendor cloud, and that is not enough for a camera pointed at my child.
+
+I wrote this for anyone who owns a "smart" camera at home and wants to know what it really is, and for the next person who sits down to reverse a Tuya device.
+
+## What I wanted
+
+Three things the official app will never give me.
+
+I want my own analytics on the video: an estimate of his breathing rate, a count of how often he stirs, a log of when he wakes. I want a client on my own Linux box, because there is no Linux app and no website to open. And I want to know exactly **where the video goes**, because "it watches my child" is reason enough not to trust the vendor on it.
+
+One more, on the wish list. I would like to reach the camera over my own VPN when I travel, instead of routing my baby's video through a cloud I do not control.
+
+## What this is not
+
+- Not a firmware hack. I reversed the phone client and the protocol, not the camera's firmware.
+- Not a credential dump. All magic values are trivially extractable from the apk.
+- Not finished. See the last section.
+
+## It's a Tuya camera
+
+Decompile the app and look. **Philips wrote almost none of it.**
+
+Count the packages and the verdict is blunt: Philips' own code is a single file, and Tuya's is tens of thousands. The app is a re-skinned Tuya camera app. That is good news, because the protocol was never a Philips secret: it is Tuya's, people have picked Tuya apart before, and that gave me references to check my work against.
+
+## How it works
+
+So where does the video actually go? The cloud is in the loop for setup, and only for setup.
+
+Here is the shape. The client logs in to Tuya's cloud and gets a session token. It uses that token to fetch the device list and each camera's config: the per-device keys and the connection candidates. It connects to a Tuya MQTT broker, which carries a WebRTC-style offer-and-answer handshake. The camera answers, both sides trade ICE candidates, and a direct path opens. Over that path the video flows as H.264 inside a custom UDP transport, encrypted one segment at a time:
+
+```
+each UDP datagram, per KCP segment:
+[ 16-byte IV | AES-128-CBC ciphertext | 20-byte HMAC-SHA1 ]
+```
+
+![How my client, Tuya's cloud, and the camera talk. The cloud brokers every session; the video itself goes direct.](assets/architecture.svg)
+
+Notice the detail that matters for the VPN idea: **the media path is genuinely peer-to-peer.** In one capture the video went straight to the camera's address on my LAN, with no relay in the middle. The cloud sets the session up. It does not carry the pixels.
+
+## How I reversed it
+
+The Tuya app is hard, and one technique is not enough. You need two, and a rule for when they fight.
+
+Do the static pass first. Pull the install package apart, decompile the Java with jadx, and disassemble the native crypto libraries with Ghidra. This is reading the code at rest, and the app fights you: the code is heavily obfuscated, the logic is smeared across a native SDK and a pile of JavaScript on an embedded engine, the signing key is built partly from a value hidden inside a bitmap (decoded with bignum-and-matrix math), and the app refuses to run rooted or emulated. It even hunts for the debugger you would point at it.
+
+Then watch it run. Boot a rooted Android emulator, patch out the anti-tamper checks, strip the TLS pinning, and capture the real conversation. Static analysis tells you what the code could do. The live capture tells you what it does.
+
+Two disagreements paid for the project. After four rounds of reading the code, I was sure login was blocked by a server-side identity check no home-made client could pass. Then I watched the wire: it was my own bug, a single field sliced to the wrong length. The code also swore the video used standard WebRTC encryption; the wire showed a custom transport. **The wire won.** It always does.
+
+## Where it stands
+
+The offline core is solid and tested: decrypt the camera's KCP and AES stream, reassemble the H.264, decode it, all byte-checked against a real capture. With a captured session injected, the client connects to my camera and shows **live 1080p video in a desktop window**. The earlier stall, where video froze after about a dozen packets, is gone: I decoupled the render sink from the KCP ACK loop.
+
+It is not done, and I will not pretend it is:
+
+- Standalone login is the missing piece. The request signer still needs one value I have not pulled out of the app (a token hidden in a bitmap), so today I bootstrap from a captured session instead of logging in fresh.
+- Sustained streaming works in a live run, but I have not nailed it down with a regression test yet.
+- Audio decodes offline. It turned out to be raw 16 kHz PCM, not the G.711 I first assumed. It is not wired into the window yet.
+- There is no relay, so the VPN plan works on my own network today, not from the open internet.
+- The cloud still brokers each session. The SDK has a LAN-only mode, but I have not proven it.
+
+I do not own the whole stack yet. But I own the camera, I own the video the moment it lands, and I finally know who sits between my child's room and me. Next: a standalone login, a sustained-stream test, audio in the window, and a relay so it reaches me anywhere. Watch the wire, and keep pulling.
+
+Most of this reverse engineering ran autonomously: Claude worked it in a Ralph loop over about three days, with intermittent human guidance.
+
+Source: personal project, not published.
