@@ -1,5 +1,3 @@
-# About This Blog
-
 This entire blog — the **Rust binary**, the **Nix build system**, the **templates**, the **CSS**, this very text — was designed and implemented by an **AI (Claude)**, working interactively with a **human (Mark)**. Every line of code was reviewed, and every architectural decision was debated. **Nothing was copy-pasted from a tutorial.**
 
 ## Architecture: Compile, Link, Compose

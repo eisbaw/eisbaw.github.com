@@ -1,5 +1,3 @@
-# Nucleus-rs: porting for ~free
-
 **Algorithms outlive the hardware they run on, yet every time we must port or
 performance tune.** A signal-processing kernel stays stable for years. The chips
 under it come and go.
