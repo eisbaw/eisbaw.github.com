@@ -55,6 +55,7 @@
   /* Geometry */
   --max-content: 800px;       /* ~712px text measure inside .post padding */
   --sidebar-w: 280px;
+  --toc-w: 240px;             /* right "On this page" pane */
   --header-h: 56px;
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -319,6 +320,56 @@ html, body {
 .content {
   min-width: 0;
   max-width: var(--max-content);
+}
+
+/* --- Right pane: "On this page" TOC (post pages only) ------------------- */
+
+/* Hidden by default; the third grid column + this pane only appear on post
+   pages wide enough to hold all three columns. */
+.toc { display: none; }
+
+@media (min-width: 1241px) {
+  .layout.has-toc {
+    max-width: 1440px;
+    grid-template-columns: var(--sidebar-w) minmax(0, 1fr) var(--toc-w);
+  }
+  .layout.has-toc .toc { display: block; }
+}
+
+.toc {
+  position: sticky;
+  top: calc(var(--header-h) + 32px);
+  align-self: start;
+  max-height: calc(100vh - var(--header-h) - 64px);
+  overflow-y: auto;
+  font-size: 0.875rem;
+}
+.toc-title {
+  margin: 0 0 8px;
+  padding-bottom: 6px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.toc-list { list-style: none; margin: 0; padding: 0; }
+.toc-item { margin: 0; }
+.toc-link {
+  display: block;
+  padding: 4px 0 4px 12px;
+  margin-left: -1px;
+  border-left: 2px solid var(--rule);
+  color: var(--ink-mute);
+  text-decoration: none;
+  line-height: 1.4;
+}
+.toc-link:hover { color: var(--ink); text-decoration: none; }
+.toc-h3 .toc-link { padding-left: 24px; font-size: 0.8125rem; }
+.toc-link.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 600;
 }
 
 h1, h2, h3, h4, h5, h6 {

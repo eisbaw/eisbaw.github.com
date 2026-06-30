@@ -79,7 +79,7 @@
     </button>
   </header>
 
-  <div class="layout">
+  <div class="layout{% if post %} has-toc{% endif %}">
     <aside class="sidebar" id="sidebar" aria-label="All posts">
       {# Each tag group is a <details> — collapsed by default. The group that
          contains the current page auto-expands so the reader keeps the "you
@@ -152,6 +152,13 @@
     <main class="content">
       {% block content %}{% endblock %}
     </main>
+
+    {% if post %}
+    <aside class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ul class="toc-list" id="toc-list"></ul>
+    </aside>
+    {% endif %}
   </div>
 
   <footer class="site-footer">
@@ -168,6 +175,61 @@
         btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
     }
+
+    // "On this page" TOC (right pane), GitBook-style: built from the post's
+    // section headings, with scroll-spy highlighting the current section.
+    (function () {
+      const layout = document.querySelector('.layout');
+      const list = document.getElementById('toc-list');
+      const content = document.querySelector('.post-content');
+      if (!list || !content) return;
+      // niche puts the id on an empty <a class="anchor"> inside each heading.
+      const heads = [...content.querySelectorAll('h2, h3')]
+        .map((h) => ({ h, id: (h.querySelector('a.anchor') || h).id }))
+        .filter((x) => x.id);
+      if (heads.length < 2) {            // too short to be worth a TOC
+        if (layout) layout.classList.remove('has-toc');
+        const aside = document.querySelector('.toc');
+        if (aside) aside.remove();
+        return;
+      }
+      const linkFor = new Map();
+      heads.forEach(({ h, id }) => {
+        const li = document.createElement('li');
+        li.className = 'toc-item toc-' + h.tagName.toLowerCase();
+        const a = document.createElement('a');
+        a.className = 'toc-link';
+        a.href = '#' + id;
+        a.textContent = h.textContent.trim();
+        li.appendChild(a);
+        list.appendChild(li);
+        linkFor.set(id, a);
+      });
+      // Active = the last heading scrolled above a band just under the header.
+      const headerH = parseInt(getComputedStyle(document.documentElement)
+        .getPropertyValue('--header-h')) || 56;
+      const offset = headerH + 24;
+      let active = null;
+      const sync = () => {
+        let cur = heads[0].id;
+        for (const { h, id } of heads) {
+          if (h.getBoundingClientRect().top - offset <= 1) cur = id; else break;
+        }
+        if (cur === active) return;
+        if (active) linkFor.get(active).classList.remove('active');
+        linkFor.get(cur).classList.add('active');
+        active = cur;
+      };
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { sync(); ticking = false; });
+      };
+      document.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      sync();
+    })();
 
     // Dark/Light theme toggle. Theme is applied pre-paint by the inline
     // <script> in <head>; here we just handle clicks and persist.
