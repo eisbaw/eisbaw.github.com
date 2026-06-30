@@ -1,6 +1,6 @@
 {
   slug = "reversing-my-baby-monitor";
-  title = "I reverse-engineered my own baby monitor";
+  title = "AI reverse-engineered my baby monitor and built a Rust client";
   date = "2026-06-30";
   tags = [ "reverse-engineering" "tuya" "rust" "privacy" "iot" ];
   # Optional animated pixel sprite shown before the title (post page + index).

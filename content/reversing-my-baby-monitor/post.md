@@ -1,6 +1,6 @@
 **I own a Philips Avent Baby Monitor+, and under the badge it is a Chinese Tuya camera.** It works well. But it is locked to a phone app and a vendor cloud, and that is not enough for a camera pointed at my child.
 
-I wrote this for anyone who owns a "smart" camera at home and wants to know what it really is, and for the next person who sits down to reverse a Tuya device.
+With a properly grounded negative-feedback loop and task management, Claude can easily reverse Android apps. Full reverse of the Tuya IP camera protocol, re-implemented in native Rust: [github.com/eisbaw/babymonitor-client](https://github.com/eisbaw/babymonitor-client). The AI methodology will be another blog post.
 
 ## What I wanted
 
