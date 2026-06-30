@@ -630,12 +630,26 @@ th { font-weight: 600; }
 /* --- Footer ------------------------------------------------------------- */
 
 .site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
   border-top: 1px solid var(--rule);
   padding: 24px;
-  text-align: center;
   color: var(--ink-faint);
   font-size: 0.875rem;
 }
+.footer-copy { margin-right: 4px; }
+.footer-icon {
+  display: inline-flex;
+  color: var(--ink-faint);          /* grey, matches footer text */
+  transition: color 0.15s ease-out, opacity 0.15s ease-out;
+}
+.footer-icon svg { width: 18px; height: 18px; display: block; fill: currentColor; }
+.footer-icon:hover { color: var(--ink); }
+.footer-icon--muted { opacity: 0.45; }   /* the secondary GitHub, lighter */
+.footer-icon--muted:hover { opacity: 1; color: var(--ink); }
 
 /* --- Mobile ------------------------------------------------------------- */
 
