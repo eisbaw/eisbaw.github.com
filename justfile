@@ -3,6 +3,9 @@
 # Local preview port for the ad-hoc HTTP server.
 port := "8099"
 
+# Parent dir for throwaway Brave preview profiles — safe to rm -rf wholesale.
+preview-dir := "/tmp/" + env_var_or_default("USER", "user") + "/blog-preview"
+
 # List recipes (default).
 default:
     @just --list
@@ -29,7 +32,8 @@ open:
 preview url=("http://127.0.0.1:" + port + "/"):
     #!/usr/bin/env bash
     set -euo pipefail
-    profile=$(mktemp -d /tmp/brave-fresh.XXXXXX)
+    mkdir -p "{{preview-dir}}"
+    profile=$(mktemp -d "{{preview-dir}}/profile.XXXXXX")
     setsid brave \
       --user-data-dir="$profile" \
       --disk-cache-dir=/dev/null --disk-cache-size=1 \
@@ -37,3 +41,10 @@ preview url=("http://127.0.0.1:" + port + "/"):
       --new-window "{{url}}" >"$profile/brave.log" 2>&1 < /dev/null &
     disown
     echo "Brave (fresh profile $profile) -> {{url}}"
+
+# The [p] bracket keeps pkill's own shell from matching the pattern.
+# Close preview Brave windows and delete all throwaway preview profiles.
+clean-preview:
+    -pkill -9 -f "user-data-dir={{preview-dir}}/[p]rofile"
+    rm -rf "{{preview-dir}}"
+    @echo "Removed {{preview-dir}}"
