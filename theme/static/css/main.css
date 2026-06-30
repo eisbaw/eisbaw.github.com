@@ -47,10 +47,10 @@
   --bg-card: #ffffff;         /* card surfaces */
   --bg-glass: #f5f0e8b8;      /* header bg with alpha */
   --glass-inner-highlight: #ffffff99;
-  --accent: #0e7c44;          /* terminal green */
-  --accent-ink: #0a5c33;
-  --accent-tint: #0e7c4414;
-  --accent-tint-strong: #0e7c442e;
+  --accent: #3a6ea5;          /* Windows-blue (matches logo) */
+  --accent-ink: #2c5580;      /* darker blue for hover */
+  --accent-tint: #3a6ea514;
+  --accent-tint-strong: #3a6ea52e;
 
   /* Geometry */
   --max-content: 720px;
@@ -71,22 +71,23 @@
   --shadow-md: 0 4px 12px #0000000f;
 }
 
-/* Dark palette — same hue family, inverted lightness. */
+/* Dark palette — Claude warm-gray surface ramp (mirrors Anthropic's
+   [data-theme=claude][data-mode=dark]) with a Windows-blue accent. */
 [data-theme="dark"] {
-  --ink: #f5f0e8;
-  --ink-mute: #b8b0a5;
-  --ink-faint: #8a8278;
+  --ink: #faf9f5;             /* cream text (Claude text-000) */
+  --ink-mute: #c2c0b6;        /* secondary (Claude text-200) */
+  --ink-faint: #9c9a92;       /* tertiary (Claude text-400) */
   --rule: #ffffff20;
   --rule-thin: #ffffff0e;
-  --bg: #1a1715;
-  --bg-soft: #26211d;
-  --bg-card: #221d1a;
-  --bg-glass: #1a1715b8;
+  --bg: #1f1e1d;              /* page bg (Claude bg-200) */
+  --bg-soft: #30302e;         /* lightest fill: hover, code, tags (bg-000) */
+  --bg-card: #262624;         /* raised card surface (Claude bg-100) */
+  --bg-glass: #1f1e1db8;      /* header bg with alpha */
   --glass-inner-highlight: #ffffff14;
-  --accent: #2dca7c;
-  --accent-ink: #4ee69b;
-  --accent-tint: #2dca7c1f;
-  --accent-tint-strong: #2dca7c3a;
+  --accent: #6a9bd0;          /* Windows-blue, lifted for legibility on dark */
+  --accent-ink: #8db8e0;      /* lighter blue for hover */
+  --accent-tint: #6a9bd01f;
+  --accent-tint-strong: #6a9bd03a;
   --shadow-sm: 0 1px 2px #00000033, 0 1px 3px #00000033;
   --shadow-md: 0 4px 12px #00000040;
 }
