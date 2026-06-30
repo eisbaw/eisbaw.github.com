@@ -380,6 +380,9 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 { font-size: 2rem; margin: 0 0 16px; font-weight: 600; }
 
+/* Blog post title (Archive/tag page h1s keep the larger size). */
+.post-header h1 { font-size: 25px; font-weight: 400; }
+
 /* Optional per-post animated pixel sprite, shown before the title. Sized to
    the title's font (1em) so it works in the post h1 and the index h2 alike. */
 .title-sprite {
@@ -493,6 +496,35 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
 .post-content :is(h1, h2, h3, h4):hover > .anchor,
 .post-content .anchor:focus-visible { opacity: 1; }
 .post-content .anchor:hover { color: var(--accent); }
+
+/* Section accent: a blue left bar on section headings (h2/h3 — niche shifts
+   markdown levels down one, so `##` sections render as h3), and a smaller
+   blue square on deeper h4 subsections. The heading text is indented to make
+   room; the "#" anchor stays further out in the gutter, so they never collide. */
+.post-content h2,
+.post-content h3,
+.post-content h4 { padding-left: 16px; }
+.post-content h2::before,
+.post-content h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.18em;
+  bottom: 0.18em;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+.post-content h4::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--accent);
+}
 
 blockquote {
   margin: 16px 0;
