@@ -5,7 +5,7 @@
 {% block content %}
 <article class="post">
   <header class="post-header">
-    <h1>{{ post.title }}</h1>
+    <h1>{% if post.title_icon %}<img class="title-sprite" src="/posts/{{ post.slug }}/assets/{{ post.title_icon }}" alt="" aria-hidden="true">{% endif %}{{ post.title }}</h1>
     <div class="post-meta">
       <time datetime="{{ post.date }}">{{ post.date }}</time>
       {% if post.reading_time_minutes %}
