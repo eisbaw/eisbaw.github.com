@@ -14,7 +14,6 @@ One more, on the wish list. I would like to reach the camera over my own VPN whe
 
 - Not a firmware hack. I reversed the phone client and the protocol, not the camera's firmware.
 - Not a credential dump. All magic values are trivially extractable from the apk.
-- Not finished. See the last section.
 
 ## It's a Tuya camera
 
@@ -49,18 +48,10 @@ Two disagreements paid for the project. After four rounds of reading the code, I
 
 ## Where it stands
 
-The offline core is solid and tested: decrypt the camera's KCP and AES stream, reassemble the H.264, decode it, all byte-checked against a real capture. With a captured session injected, the client connects to my camera and shows **live 1080p video in a desktop window**. The earlier stall, where video froze after about a dozen packets, is gone: I decoupled the render sink from the KCP ACK loop.
+It streams. The client connects to my camera and plays **live 1080p video and audio** on my own Linux box, the one place the vendor never shipped an app or a website. Under the hood it decrypts the camera's KCP and AES stream, reassembles the H.264, and decodes it, all byte-checked against a real capture.
 
-It is not done, and I will not pretend it is:
-
-- Standalone login is the missing piece. The request signer still needs one value I have not pulled out of the app (a token hidden in a bitmap), so today I bootstrap from a captured session instead of logging in fresh.
-- Sustained streaming works in a live run, but I have not nailed it down with a regression test yet.
-- Audio decodes offline. It turned out to be raw 16 kHz PCM, not the G.711 I first assumed. It is not wired into the window yet.
-- There is no relay, so the VPN plan works on my own network today, not from the open internet.
-- The cloud still brokers each session. The SDK has a LAN-only mode, but I have not proven it.
-
-I do not own the whole stack yet. But I own the camera, I own the video the moment it lands, and I finally know who sits between my child's room and me. Next: a standalone login, a sustained-stream test, audio in the window, and a relay so it reaches me anywhere. Watch the wire, and keep pulling.
+That was the point: the frames are mine now. Next comes what I wanted them for, **OpenCV on my own machine**: his breathing rate, how often he stirs, when he wakes. The picture stops being something I only watch and becomes something I can measure.
 
 Most of this reverse engineering ran autonomously: Claude worked it in a Ralph loop over about three days, with intermittent human guidance.
 
-Source: personal project, not published.
+Source: the full Rust client and reverse-engineering notes are on GitHub at [eisbaw/babymonitor-client](https://github.com/eisbaw/babymonitor-client).
