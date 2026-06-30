@@ -1,6 +1,6 @@
 **I own a Philips Avent Baby Monitor+, and under the badge it is a Chinese Tuya camera.** It works well. But it is locked to a phone app and a vendor cloud, and that is not enough for a camera pointed at my child.
 
-With a properly grounded negative-feedback loop and task management, Claude can easily reverse Android apps. Full reverse of the Tuya IP camera protocol, re-implemented in native Rust: [github.com/eisbaw/babymonitor-client](https://github.com/eisbaw/babymonitor-client). The AI methodology will be another blog post.
+With a properly grounded negative-feedback loop and task management, Claude can easily reverse Android apps. Most of this reverse engineering ran autonomously: Claude worked it in a Ralph loop over about three days, with intermittent human guidance. Full reverse of the Tuya IP camera protocol, re-implemented in native Rust: [github.com/eisbaw/babymonitor-client](https://github.com/eisbaw/babymonitor-client). The AI methodology will be another blog post.
 
 ## What I wanted
 
@@ -51,7 +51,5 @@ Two disagreements paid for the project. After four rounds of reading the code, I
 It streams. The client connects to my camera and plays **live 1080p video and audio** on my own Linux box, the one place the vendor never shipped an app or a website. Under the hood it decrypts the camera's KCP and AES stream, reassembles the H.264, and decodes it, all byte-checked against a real capture.
 
 That was the point: the frames are mine now. Next comes what I wanted them for, **OpenCV on my own machine**: his breathing rate, how often he stirs, when he wakes. The picture stops being something I only watch and becomes something I can measure.
-
-Most of this reverse engineering ran autonomously: Claude worked it in a Ralph loop over about three days, with intermittent human guidance.
 
 Source: the full Rust client and reverse-engineering notes are on GitHub at [eisbaw/babymonitor-client](https://github.com/eisbaw/babymonitor-client).
