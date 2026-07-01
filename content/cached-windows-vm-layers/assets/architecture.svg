@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="900" height="620" font-family="Inter, system-ui, sans-serif" role="img" aria-label="Docker-style cached snapshot layers on a Windows VirtualBox VM">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/>
+    </marker>
+    <marker id="arrowClay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d97757"/>
+    </marker>
+  </defs>
+
+  <!-- light panel: reads on both light and dark themes -->
+  <rect x="2" y="2" width="896" height="616" rx="14" fill="#f9fafb" stroke="#9ca3af" stroke-width="1.5"/>
+
+  <!-- ============ LEFT: Linux host ============ -->
+  <rect x="24" y="32" width="300" height="480" rx="12" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="174" y="58" text-anchor="middle" font-size="15" font-weight="700" fill="#1a1715">Linux host (CI runner or dev box)</text>
+
+  <!-- driver script -->
+  <rect x="44" y="78" width="260" height="76" rx="10" fill="#eef2ff" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="174" y="104" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1715">driver script</text>
+  <text x="174" y="124" text-anchor="middle" font-size="12" fill="#374151">walks the layer chain,</text>
+  <text x="174" y="140" text-anchor="middle" font-size="12" fill="#374151">calls VBoxManage snapshot</text>
+
+  <!-- git repo -->
+  <rect x="44" y="174" width="260" height="150" rx="10" fill="#fffbeb" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="174" y="198" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1715">git repo</text>
+  <text x="174" y="220" text-anchor="middle" font-size="11.5" fill="#374151">installer .bat files</text>
+  <text x="174" y="238" text-anchor="middle" font-size="11.5" fill="#374151">source tree, payload .bat</text>
+  <text x="174" y="256" text-anchor="middle" font-size="11.5" fill="#374151">requirements.txt, versions</text>
+  <text x="174" y="284" text-anchor="middle" font-size="11" font-style="italic" fill="#6b7280">md5sum(installer) --&gt; cache key</text>
+  <text x="174" y="302" text-anchor="middle" font-size="11" font-style="italic" fill="#6b7280">e.g. msvc@a3f9c2</text>
+
+  <!-- shared folder box -->
+  <rect x="44" y="344" width="260" height="60" rx="10" fill="#ecfdf5" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="174" y="368" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1715">shared folder</text>
+  <text x="174" y="386" text-anchor="middle" font-size="11.5" fill="#374151">host git root mounted as Z:\</text>
+
+  <!-- usb host -->
+  <rect x="44" y="424" width="260" height="68" rx="10" fill="#fef2f2" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="174" y="448" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1715">USB device on host</text>
+  <text x="174" y="466" text-anchor="middle" font-size="11.5" fill="#374151">passed through by VID/PID filter</text>
+  <text x="174" y="482" text-anchor="middle" font-size="11" fill="#6b7280">e.g. a programmer, dev board, dongle</text>
+
+  <!-- ============ RIGHT: VM with snapshot stack ============ -->
+  <rect x="480" y="32" width="396" height="480" rx="12" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="678" y="58" text-anchor="middle" font-size="15" font-weight="700" fill="#1a1715">VirtualBox guest (Windows)</text>
+
+  <!-- Layer stack. bottom = base OVA. top = payload runs here. -->
+  <!-- Payload (tip, highlighted) -->
+  <rect x="500" y="78" width="356" height="52" rx="8" fill="#fff7ed" stroke="#d97757" stroke-width="2.2"/>
+  <text x="678" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1715">payload runs here (tip snapshot)</text>
+  <text x="678" y="118" text-anchor="middle" font-size="11.5" fill="#6b4a2a">restore to tip, run, capture stdout/stderr, stop</text>
+
+  <!-- Layer: pip deps -->
+  <rect x="510" y="146" width="336" height="44" rx="7" fill="#eef2ff" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="524" y="171" font-size="12.5" font-weight="700" fill="#1a1715">pip deps</text>
+  <text x="836" y="171" text-anchor="end" font-size="11" fill="#6b7280">@ ck(requirements.txt)</text>
+
+  <!-- Layer: python -->
+  <rect x="520" y="200" width="316" height="44" rx="7" fill="#eef2ff" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="534" y="225" font-size="12.5" font-weight="700" fill="#1a1715">python 3.9</text>
+  <text x="826" y="225" text-anchor="end" font-size="11" fill="#6b7280">@ ck(python.bat)</text>
+
+  <!-- Layer: cmake + ninja -->
+  <rect x="530" y="254" width="296" height="44" rx="7" fill="#eef2ff" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="544" y="279" font-size="12.5" font-weight="700" fill="#1a1715">cmake + ninja</text>
+  <text x="816" y="279" text-anchor="end" font-size="11" fill="#6b7280">@ ck(cmake.bat, ninja.bat)</text>
+
+  <!-- Layer: MSVC -->
+  <rect x="540" y="308" width="276" height="44" rx="7" fill="#eef2ff" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="554" y="333" font-size="12.5" font-weight="700" fill="#1a1715">MSVC build tools</text>
+  <text x="806" y="333" text-anchor="end" font-size="11" fill="#6b7280">@ ck(vs_buildtools.bat)</text>
+
+  <!-- Layer: recovery-disable -->
+  <rect x="550" y="362" width="256" height="44" rx="7" fill="#eef2ff" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="564" y="387" font-size="12.5" font-weight="700" fill="#1a1715">recovery-disable</text>
+  <text x="796" y="387" text-anchor="end" font-size="11" fill="#6b7280">@ ck(disable.bat)</text>
+
+  <!-- Layer: base OVA -->
+  <rect x="560" y="416" width="236" height="60" rx="7" fill="#f3f4f6" stroke="#374151" stroke-width="1.8"/>
+  <text x="678" y="440" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1715">base OVA</text>
+  <text x="678" y="458" text-anchor="middle" font-size="11" fill="#374151">stock Windows install, imported once</text>
+
+  <!-- little downward arrow annotation on stack -->
+  <text x="866" y="252" font-size="11" font-style="italic" fill="#6b7280" transform="rotate(90 866 252)">layers stack, each named from its parent</text>
+
+  <!-- ============ Cross-arrows ============ -->
+
+  <!-- driver -> layers (VBoxManage snapshot restore / take) -->
+  <path d="M304,116 C400,116 420,116 500,104" fill="none" stroke="#6b7280" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="404" y="82" text-anchor="middle" font-size="11.5" fill="#1a1715">snapshot restore / take</text>
+
+  <!-- git repo -> shared folder Z:\ -->
+  <line x1="304" y1="374" x2="480" y2="374" stroke="#6b7280" stroke-width="1.8" marker-end="url(#arrow)" stroke-dasharray="5 4"/>
+  <text x="392" y="368" text-anchor="middle" font-size="11.5" fill="#1a1715">Z:\ shared folder</text>
+  <text x="392" y="384" text-anchor="middle" font-size="10.5" fill="#6b7280">(host git root, live)</text>
+
+  <!-- git repo cache-key -> layer names (dashed clay) -->
+  <path d="M304,240 C380,240 420,300 500,308" fill="none" stroke="#d97757" stroke-width="1.6" stroke-dasharray="4 4" marker-end="url(#arrowClay)"/>
+  <text x="376" y="256" text-anchor="middle" font-size="11" font-style="italic" fill="#b45a3c">hash of installer</text>
+  <text x="376" y="270" text-anchor="middle" font-size="11" font-style="italic" fill="#b45a3c">names the layer</text>
+
+  <!-- usb passthrough -->
+  <line x1="304" y1="458" x2="480" y2="458" stroke="#6b7280" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="392" y="452" text-anchor="middle" font-size="11.5" fill="#1a1715">USB filter (VID/PID)</text>
+
+  <!-- ============ Bottom: caching rule ============ -->
+  <rect x="24" y="530" width="852" height="70" rx="10" fill="#ffffff" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="40" y="554" font-size="13" font-weight="700" fill="#1a1715">The rule</text>
+  <text x="40" y="574" font-size="12" fill="#374151">Cache hit: layer name already exists ==&gt; VBoxManage snapshot restore. A few seconds.</text>
+  <text x="40" y="590" font-size="12" fill="#374151">Cache miss: boot from parent tip, run installer inside guest, VBoxManage snapshot take. Once, then reused forever.</text>
+</svg>

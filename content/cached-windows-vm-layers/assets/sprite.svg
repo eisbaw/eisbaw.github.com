@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" role="img" aria-label="Animated pixel stack of snapshot layers, growing one layer at a time">
+  <!-- Base VM box (windows-2000 blue) - always visible -->
+  <rect x="1"  y="13" width="14" height="2" fill="#3a6ea5"/>
+  <rect x="1"  y="11" width="14" height="2" fill="#5a8dc2"/>
+
+  <!-- Layer 1: clay - appears at 0s -->
+  <g>
+    <rect x="2"  y="9"  width="12" height="2" fill="#d97757">
+      <animate attributeName="opacity" values="0;1;1;1;1;0"
+               keyTimes="0;0.05;0.75;0.95;0.98;1"
+               calcMode="discrete" dur="4s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Layer 2: light-blue tint - appears at 1s -->
+  <g>
+    <rect x="2"  y="7"  width="12" height="2" fill="#8fb4d6">
+      <animate attributeName="opacity" values="0;0;1;1;0;0"
+               keyTimes="0;0.24;0.25;0.95;0.98;1"
+               calcMode="discrete" dur="4s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Layer 3: cream - appears at 2s -->
+  <g>
+    <rect x="3"  y="5"  width="10" height="2" fill="#f0d9b5">
+      <animate attributeName="opacity" values="0;0;1;1;0;0"
+               keyTimes="0;0.49;0.5;0.95;0.98;1"
+               calcMode="discrete" dur="4s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Tip layer: clay highlight - appears at 3s (the "payload" tip) -->
+  <g>
+    <rect x="4"  y="3"  width="8"  height="2" fill="#d97757">
+      <animate attributeName="opacity" values="0;0;1;1;0;0"
+               keyTimes="0;0.74;0.75;0.95;0.98;1"
+               calcMode="discrete" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    <!-- little "cache-hit" spark on tip -->
+    <rect x="7"  y="1"  width="2"  height="1" fill="#d97757">
+      <animate attributeName="opacity" values="0;0;0;1;0;0"
+               keyTimes="0;0.74;0.85;0.9;0.95;1"
+               calcMode="discrete" dur="4s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+</svg>
