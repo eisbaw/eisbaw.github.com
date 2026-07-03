@@ -1,89 +1,46 @@
-This entire blog — the **Rust binary**, the **Nix build system**, the **templates**, the **CSS**, this very text — was designed and implemented by an **AI (Claude)**, working interactively with a **human (Mark)**. Every line of code was reviewed, and every architectural decision was debated. **Nothing was copy-pasted from a tutorial.**
+# About This Blog
 
-## Architecture: Compile, Link, Compose
+**This blog is two repos, not one.** What you are reading lives in a small content repo: the posts, a theme, and a thirty-line Nix flake. The machinery that turns that into a website lives in a separate project, [[niche|niche]].
 
-The build follows a **compiler toolchain model**, analogous to `cc` + `ld`:
+I split it on purpose. The content should not know how it is built, and the build tool should not know what I write about. This page is the colophon for the content side. The [[niche|niche]] post is the engine.
 
-![Build pipeline: compile, link, compose](assets/pipeline.svg)
+## Instance and engine
 
-1. **Compile** — Each post is an **independent Nix derivation**. A Rust binary (`post2html render`) converts Markdown to an **HTML fragment**. Posts know nothing about each other. **Nix builds them in parallel.**
+![How the instance, the engine, and the deploy fit together](assets/instance-engine.svg)
 
-2. **Link** — A single pass resolves **cross-references**. Posts can link to each other using Obsidian-style `[[wiki-links]]`. The render phase leaves these as **unresolved placeholders**; the link phase (`post2html link`) replaces them with real `<a href>` tags using a **registry built from all posts' metadata**.
+The **instance** is this repository. It holds:
 
-3. **Compose** — The final assembly. `post2html compose` wraps each content fragment in **site chrome** (navigation, footer, `<head>` tags), generates **aggregate pages** (index with pagination, tag pages, archive, Atom feed), and copies static assets.
+- **`content/`** — one directory per post: a `meta.nix` (title, date, tags, summary as a pure Nix attribute set) and a `post.md`. Some posts add an `assets/` dir or a `figures.nix`.
+- **`theme/`** — Tera templates plus CSS and self-hosted fonts. Here that is a local copy of niche's `fancy-sidebar` theme, with a MathJax include bolted on.
+- **`flake.nix`** — the wrapper. It calls `niche.lib.mkSite { contentDir = ./content; themeDir = ./theme; siteConfig = ...; }`, then adds the `CNAME` and `.nojekyll` that GitHub Pages needs.
 
-This separation matters for **performance**: changing one post **only rebuilds that post's** compile derivation. The link and compose phases re-run but are fast — string replacement and template rendering, no content parsing.
+That is the whole instance. No generator code, no pipeline, no Rust. Pull the `niche` input, hand it three arguments, get a site.
 
-## The Nix Layer
+The **engine** is niche: a Rust binary (`post2html`) wrapped by Nix, built as a compile/link/compose toolchain. If you want the architecture, the caching model, and the bugs it was born from, read the [[niche|niche]] post.
 
-**Nix is the orchestration language**, not just the package manager. There is **no YAML, TOML, or custom config format**.
+## Design principles
 
-![Nix layer: how site.nix orchestrates the build](assets/nix-layer.svg)
+The visual design is typography-first: generous whitespace, a minimal palette, nothing competing with the text.
 
-- **`meta.nix`** — Each post's metadata is a **pure Nix attribute set**. Title, date, tags, summary — all Nix expressions. This is the **single source of truth**.
-- **`mkPost.nix`** — A **shared build function**. Takes a post directory, returns `{ meta; compiled; }`. **No per-post boilerplate.**
-- **`resolveContent.nix`** — Content file detection by extension priority (`.md` > `.rst` > `.html` > `.txt`). **Written once, used everywhere.**
-- **`site.nix`** — The **top-level expression**. Discovers posts, validates slug uniqueness, validates nav links, builds the link registry, and orchestrates all three phases.
-
-Nix gives us **caching for free**. Each compiled post is a **store path**. If the content hasn't changed, Nix skips the rebuild. A warm build (nothing changed) takes **0.7 seconds** for 305 posts.
-
-## The Rust Binary
-
-`post2html` is deliberately **nix-agnostic**. It takes **JSON config + a content file** and produces **HTML + JSON metadata**. It could be driven by a Makefile or a shell script — it doesn't know or care that Nix exists.
-
-Three subcommands, each a **pure function**:
-
-- **`render`** — Markdown/RST/HTML/txt to HTML fragment. **Syntax highlighting** via syntect. Wiki-link placeholders.
-- **`link`** — Resolve wiki-link placeholders using a **JSON registry**. Warn on broken links.
-- **`compose`** — Wrap fragments in **Tera templates**, generate aggregate pages, copy static assets.
-
-## Content Formats
-
-| Format | Extension | How |
-|--------|-----------|-----|
-| **Markdown** (CommonMark + GFM) | `.md` | comrak with tables, autolinks, task lists, strikethrough |
-| **reStructuredText** | `.rst` | Shells out to `rst2html5` from docutils |
-| **Raw HTML** | `.html` | Passthrough |
-| **Plain text** | `.txt` | Wrapped in `<pre>` |
-
-## Design Principles
-
-The visual design is **typography-first**: generous whitespace, a minimal color palette, and nothing competing with the text.
-
-- **Inter** for body text, **JetBrains Mono** for code. **Self-hosted** as woff2.
+- **Inter** for body text, **JetBrains Mono** for code. Self-hosted as woff2, no CDN.
 - **Dark mode** with a small toggle, persisted in `localStorage`, defaulting to your OS preference.
-- No CSS framework. **CSS custom properties** for theming. One `main.css`, one `code.css`.
-- **Valid HTML5**. Semantic elements. **OpenGraph tags**. Atom feed. Canonical URLs.
-- **Minimal JavaScript** — just the dark-mode toggle, plus [MathJax](https://www.mathjax.org/) for rendering math. The content itself is **static HTML + CSS**.
+- No CSS framework. CSS custom properties for theming. One `main.css`, one `code.css`.
+- Valid HTML5, semantic elements, OpenGraph tags, an Atom feed, canonical URLs.
+- **Minimal JavaScript**: the dark-mode toggle, plus [MathJax](https://www.mathjax.org/) for math. The content itself is static HTML and CSS.
 
-## Theming
+Because a theme is only read during the engine's compose phase, editing a template or a stylesheet never rebuilds a post. Only the final assembly reruns. That is why fiddling with CSS is cheap.
 
-![Theme structure](assets/theme-structure.svg)
+## What AI built here
 
-A theme is just a directory of **Tera templates + CSS** (here, a sidebar layout with a MathJax include). Switching themes means pointing the instance's `themeDir` at a different directory. The Rust binary **doesn't know about themes** — templates are only used during compose. This means **changing a template or CSS never rebuilds any post**, only the compose phase.
+The content and the theme were designed and written by an AI (Claude, Opus), working interactively with a human (Mark). Every post, the theme templates, the CSS, the flake wrapper: all generated, all reviewed. Each change passed an architectural-review agent and a QA agent before it was committed.
 
-## Build Performance (305 posts)
-
-| Scenario | Time |
-|----------|------|
-| **Full cold build** | ~12s |
-| **Incremental** (1 post changed) | **2.2s** |
-| **Warm** (nothing changed) | **0.7s** |
-
-The **source filter** in `site.nix` ensures content changes **never rebuild the Rust binary**. Only the changed post recompiles.
-
-## What AI Built
-
-The PRD, the architecture, the Rust code, the Nix expressions, the templates, the CSS, the **106 tests** (unit + integration, 14 E2E assertions), the backlog, the commit messages — **all generated by Claude (Opus)**, guided by Mark through iterative review. Each milestone was reviewed by an **MPED architectural agent** and a **QA agent** before committing.
-
-The AI made **real mistakes** along the way:
-- Initially had `cleanSource ./.` which **included content files in the Rust binary hash**, making incremental builds useless
-- Tried a **batched compilation** approach (50 posts per derivation) that was faster for cold builds but **worse in every other dimension** — reviewed, rejected, deleted
-- Fed `links.json` into every post derivation, **defeating per-post caching** — redesigned to the compile/link/compose pipeline
-- **Shell-interpolated JSON strings** that would break on titles with quotes
-
-Each mistake was **caught by review and fixed properly**. The codebase is better for it.
+The engine was built the same way, in its own repo, with its own PRD, backlog, and review trail. The mistakes it made along the way (a source filter that broke incremental builds, a batched-compilation dead end) are worth reading: they are in the [[niche|niche]] post.
 
 ## Source
 
-The full source — including the **PRD**, **backlog**, and **commit history** of every design decision — is in the repository. `git log` tells the complete story.
+Two repositories tell the whole story:
+
+- **This instance** — content, theme, and the flake wrapper: [github.com/eisbaw/eisbaw.github.com](https://github.com/eisbaw/eisbaw.github.com).
+- **The niche engine** — the Rust binary, the Nix library, the PRD, and the backlog: [github.com/eisbaw/niche](https://github.com/eisbaw/niche).
+
+`git log` in either one is honest about how it got here. Start with the [[niche|niche]] post if you want to know how the site is actually built.

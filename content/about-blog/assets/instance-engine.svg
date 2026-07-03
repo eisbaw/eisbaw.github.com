@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 190" width="680" height="190" font-family="sans-serif">
+  <!-- Light panel so text reads on both light and dark themes. -->
+  <rect x="0" y="0" width="680" height="190" fill="#ffffff"/>
+
+  <!-- Box 1: the instance (this repo) -->
+  <rect x="12" y="45" width="210" height="110" rx="6" fill="#eef2ff" stroke="#9ca3af" stroke-width="2"/>
+  <text x="117" y="75" text-anchor="middle" fill="#1f2937" font-size="18" font-weight="bold">This repo</text>
+  <text x="117" y="95" text-anchor="middle" fill="#4b5563" font-size="13">(the instance)</text>
+  <text x="117" y="120" text-anchor="middle" fill="#1f2937" font-size="13">content/ &#183; theme/</text>
+  <text x="117" y="140" text-anchor="middle" fill="#1f2937" font-size="13">flake.nix wrapper</text>
+
+  <!-- Arrow 1 -->
+  <text x="262" y="90" text-anchor="middle" fill="#4b5563" font-size="12">mkSite</text>
+  <line x1="228" y1="100" x2="292" y2="100" stroke="#9ca3af" stroke-width="2"/>
+  <polygon points="292,100 282,95 282,105" fill="#9ca3af"/>
+
+  <!-- Box 2: the engine (niche) -->
+  <rect x="298" y="45" width="180" height="110" rx="6" fill="#fffbeb" stroke="#9ca3af" stroke-width="2"/>
+  <text x="388" y="80" text-anchor="middle" fill="#1f2937" font-size="18" font-weight="bold">niche</text>
+  <text x="388" y="100" text-anchor="middle" fill="#4b5563" font-size="13">(the engine)</text>
+  <text x="388" y="125" text-anchor="middle" fill="#1f2937" font-size="13">post2html + Nix</text>
+
+  <!-- Arrow 2 -->
+  <text x="518" y="90" text-anchor="middle" fill="#4b5563" font-size="12">nix build</text>
+  <line x1="484" y1="100" x2="548" y2="100" stroke="#9ca3af" stroke-width="2"/>
+  <polygon points="548,100 538,95 538,105" fill="#9ca3af"/>
+
+  <!-- Box 3: the deploy -->
+  <rect x="554" y="45" width="114" height="110" rx="6" fill="#f9fafb" stroke="#9ca3af" stroke-width="2"/>
+  <text x="611" y="90" text-anchor="middle" fill="#1f2937" font-size="15" font-weight="bold">GitHub</text>
+  <text x="611" y="110" text-anchor="middle" fill="#1f2937" font-size="15" font-weight="bold">Pages</text>
+</svg>
