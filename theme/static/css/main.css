@@ -788,7 +788,7 @@ th { font-weight: 600; }
   border-bottom: 1px dashed var(--accent);
 }
 .gloss::after {
-  content: "i";
+  content: "?";
   font-family: var(--font-mono);
   font-style: normal;
   font-weight: 700;
@@ -809,6 +809,7 @@ th { font-weight: 600; }
 .gloss > .gloss-card {
   position: absolute;
   z-index: 60; /* above the sticky site-header (z-index 50) so first-line cards are not occluded */
+  cursor: auto; /* the help cursor belongs to the term, not the whole card */
   left: 50%;
   bottom: 165%;
   width: min(300px, 78vw);
