@@ -1,94 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" role="img" aria-label="Animated pixel Nix snowflake with a clay sparkle chasing around its arms">
-  <!-- hub -->
-  <rect x="8" y="8" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="7" y="8" width="1" height="1" fill="#5a8dc2"/>
-  <rect x="9" y="8" width="1" height="1" fill="#5a8dc2"/>
-  <rect x="8" y="7" width="1" height="1" fill="#5a8dc2"/>
-  <rect x="8" y="9" width="1" height="1" fill="#5a8dc2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" role="img" aria-label="Animated pixel CRT terminal with a blinking cursor, a scanline, and a power light">
+  <!-- monitor bezel -->
+  <rect x="2" y="2" width="12" height="9" fill="#3a6ea5"/>
+  <!-- screen -->
+  <rect x="3" y="3" width="10" height="7" fill="#16263a"/>
 
-  <!-- vertical arm -->
-  <rect x="8" y="6" width="1" height="1" fill="#5a8dc2"/>
-  <rect x="8" y="5" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="8" y="4" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="8" y="3" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="8" y="10" width="1" height="1" fill="#5a8dc2"/>
-  <rect x="8" y="11" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="8" y="12" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="8" y="13" width="1" height="1" fill="#3a6ea5"/>
+  <!-- scanline sweeping down the screen -->
+  <rect x="3" y="3" width="10" height="1" fill="#ffffff" opacity="0.14">
+    <animate attributeName="y" values="3;5;7;9;3" keyTimes="0;0.25;0.5;0.75;1"
+             dur="3.2s" calcMode="discrete" repeatCount="indefinite"/>
+  </rect>
 
-  <!-- horizontal arm -->
-  <rect x="6" y="8" width="1" height="1" fill="#5a8dc2"/>
-  <rect x="5" y="8" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="4" y="8" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="3" y="8" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="10" y="8" width="1" height="1" fill="#5a8dc2"/>
-  <rect x="11" y="8" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="12" y="8" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="13" y="8" width="1" height="1" fill="#3a6ea5"/>
+  <!-- prompt line: clay caret, blinking cursor -->
+  <rect x="4" y="4" width="1" height="1" fill="#d97757"/>
+  <rect x="6" y="4" width="1" height="1" fill="#a9c7e8">
+    <animate attributeName="fill" values="#a9c7e8;#16263a" keyTimes="0;0.5"
+             dur="1s" calcMode="discrete" repeatCount="indefinite"/>
+  </rect>
+  <!-- output lines -->
+  <rect x="4" y="6" width="5" height="1" fill="#a9c7e8"/>
+  <rect x="4" y="8" width="3" height="1" fill="#5a8dc2"/>
 
-  <!-- diagonal arms -->
-  <rect x="7" y="7" width="1" height="1" fill="#5a8dc2"/>
-  <rect x="6" y="6" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="5" y="5" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="9" y="7" width="1" height="1" fill="#5a8dc2"/>
-  <rect x="10" y="6" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="11" y="5" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="7" y="9" width="1" height="1" fill="#5a8dc2"/>
-  <rect x="6" y="10" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="5" y="11" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="9" y="9" width="1" height="1" fill="#5a8dc2"/>
-  <rect x="10" y="10" width="1" height="1" fill="#3a6ea5"/>
-  <rect x="11" y="11" width="1" height="1" fill="#3a6ea5"/>
+  <!-- power LED, slow pulse -->
+  <rect x="12" y="10" width="1" height="1" fill="#d97757">
+    <animate attributeName="opacity" values="1;0.25;1" keyTimes="0;0.5;1"
+             dur="2.2s" calcMode="discrete" repeatCount="indefinite"/>
+  </rect>
 
-  <!-- snowflake branch pixels (light-blue) -->
-  <rect x="7" y="4" width="1" height="1" fill="#8fb4d6"/>
-  <rect x="9" y="4" width="1" height="1" fill="#8fb4d6"/>
-  <rect x="7" y="12" width="1" height="1" fill="#8fb4d6"/>
-  <rect x="9" y="12" width="1" height="1" fill="#8fb4d6"/>
-  <rect x="4" y="7" width="1" height="1" fill="#8fb4d6"/>
-  <rect x="4" y="9" width="1" height="1" fill="#8fb4d6"/>
-  <rect x="12" y="7" width="1" height="1" fill="#8fb4d6"/>
-  <rect x="12" y="9" width="1" height="1" fill="#8fb4d6"/>
-
-  <!-- 8 arm tips: clay sparkle chases around, one lit per step -->
-  <rect x="8" y="2" width="1" height="1" fill="#3a6ea5">
-    <animate attributeName="fill" calcMode="discrete" dur="2.4s" repeatCount="indefinite"
-             keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
-             values="#d97757;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#d97757"/>
-  </rect>
-  <rect x="12" y="4" width="1" height="1" fill="#3a6ea5">
-    <animate attributeName="fill" calcMode="discrete" dur="2.4s" repeatCount="indefinite"
-             keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
-             values="#3a6ea5;#d97757;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5"/>
-  </rect>
-  <rect x="14" y="8" width="1" height="1" fill="#3a6ea5">
-    <animate attributeName="fill" calcMode="discrete" dur="2.4s" repeatCount="indefinite"
-             keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
-             values="#3a6ea5;#3a6ea5;#d97757;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5"/>
-  </rect>
-  <rect x="12" y="12" width="1" height="1" fill="#3a6ea5">
-    <animate attributeName="fill" calcMode="discrete" dur="2.4s" repeatCount="indefinite"
-             keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
-             values="#3a6ea5;#3a6ea5;#3a6ea5;#d97757;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5"/>
-  </rect>
-  <rect x="8" y="14" width="1" height="1" fill="#3a6ea5">
-    <animate attributeName="fill" calcMode="discrete" dur="2.4s" repeatCount="indefinite"
-             keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
-             values="#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#d97757;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5"/>
-  </rect>
-  <rect x="4" y="12" width="1" height="1" fill="#3a6ea5">
-    <animate attributeName="fill" calcMode="discrete" dur="2.4s" repeatCount="indefinite"
-             keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
-             values="#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#d97757;#3a6ea5;#3a6ea5;#3a6ea5"/>
-  </rect>
-  <rect x="2" y="8" width="1" height="1" fill="#3a6ea5">
-    <animate attributeName="fill" calcMode="discrete" dur="2.4s" repeatCount="indefinite"
-             keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
-             values="#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#d97757;#3a6ea5;#3a6ea5"/>
-  </rect>
-  <rect x="4" y="4" width="1" height="1" fill="#3a6ea5">
-    <animate attributeName="fill" calcMode="discrete" dur="2.4s" repeatCount="indefinite"
-             keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
-             values="#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#3a6ea5;#d97757;#3a6ea5"/>
-  </rect>
+  <!-- neck + base -->
+  <rect x="7" y="11" width="2" height="1" fill="#3a6ea5"/>
+  <rect x="4" y="12" width="8" height="1" fill="#3a6ea5"/>
 </svg>

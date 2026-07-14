@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" role="img" aria-label="Animated pixel infinity sign with a clay dot endlessly orbiting, for infinitely many primes">
+  <!-- infinity outline (blue): two loops joined at a waist -->
+  <!-- left loop -->
+  <rect x="4" y="6" width="2" height="1" fill="#3a6ea5"/>
+  <rect x="3" y="7" width="1" height="1" fill="#3a6ea5"/>
+  <rect x="6" y="7" width="1" height="1" fill="#3a6ea5"/>
+  <rect x="3" y="8" width="1" height="1" fill="#3a6ea5"/>
+  <rect x="6" y="8" width="1" height="1" fill="#3a6ea5"/>
+  <rect x="3" y="9" width="1" height="1" fill="#3a6ea5"/>
+  <rect x="6" y="9" width="1" height="1" fill="#3a6ea5"/>
+  <rect x="4" y="10" width="2" height="1" fill="#3a6ea5"/>
+  <!-- right loop -->
+  <rect x="10" y="6" width="2" height="1" fill="#3a6ea5"/>
+  <rect x="9" y="7" width="1" height="1" fill="#3a6ea5"/>
+  <rect x="12" y="7" width="1" height="1" fill="#3a6ea5"/>
+  <rect x="9" y="8" width="1" height="1" fill="#3a6ea5"/>
+  <rect x="12" y="8" width="1" height="1" fill="#3a6ea5"/>
+  <rect x="9" y="9" width="1" height="1" fill="#3a6ea5"/>
+  <rect x="12" y="9" width="1" height="1" fill="#3a6ea5"/>
+  <rect x="10" y="10" width="2" height="1" fill="#3a6ea5"/>
+  <!-- waist connectors (top + bottom), pinch stays open -->
+  <rect x="7" y="7" width="2" height="1" fill="#8fb4d6"/>
+  <rect x="7" y="9" width="2" height="1" fill="#8fb4d6"/>
+
+  <!-- clay dot orbiting the figure-eight -->
+  <rect width="1" height="1" fill="#d97757">
+    <animate attributeName="x" calcMode="discrete" dur="2.4s" repeatCount="indefinite"
+             keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
+             values="4;6;5;3;10;12;11;9;4"/>
+    <animate attributeName="y" calcMode="discrete" dur="2.4s" repeatCount="indefinite"
+             keyTimes="0;0.125;0.25;0.375;0.5;0.625;0.75;0.875;1"
+             values="6;8;10;8;6;8;10;8;6"/>
+  </rect>
+</svg>

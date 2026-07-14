@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" shape-rendering="crispEdges" role="img" aria-label="Animated pixel pipe with data segments flowing left to right, for Unix-like pipes in Haskell">
+  <!-- pipe walls (blue) -->
+  <rect x="1" y="5" width="14" height="1" fill="#3a6ea5"/>
+  <rect x="1" y="10" width="14" height="1" fill="#3a6ea5"/>
+  <!-- end flanges -->
+  <rect x="1" y="4" width="1" height="8" fill="#3a6ea5"/>
+  <rect x="14" y="4" width="1" height="8" fill="#3a6ea5"/>
+  <!-- inner channel (dark) -->
+  <rect x="2" y="6" width="12" height="4" fill="#16263a"/>
+
+  <!-- data segment A, flowing left to right -->
+  <rect y="7" width="2" height="2" fill="#d97757">
+    <animate attributeName="x" calcMode="discrete" dur="1.6s" repeatCount="indefinite"
+             keyTimes="0;0.2;0.4;0.6;0.8;1" values="2;4;6;8;10;12"/>
+  </rect>
+  <!-- data segment B, phase-shifted for a continuous stream -->
+  <rect y="7" width="2" height="2" fill="#8fb4d6">
+    <animate attributeName="x" calcMode="discrete" dur="1.6s" repeatCount="indefinite"
+             keyTimes="0;0.2;0.4;0.6;0.8;1" values="8;10;12;2;4;6"/>
+  </rect>
+</svg>

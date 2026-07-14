@@ -213,6 +213,11 @@ html, body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 32px 24px 64px;
+  /* Clip at the full-width layout, not at .post-content: a glossary card can then
+     spill over the side gutters (fully visible, lifted by its z-index) while the
+     page still cannot scroll sideways. overflow: clip creates no scroll container,
+     so the sticky sidebar and TOC are unaffected. */
+  overflow-x: clip;
 }
 
 .sidebar {
@@ -488,9 +493,7 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
 }
 .post-header-text { flex: 1 1 auto; min-width: 0; }
 .post-header-text h1 { margin: 0 0 8px; }
-/* overflow-x: clip keeps an edge-of-line glossary card from causing horizontal
-   page scroll on narrow screens (no scroll container, so sticky TOC is unaffected). */
-.post-content { font-size: 1rem; line-height: 1.625; overflow-x: clip; }
+.post-content { font-size: 1rem; line-height: 1.625; }
 .post-content img { max-width: 100%; height: auto; }
 
 /* GitBook-style hover anchor. niche emits an empty <a class="anchor" id=…>
