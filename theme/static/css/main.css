@@ -789,6 +789,11 @@ th { font-weight: 600; }
 }
 .gloss::after {
   content: "?";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
   font-family: var(--font-mono);
   font-style: normal;
   font-weight: 700;
@@ -798,8 +803,6 @@ th { font-weight: 600; }
   color: var(--bg-card);
   background: var(--accent);
   border-radius: 50%;
-  padding: 0 0.4em;
-  line-height: 1.5;
 }
 .gloss:focus-visible {
   outline: 2px solid var(--accent);
