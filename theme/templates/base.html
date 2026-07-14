@@ -254,6 +254,34 @@
         try { localStorage.setItem('theme', next); } catch (e) {}
       });
     }
+
+    // Glossary callouts: inject a close button into each card. The card shows on
+    // hover/focus via CSS; clicking/tapping a term pins it (focus), so the button
+    // lets you dismiss without clicking elsewhere. mousedown-preventDefault keeps
+    // focus on the term so the click handler can blur it to close.
+    document.querySelectorAll('.gloss-card .gc-head').forEach((head) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'gc-close';
+      btn.setAttribute('aria-label', 'Close');
+      btn.textContent = '×';
+      btn.addEventListener('mousedown', (e) => e.preventDefault());
+      btn.addEventListener('click', () => {
+        const g = head.closest('.gloss');
+        if (!g) return;
+        // data-dismissed hides the card even while the pointer is still over it
+        // (plain :hover would otherwise keep it open). Cleared on mouseleave so
+        // the term can be reopened later.
+        g.setAttribute('data-dismissed', '');
+        g.blur();
+        const clear = () => {
+          g.removeAttribute('data-dismissed');
+          g.removeEventListener('mouseleave', clear);
+        };
+        g.addEventListener('mouseleave', clear);
+      });
+      head.appendChild(btn);
+    });
   </script>
 
 </body>

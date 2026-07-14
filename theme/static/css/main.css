@@ -846,28 +846,41 @@ th { font-weight: 600; }
 .gloss-card .gc-head {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 9px;
-  padding: 10px 13px;
+  padding: 8px 8px 8px 13px;
   background: var(--accent-tint);
   border-bottom: 1px solid var(--rule);
-}
-.gloss-card .gc-chip {
-  width: 24px;
-  height: 24px;
-  flex: none;
-  border-radius: 6px;
-  background: var(--accent);
-  color: var(--bg-card);
-  display: grid;
-  place-items: center;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 0.8rem;
 }
 .gloss-card .gc-name {
   font-weight: 700;
   font-size: 0.9rem;
   color: var(--ink);
+}
+/* Close button, injected by base.html so a pinned (clicked/tapped) card can be
+   dismissed without clicking elsewhere. */
+.gloss-card .gc-close {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--ink-faint);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.gloss-card .gc-close:hover {
+  background: var(--bg-soft);
+  color: var(--ink);
+}
+/* The close button sets data-dismissed, which must beat :hover/:focus-within. */
+.gloss[data-dismissed] > .gloss-card {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 .gloss-card .gc-body {
   padding: 11px 13px;

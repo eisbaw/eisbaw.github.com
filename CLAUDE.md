@@ -11,11 +11,11 @@
 - New asset files are only picked up after `git add` — `nix build` reads the git tree, so an untracked sprite will not deploy.
 
 ## Inline glossary callouts
-- Gloss a jargon term inline: it gets a dashed underline and a small `i` badge, and on hover or keyboard focus a card pops up with a definition (and an optional source link). Pure CSS, no JS, so it survives the Markdown pipeline and works headless. Styles live in `theme/static/css/main.css` under the `.gloss` / `.gloss-card` / `.gc-*` selectors and reuse the theme tokens, so both light and dark themes are handled.
+- Gloss a jargon term inline: it gets a dashed underline and a small `i` badge, and on hover or keyboard focus a card pops up with a definition (and an optional source link). Styles live in `theme/static/css/main.css` under the `.gloss` / `.gloss-card` / `.gc-*` selectors and reuse the theme tokens, so both light and dark themes are handled. Reveal is CSS-only (hover / `:focus-within`); a small script in `base.html` injects a close **×** into each card's `.gc-head` so a card pinned by a click/tap can be dismissed. Without JS the callouts still work (dismiss by clicking elsewhere).
 - Author it as raw inline HTML in `post.md` (niche passes inline HTML through). Keep the whole thing on **one line** (a blank line inside breaks the Markdown HTML block). Pattern:
-  - `<span class="gloss" tabindex="0">TERM<span class="gloss-card"><span class="gc-head"><span class="gc-chip">x</span><span class="gc-name">Name</span></span><span class="gc-body">One or two plain sentences.</span><span class="gc-foot"><a href="URL" target="_blank" rel="noopener">host.tld</a></span></span></span>`
+  - `<span class="gloss" tabindex="0">TERM<span class="gloss-card"><span class="gc-head"><span class="gc-name">Name</span></span><span class="gc-body">One or two plain sentences.</span><span class="gc-foot"><a href="URL" target="_blank" rel="noopener">host.tld</a></span></span></span>`
   - Drop the `<span class="gc-foot">…</span>` line for terms with no external source.
-  - `gc-chip` is a one-glyph icon (first letter, or a symbol like `∘`, `µ`); `tabindex="0"` makes it keyboard-reachable (`:focus-within` opens the card).
+  - `tabindex="0"` makes the term keyboard-reachable (`:focus-within` opens the card). Do not hand-author a `gc-chip` or a close button; the close × is added by the theme.
 - Intended usage: gloss anything a general engineer reader may not immediately know, **first occurrence only**, curated so it teaches without littering. Convention: named tools/products get a **source link** in the footer; plain concepts (idempotency, composition, cgroups) get a **definition only**. Do not gloss inside TL;DR bullets, headings, or the bolded lead.
 
 ## Rendering / preview requests
