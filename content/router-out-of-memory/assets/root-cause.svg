@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 690" role="img" aria-labelledby="title desc">
+  <title id="title">Shared page-frag lifetime mixing before the fix and per-ring isolation after the fix</title>
+  <desc id="desc">The left panel shows regular RX, monitor RX, and CE allocations sharing one per-CPU page-frag cache. Long-lived fragments from one owner pin sparsely occupied 32 KiB pages after short-lived fragments are released. The right panel shows each RXDMA ring using a private cache, preventing new RXDMA fragments from sharing pages across rings or with CE fragments.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0L8 4L0 8Z" fill="#48616d"/>
+    </marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="8" height="8" fill="#f6e7d3"/>
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#a95b16" stroke-width="2"/>
+    </pattern>
+    <style>
+      .bg { fill: #fffdf8; }
+      .panel { fill: #f8faf8; stroke: #c8cec9; stroke-width: 2; }
+      .panel.after { fill: #f2faf7; stroke: #90c9c3; }
+      .heading { fill: #123b52; font: 700 27px system-ui, sans-serif; }
+      .sub { fill: #52626d; font: 500 16px system-ui, sans-serif; }
+      .label { fill: #263944; font: 650 16px system-ui, sans-serif; }
+      .small { fill: #52626d; font: 500 14px system-ui, sans-serif; }
+      .micro { fill: #23333d; font: 700 12px ui-monospace, monospace; }
+      .micro-light { fill: #ffffff; }
+      .cache-name { fill: #263944; font: 650 14px system-ui, sans-serif; }
+      .node-detail { fill: #52626d; font: 500 12px system-ui, sans-serif; }
+      .node { fill: #ffffff; stroke: #9aa8ad; stroke-width: 1.5; }
+      .cache { fill: #e7eef1; stroke: #176b87; stroke-width: 2; }
+      .cache-private { fill: #dcefeb; stroke: #08766f; stroke-width: 2; }
+      .page { fill: #ffffff; stroke: #667b85; stroke-width: 1.5; }
+      .ring-a { fill: #2b7b9b; }
+      .ring-b { fill: #72a9be; }
+      .monitor { fill: #e1a34e; }
+      .ce { fill: #a65f85; }
+      .free { fill: url(#hatch); }
+      .arrow { fill: none; stroke: #48616d; stroke-width: 2; marker-end: url(#arrow); }
+      .danger { fill: #9e3937; font: 700 15px system-ui, sans-serif; }
+      .success { fill: #08766f; font: 700 15px system-ui, sans-serif; }
+      .rule { stroke: #d5d8d2; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="690" rx="18"/>
+
+  <rect class="panel" x="24" y="24" width="560" height="642" rx="16"/>
+  <rect class="panel after" x="616" y="24" width="560" height="642" rx="16"/>
+
+  <text class="heading" x="54" y="69">Before · shared cache</text>
+  <text class="sub" x="54" y="96">One per-CPU allocator lane mixes unrelated lifetimes.</text>
+
+  <rect class="node" x="54" y="128" width="112" height="54" rx="8"/>
+  <text class="label" x="110" y="151" text-anchor="middle">RX ring A</text>
+  <text class="small" x="110" y="171" text-anchor="middle">2,560 B</text>
+
+  <rect class="node" x="184" y="128" width="112" height="54" rx="8"/>
+  <text class="label" x="240" y="151" text-anchor="middle">RX ring B</text>
+  <text class="small" x="240" y="171" text-anchor="middle">2,560 B</text>
+
+  <rect class="node" x="314" y="128" width="112" height="54" rx="8"/>
+  <text class="label" x="370" y="151" text-anchor="middle">Monitor</text>
+  <text class="small" x="370" y="171" text-anchor="middle">2,560 B</text>
+
+  <rect class="node" x="444" y="128" width="110" height="54" rx="8"/>
+  <text class="label" x="499" y="151" text-anchor="middle">CE / HTC</text>
+  <text class="small" x="499" y="171" text-anchor="middle">2,432 B</text>
+
+  <path class="arrow" d="M110 184V218H246"/>
+  <path class="arrow" d="M240 184V218H268"/>
+  <path class="arrow" d="M370 184V218H292"/>
+  <path class="arrow" d="M499 184V218H314"/>
+
+  <rect class="cache" x="176" y="218" width="256" height="66" rx="10"/>
+  <text class="cache-name" x="304" y="238" text-anchor="middle">
+    <tspan x="304">shared per-CPU</tspan>
+    <tspan x="304" dy="17">page_frag_cache</tspan>
+  </text>
+  <text class="small" x="304" y="276" text-anchor="middle">descending bump · order 3</text>
+
+  <path class="arrow" d="M304 286V322"/>
+
+  <text class="label" x="54" y="341">32 KiB backing pages after churn</text>
+  <rect class="page" x="54" y="359" width="500" height="50" rx="5"/>
+  <rect class="ring-a" x="55" y="360" width="43" height="48" rx="4"/>
+  <rect class="free" x="98" y="360" width="130" height="48"/>
+  <rect class="monitor" x="228" y="360" width="42" height="48"/>
+  <rect class="free" x="270" y="360" width="283" height="48" rx="4"/>
+  <text class="micro micro-light" x="76" y="389" text-anchor="middle">A</text>
+  <text class="micro" x="249" y="389" text-anchor="middle">M</text>
+
+  <rect class="page" x="54" y="423" width="500" height="50" rx="5"/>
+  <rect class="free" x="55" y="424" width="170" height="48" rx="4"/>
+  <rect class="ring-b" x="225" y="424" width="44" height="48"/>
+  <rect class="free" x="269" y="424" width="100" height="48"/>
+  <rect class="ce" x="369" y="424" width="41" height="48"/>
+  <rect class="free" x="410" y="424" width="143" height="48" rx="4"/>
+  <text class="micro" x="247" y="453" text-anchor="middle">B</text>
+  <text class="micro micro-light" x="389" y="453" text-anchor="middle">CE</text>
+
+  <rect class="page" x="54" y="487" width="500" height="50" rx="5"/>
+  <rect class="ring-a" x="55" y="488" width="42" height="48" rx="4"/>
+  <rect class="free" x="97" y="488" width="456" height="48" rx="4"/>
+  <text class="micro micro-light" x="76" y="517" text-anchor="middle">A</text>
+
+  <path d="M75 546V577H137" fill="none" stroke="#9e3937" stroke-width="2" marker-end="url(#arrow)"/>
+  <text class="danger" x="54" y="605">One survivor retains the entire page.</text>
+  <text class="small" x="54" y="630">Logical ring counts stay bounded while physical backing grows.</text>
+
+  <text class="heading" x="646" y="69">After · lifetime isolation</text>
+  <text class="sub" x="646" y="96">Each RXDMA ring owns and drains its cache.</text>
+
+  <rect class="node" x="646" y="128" width="136" height="54" rx="8"/>
+  <text class="label" x="714" y="151" text-anchor="middle">RX ring A</text>
+  <text class="node-detail" x="714" y="171" text-anchor="middle">regular / monitor-dst</text>
+
+  <rect class="node" x="830" y="128" width="136" height="54" rx="8"/>
+  <text class="label" x="898" y="151" text-anchor="middle">RX ring B</text>
+  <text class="small" x="898" y="171" text-anchor="middle">regular</text>
+
+  <rect class="node" x="1014" y="128" width="132" height="54" rx="8"/>
+  <text class="label" x="1080" y="151" text-anchor="middle">Monitor ring</text>
+  <text class="small" x="1080" y="171" text-anchor="middle">status</text>
+
+  <path class="arrow" d="M714 184V218"/>
+  <path class="arrow" d="M898 184V218"/>
+  <path class="arrow" d="M1080 184V218"/>
+
+  <rect class="cache-private" x="646" y="218" width="136" height="62" rx="10"/>
+  <text class="label" x="714" y="244" text-anchor="middle">frag_cache A</text>
+  <text class="small" x="714" y="266" text-anchor="middle">ring-local</text>
+
+  <rect class="cache-private" x="830" y="218" width="136" height="62" rx="10"/>
+  <text class="label" x="898" y="244" text-anchor="middle">frag_cache B</text>
+  <text class="small" x="898" y="266" text-anchor="middle">ring-local</text>
+
+  <rect class="cache-private" x="1014" y="218" width="132" height="62" rx="10"/>
+  <text class="label" x="1080" y="244" text-anchor="middle">frag_cache M</text>
+  <text class="small" x="1080" y="266" text-anchor="middle">ring-local</text>
+
+  <path class="arrow" d="M714 282V322"/>
+  <path class="arrow" d="M898 282V322"/>
+  <path class="arrow" d="M1080 282V322"/>
+
+  <text class="label" x="646" y="341">Owner-separated backing pages</text>
+
+  <rect class="page" x="646" y="359" width="136" height="50" rx="5"/>
+  <rect class="ring-a" x="647" y="360" width="124" height="48" rx="4"/>
+  <rect class="free" x="771" y="360" width="10" height="48" rx="3"/>
+  <text class="micro micro-light" x="709" y="389" text-anchor="middle">A · A · A</text>
+
+  <rect class="page" x="830" y="359" width="136" height="50" rx="5"/>
+  <rect class="ring-b" x="831" y="360" width="124" height="48" rx="4"/>
+  <rect class="free" x="955" y="360" width="10" height="48" rx="3"/>
+  <text class="micro" x="893" y="389" text-anchor="middle">B · B · B</text>
+
+  <rect class="page" x="1014" y="359" width="132" height="50" rx="5"/>
+  <rect class="monitor" x="1015" y="360" width="120" height="48" rx="4"/>
+  <rect class="free" x="1135" y="360" width="10" height="48" rx="3"/>
+  <text class="micro" x="1075" y="389" text-anchor="middle">M · M · M</text>
+
+  <line class="rule" x1="646" y1="448" x2="1146" y2="448"/>
+  <text class="label" x="646" y="482">Teardown order</text>
+  <rect class="node" x="646" y="501" width="138" height="48" rx="8"/>
+  <text class="small" x="715" y="530" text-anchor="middle">quiesce IRQ / NAPI</text>
+  <path class="arrow" d="M786 525H818"/>
+  <rect class="node" x="820" y="501" width="138" height="48" rx="8"/>
+  <text class="small" x="889" y="520" text-anchor="middle">unmap + free skb</text>
+  <text class="small" x="889" y="538" text-anchor="middle">destroy IDR</text>
+  <path class="arrow" d="M960 525H992"/>
+  <rect class="node" x="994" y="501" width="152" height="48" rx="8"/>
+  <text class="small" x="1070" y="530" text-anchor="middle">drain ring cache</text>
+
+  <text class="success" x="646" y="605">New RXDMA: no cross-ring or RX-to-CE page sharing.</text>
+  <text class="small" x="646" y="630">Same-ring temporal stranding can still exist, but stayed bounded live.</text>
+</svg>

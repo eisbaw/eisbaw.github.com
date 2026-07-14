@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 670" role="img" aria-labelledby="title desc">
+  <title id="title">From router memory collapse to page-frag lifetime amplification</title>
+  <desc id="desc">Four evidence layers progressively narrow the failure. Available memory collapses, an ath11k reload returns memory, allocator accounting identifies page-frag backing, and generation-safe ownership tracing finds bounded receive rings. At the two final snapshots, 86.47 and 87.25 percent of tracker-visible pages had current or historical cross-origin evidence. The conclusion changes from a suspected missing buffer free to allocator lifetime amplification.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0L9 4.5L0 9Z" fill="#56707b"/>
+    </marker>
+    <style>
+      .bg { fill: #fffdf8; }
+      .box { fill: #ffffff; stroke: #c5cecc; stroke-width: 2; }
+      .box.symptom { fill: #fff4f1; stroke: #d89a95; }
+      .box.scope { fill: #fff8eb; stroke: #d4ab73; }
+      .box.bytes { fill: #edf5f7; stroke: #71aebe; }
+      .box.proof { fill: #ecf7f3; stroke: #74b7ae; }
+      .step { font: 800 14px ui-monospace, monospace; letter-spacing: .08em; }
+      .step.red { fill: #9e3937; }
+      .step.amber { fill: #9a5718; }
+      .step.blue { fill: #176b87; }
+      .step.teal { fill: #08766f; }
+      .head { fill: #123b52; font: 700 24px system-ui, sans-serif; }
+      .head-small { fill: #123b52; font: 700 20px system-ui, sans-serif; }
+      .body { fill: #50626c; font: 500 15px system-ui, sans-serif; }
+      .metric { fill: #17242d; font: 760 22px ui-monospace, monospace; }
+      .metric-small { fill: #17242d; font: 760 12px ui-monospace, monospace; }
+      .small { fill: #5f7078; font: 500 13px system-ui, sans-serif; }
+      .arrow { fill: none; stroke: #56707b; stroke-width: 2.2; marker-end: url(#arrow); }
+      .question { fill: #354b56; font: 650 15px system-ui, sans-serif; }
+      .old { fill: #9e3937; font: 700 18px system-ui, sans-serif; }
+      .new { fill: #08766f; font: 750 19px system-ui, sans-serif; }
+      .strike { stroke: #9e3937; stroke-width: 2; }
+      .pill { fill: #dcefeb; stroke: #90c9c3; stroke-width: 1.5; }
+      .pill-text { fill: #075f59; font: 700 15px system-ui, sans-serif; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="670" rx="18"/>
+
+  <rect class="box symptom" x="30" y="36" width="252" height="330" rx="15"/>
+  <text class="step red" x="54" y="70">01 · SYMPTOM</text>
+  <text class="head" x="54" y="110">RAM collapses</text>
+  <text class="body" x="54" y="144">Natural repeater traffic</text>
+  <text class="body" x="54" y="167">drives available memory</text>
+  <text class="body" x="54" y="190">toward OOM.</text>
+  <text class="metric" x="54" y="236">−12…−16 MB/min</text>
+  <line x1="54" y1="260" x2="258" y2="260" stroke="#e5c8c4"/>
+  <text class="question" x="54" y="291">Question</text>
+  <text class="small" x="54" y="316">Which subsystem's lifetime</text>
+  <text class="small" x="54" y="338">holds the missing memory?</text>
+
+  <path class="arrow" d="M284 201H316"/>
+
+  <rect class="box scope" x="318" y="36" width="252" height="330" rx="15"/>
+  <text class="step amber" x="342" y="70">02 · LIFETIME</text>
+  <text class="head-small" x="342" y="110">Reload returns it</text>
+  <text class="body" x="342" y="144">One ath11k reload raises</text>
+  <text class="body" x="342" y="167">MemAvailable from 3,348</text>
+  <text class="body" x="342" y="190">to 170,820 KiB.</text>
+  <text class="metric" x="342" y="236">+163.5 MiB</text>
+  <line x1="342" y1="260" x2="546" y2="260" stroke="#ead8bb"/>
+  <text class="question" x="342" y="291">What this proves</text>
+  <text class="small" x="342" y="316">The footprint is tied to the</text>
+  <text class="small" x="342" y="338">driver lifetime—not why.</text>
+
+  <path class="arrow" d="M572 201H604"/>
+
+  <rect class="box bytes" x="606" y="36" width="252" height="330" rx="15"/>
+  <text class="step blue" x="630" y="70">03 · PHYSICAL BYTES</text>
+  <text class="head-small" x="630" y="110">Name the backing</text>
+  <text class="body" x="630" y="144">/proc/allocinfo follows</text>
+  <text class="body" x="630" y="167">the loss at one class:</text>
+  <text class="metric-small" x="630" y="207">__page_frag_cache_refill</text>
+  <text class="metric" x="630" y="246">≈ 1:1 growth</text>
+  <line x1="630" y1="260" x2="834" y2="260" stroke="#c8e0e5"/>
+  <text class="question" x="630" y="291">Critical limit</text>
+  <text class="small" x="630" y="316">The refiller is not necessarily</text>
+  <text class="small" x="630" y="338">the fragment's final owner.</text>
+
+  <path class="arrow" d="M860 201H892"/>
+
+  <rect class="box proof" x="894" y="36" width="276" height="330" rx="15"/>
+  <text class="step teal" x="918" y="70">04 · LOGICAL STATE</text>
+  <text class="head" x="918" y="110">Track generations</text>
+  <text class="body" x="918" y="144">Allocate → post → reap →</text>
+  <text class="body" x="918" y="167">release stays balanced.</text>
+  <text class="metric" x="918" y="207">15,357 posted</text>
+  <text class="metric" x="918" y="246">26 clean snapshots</text>
+  <line x1="918" y1="260" x2="1146" y2="260" stroke="#c9e3dc"/>
+  <text class="question" x="918" y="282">Physical result</text>
+  <text class="small" x="918" y="302">86.47% / 87.25% of final</text>
+  <text class="small" x="918" y="318">tracker-visible pages had</text>
+  <text class="small" x="918" y="334">current or historical</text>
+  <text class="small" x="918" y="350">cross-origin evidence.</text>
+
+  <rect x="30" y="405" width="1140" height="218" rx="15" fill="#f7faf8" stroke="#c8d2cf" stroke-width="2"/>
+  <text class="question" x="58" y="442">The diagnosis changes as the evidence gets more specific</text>
+
+  <text class="old" x="58" y="491">“ath11k must be forgetting to free an ever-growing skb population”</text>
+  <line class="strike" x1="55" y1="483" x2="720" y2="483"/>
+
+  <path class="arrow" d="M744 485H797"/>
+
+  <text class="new" x="824" y="476">Bounded inventory</text>
+  <text class="new" x="824" y="502">pins expanding backing</text>
+
+  <rect class="pill" x="58" y="537" width="1084" height="60" rx="30"/>
+  <text class="pill-text" x="600" y="563" text-anchor="middle">Selected mechanism: unrelated lifetimes share 32 KiB pages</text>
+  <text class="small" x="600" y="584" text-anchor="middle">A small survivor can retain an otherwise sparse page while ring membership keeps rotating.</text>
+</svg>

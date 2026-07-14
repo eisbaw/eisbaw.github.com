@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Source-level anatomy and lifecycle of the ath11k RX page-frag fix</title>
+  <desc id="desc">The primary path adds a page-frag cache to each RXDMA ring, uses a ring-local allocation helper for regular and monitor-status buffers, and posts skbs into the IDR and DMA ring. Ring teardown removes each IDR entry, unmaps DMA, frees the ring-owned skb, destroys the IDR, then drains the cache. Draining releases the cache reference while fragment references held above the ring remain valid. A recovery path disables HIF IRQ and NAPI activity before data-path teardown. A separate integrated correction replaces a no-op pull on an empty skb with reserve for DMA alignment.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0L9 4.5L0 9Z" fill="#4e6874"/>
+    </marker>
+    <marker id="arrow-teal" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0L9 4.5L0 9Z" fill="#08766f"/>
+    </marker>
+    <style>
+      .bg { fill: #fffdf8; }
+      .lane { fill: #f7f9f7; stroke: #c9cfca; stroke-width: 1.5; }
+      .node { fill: #ffffff; stroke: #aeb9b8; stroke-width: 1.7; }
+      .node.primary { fill: #e8f5f1; stroke: #70b7ae; }
+      .node.safety { fill: #edf5f7; stroke: #76afbd; }
+      .node.align { fill: #fff5e6; stroke: #d4a365; }
+      .node.final { fill: #dcefeb; stroke: #08766f; stroke-width: 2; }
+      .eyebrow { fill: #176b87; font: 800 14px ui-monospace, monospace; letter-spacing: .08em; }
+      .head { fill: #123b52; font: 700 25px system-ui, sans-serif; }
+      .lane-head { fill: #123b52; font: 700 17px system-ui, sans-serif; }
+      .file { fill: #176b87; font: 700 12px ui-monospace, monospace; }
+      .label { fill: #203640; font: 680 16px system-ui, sans-serif; }
+      .body { fill: #52646d; font: 500 13px system-ui, sans-serif; }
+      .code { fill: #17242d; font: 650 13px ui-monospace, monospace; }
+      .code-small { fill: #17242d; font: 650 11px ui-monospace, monospace; }
+      .arrow { fill: none; stroke: #4e6874; stroke-width: 2; marker-end: url(#arrow); }
+      .arrow.primary { stroke: #08766f; marker-end: url(#arrow-teal); }
+      .dash { fill: none; stroke: #176b87; stroke-width: 2; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+      .legend { fill: #53646e; font: 500 13px system-ui, sans-serif; }
+      .note { fill: #9a5718; font: 700 13px system-ui, sans-serif; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="800" rx="18"/>
+  <text class="eyebrow" x="42" y="48">PATCH 949 · FUNCTIONAL CHANGE MAP</text>
+  <text class="head" x="42" y="82">Allocation scope, buffer ownership, and teardown form one lifecycle</text>
+
+  <rect class="lane" x="30" y="112" width="1140" height="166" rx="14"/>
+  <text class="lane-head" x="52" y="143">1 · Allocate from the owner</text>
+
+  <rect class="node primary" x="52" y="164" width="204" height="88" rx="10"/>
+  <text class="file" x="70" y="187">dp.h</text>
+  <text class="label" x="70" y="212">dp_rxdma_ring</text>
+  <text class="code" x="70" y="235">frag_cache</text>
+
+  <path class="arrow primary" d="M258 208H292"/>
+
+  <rect class="node primary" x="294" y="164" width="248" height="88" rx="10"/>
+  <text class="file" x="312" y="187">dp_rx.c</text>
+  <text class="code" x="312" y="211">ath11k_dp_rx_alloc_skb()</text>
+  <text class="code-small" x="312" y="235">page_frag_alloc(&amp;ring→frag_cache)</text>
+
+  <path class="arrow primary" d="M544 208H578"/>
+
+  <rect class="node" x="580" y="164" width="230" height="88" rx="10"/>
+  <text class="label" x="598" y="190">Preserve skb contract</text>
+  <text class="body" x="598" y="214">GFP flags · pad · head align</text>
+  <text class="body" x="598" y="235">build_skb · failure free</text>
+
+  <path class="arrow" d="M812 208H846"/>
+
+  <rect class="node align" x="848" y="164" width="292" height="88" rx="10"/>
+  <text class="file" x="866" y="187">INTEGRATED ALIGNMENT CORRECTION</text>
+  <text class="code" x="866" y="211">skb_pull() → skb_reserve()</text>
+  <text class="body" x="866" y="235">advance data while skb length is zero</text>
+
+  <rect class="lane" x="30" y="296" width="1140" height="166" rx="14"/>
+  <text class="lane-head" x="52" y="327">2 · Hand the skb to hardware, then close ring ownership</text>
+
+  <rect class="node primary" x="52" y="348" width="208" height="88" rx="10"/>
+  <text class="label" x="70" y="375">Refill callers</text>
+  <text class="body" x="70" y="399">regular RX</text>
+  <text class="body" x="70" y="420">monitor status / destination</text>
+
+  <path class="arrow primary" d="M262 392H298"/>
+
+  <rect class="node" x="300" y="348" width="208" height="88" rx="10"/>
+  <text class="label" x="318" y="375">Post ownership</text>
+  <text class="code" x="318" y="399">IDR + DMA mapping</text>
+  <text class="body" x="318" y="420">descriptor enters the ring</text>
+
+  <path class="arrow" d="M510 392H546"/>
+
+  <rect class="node" x="548" y="348" width="208" height="88" rx="10"/>
+  <text class="label" x="566" y="375">Runtime rotation</text>
+  <text class="body" x="566" y="399">reap · process · replenish</text>
+  <text class="body" x="566" y="420">capacity stays bounded</text>
+
+  <path class="arrow" d="M758 392H794"/>
+
+  <rect class="node" x="796" y="348" width="344" height="88" rx="10"/>
+  <text class="label" x="814" y="375">Teardown ring-owned buffers</text>
+  <text class="body" x="814" y="399">IDR remove → DMA unmap → free skb</text>
+  <text class="body" x="814" y="420">then idr_destroy()</text>
+
+  <rect class="lane" x="30" y="480" width="1140" height="182" rx="14"/>
+  <text class="lane-head" x="52" y="511">3 · Quiesce before teardown; drain after ring cleanup</text>
+
+  <rect class="node safety" x="52" y="534" width="270" height="100" rx="10"/>
+  <text class="file" x="70" y="558">core.c · NON-RESET RECOVERY</text>
+  <text class="code" x="70" y="583">ath11k_hif_irq_disable()</text>
+  <text class="body" x="70" y="608">stop IRQ / NAPI data-path activity</text>
+
+  <path class="dash" d="M324 584H466"/>
+  <text class="body" x="368" y="568">quiesce first</text>
+
+  <rect class="node" x="468" y="534" width="272" height="100" rx="10"/>
+  <text class="file" x="486" y="558">dp_rx.c · CLEANUP</text>
+  <text class="label" x="486" y="583">Ring IDR is destroyed</text>
+  <text class="body" x="486" y="608">no ring / IDR / DMA owner remains</text>
+
+  <path class="arrow primary" d="M742 584H782"/>
+
+  <rect class="node final" x="784" y="534" width="356" height="100" rx="10"/>
+  <text class="file" x="802" y="558">dp_rx.c · FINAL CACHE OWNER</text>
+  <text class="code" x="802" y="583">page_frag_cache_drain()</text>
+  <text class="body" x="802" y="608">release cache ref; fragment refs stay valid</text>
+
+  <rect x="30" y="686" width="1140" height="78" rx="12" fill="#f7faf8" stroke="#d0d5d1"/>
+  <rect x="54" y="708" width="18" height="18" rx="3" fill="#e8f5f1" stroke="#70b7ae"/>
+  <text class="legend" x="82" y="722">Primary mechanism: isolate RXDMA page sharing</text>
+  <rect x="424" y="708" width="18" height="18" rx="3" fill="#edf5f7" stroke="#76afbd"/>
+  <text class="legend" x="452" y="722">Lifecycle / recovery safety</text>
+  <rect x="710" y="708" width="18" height="18" rx="3" fill="#fff5e6" stroke="#d4a365"/>
+  <text class="legend" x="738" y="722">Separate correctness fix in the same live candidate</text>
+  <text class="note" x="54" y="748">Patch 950 only marks candidate identity; it changes no allocator behaviour.</text>
+</svg>
