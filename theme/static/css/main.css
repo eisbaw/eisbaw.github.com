@@ -499,6 +499,9 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
 .post-summary > h2 { grid-area: title; }
 .post-summary > .post-meta { grid-area: meta; }
 .post-summary > .summary { grid-area: summary; }
+/* Let the content column shrink below its content's min-content so a long title
+   or the tag row cannot force the card wider than a narrow (phone) viewport. */
+.post-summary > :is(h2, .post-meta, .summary) { min-width: 0; }
 .post-summary:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
@@ -526,6 +529,7 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
 
 .tag-list {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   list-style: none;
   margin: 0;
