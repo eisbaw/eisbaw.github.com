@@ -1,6 +1,7 @@
 result
 result-*
 .direnv/
+__pycache__/
 
 # Local-only scratch areas (explorations, drafts) — never published.
 cruft/

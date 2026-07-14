@@ -1,4 +1,4 @@
-# Justfile for the niche-built blog. Run from the repo root.
+# Justfile for the niche-built blog. Run from the repo root inside `nix develop`.
 
 # Local preview port for the ad-hoc HTTP server.
 port := "8099"
@@ -7,19 +7,28 @@ port := "8099"
 preview-dir := "/tmp/" + env_var_or_default("USER", "user") + "/blog-preview"
 
 # List recipes (default).
+[group('help')]
 default:
     @just --list
 
 # Build the static site into ./result (Nix flake output).
+[group('build')]
 build:
     rm -f result
     nix build
 
+# Build and validate the complete rendered site and downloadable test assets.
+[group('test')]
+e2e: build
+    bash scripts/e2e.sh result
+
 # Kill any ad-hoc preview server this Justfile started.
+[group('preview')]
 stop:
     -pkill -f "http.server {{port}}"
 
 # Kill any prior server, rebuild, then (re)start a background server on {{port}}.
+[group('preview')]
 serve: stop build
     #!/usr/bin/env bash
     set -euo pipefail
@@ -31,10 +40,12 @@ serve: stop build
     echo "Serving http://127.0.0.1:{{port}}/ (background; log: /tmp/blog-serve-{{port}}.log)"
 
 # Open the served site in the browser (serve must be running).
+[group('preview')]
 open:
     xdg-open "http://127.0.0.1:{{port}}/" 2>/dev/null || true
 
 # Render URL in Brave with a throwaway, cache-disabled profile (fresh fetch; (re)starts the server first via `serve`).
+[group('preview')]
 preview url=("http://127.0.0.1:" + port + "/"): serve
     #!/usr/bin/env bash
     set -euo pipefail
@@ -53,6 +64,7 @@ preview url=("http://127.0.0.1:" + port + "/"): serve
 
 # The [p] bracket keeps pkill's own shell from matching the pattern.
 # Close preview Brave windows and delete all throwaway preview profiles.
+[group('preview')]
 clean-preview:
     -pkill -9 -f "user-data-dir={{preview-dir}}/[p]rofile"
     rm -rf "{{preview-dir}}"
