@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 356" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect x="6" y="6" width="748" height="344" rx="16" fill="#f9fafb" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="380" y="40" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2937">Projects per repository (approx., via Repology)</text>
+
+  <!-- axis baseline -->
+  <line x1="205" y1="70" x2="205" y2="286" stroke="#d1d5db" stroke-width="1.5"/>
+
+  <!-- bars: scale 100k projects -> 500px, so 1k = 5px, bar x0 = 205 -->
+  <!-- nixpkgs 100k -> 500 -->
+  <text x="195" y="97" text-anchor="end" font-size="14" font-weight="700" fill="#1f2937">nixpkgs</text>
+  <rect x="205" y="82" width="500" height="26" rx="4" fill="#3a6ea5"/>
+  <text x="713" y="100" font-size="13" font-weight="700" fill="#3a6ea5">~100k</text>
+
+  <!-- AUR 86k -> 430 -->
+  <text x="195" y="137" text-anchor="end" font-size="14" fill="#374151">AUR</text>
+  <rect x="205" y="122" width="430" height="26" rx="4" fill="#9ca3af"/>
+  <text x="643" y="140" font-size="13" fill="#6b7280">~86k</text>
+
+  <!-- Debian 34k -> 170 -->
+  <text x="195" y="177" text-anchor="end" font-size="14" fill="#374151">Debian</text>
+  <rect x="205" y="162" width="170" height="26" rx="4" fill="#9ca3af"/>
+  <text x="383" y="180" font-size="13" fill="#6b7280">~34k</text>
+
+  <!-- Fedora 30k -> 150 -->
+  <text x="195" y="217" text-anchor="end" font-size="14" fill="#374151">Fedora</text>
+  <rect x="205" y="202" width="150" height="26" rx="4" fill="#9ca3af"/>
+  <text x="363" y="220" font-size="13" fill="#6b7280">~30k</text>
+
+  <!-- Arch core+extra 14k -> 70 -->
+  <text x="195" y="257" text-anchor="end" font-size="14" fill="#374151">Arch (core+extra)</text>
+  <rect x="205" y="242" width="70" height="26" rx="4" fill="#9ca3af"/>
+  <text x="283" y="260" font-size="13" fill="#6b7280">~14k</text>
+
+  <text x="380" y="316" text-anchor="middle" font-size="13" fill="#6b7280">Approximate counts; see repology.org for live numbers. nixpkgs leads by a wide margin.</text>
+</svg>

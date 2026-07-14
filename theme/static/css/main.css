@@ -416,7 +416,7 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
 .post-summary > .post-header-sprite { grid-area: icon; margin: 2px 18px 0 0; }
 .post-summary > h2 { grid-area: title; }
 .post-summary > .post-meta { grid-area: meta; }
-.post-summary > .summary { grid-area: summary; margin-top: 12px; }
+.post-summary > .summary { grid-area: summary; }
 .post-summary:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
@@ -488,7 +488,9 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
 }
 .post-header-text { flex: 1 1 auto; min-width: 0; }
 .post-header-text h1 { margin: 0 0 8px; }
-.post-content { font-size: 1rem; line-height: 1.625; }
+/* overflow-x: clip keeps an edge-of-line glossary card from causing horizontal
+   page scroll on narrow screens (no scroll container, so sticky TOC is unaffected). */
+.post-content { font-size: 1rem; line-height: 1.625; overflow-x: clip; }
 .post-content img { max-width: 100%; height: auto; }
 
 /* GitBook-style hover anchor. niche emits an empty <a class="anchor" id=…>
@@ -692,4 +694,116 @@ th { font-weight: 600; }
   }
   .top-nav { display: none; }
   .sidebar-toggle { display: inline-block; }
+}
+
+/* ---- inline glossary callouts (hover / focus) ---- */
+.gloss {
+  position: relative;
+  cursor: help;
+  font-weight: 600;
+  border-bottom: 1px dashed var(--accent);
+}
+.gloss::after {
+  content: "i";
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.58em;
+  vertical-align: super;
+  margin-left: 2px;
+  color: var(--bg-card);
+  background: var(--accent);
+  border-radius: 50%;
+  padding: 0 0.4em;
+  line-height: 1.5;
+}
+.gloss:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.gloss > .gloss-card {
+  position: absolute;
+  z-index: 60; /* above the sticky site-header (z-index 50) so first-line cards are not occluded */
+  left: 50%;
+  bottom: 165%;
+  width: min(300px, 78vw);
+  transform: translateX(-50%) translateY(6px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  text-align: left;
+  white-space: normal;
+  font-weight: 400;
+}
+.gloss:hover > .gloss-card,
+.gloss:focus > .gloss-card,
+.gloss:focus-within > .gloss-card {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.gloss > .gloss-card::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-top-color: var(--bg-card);
+}
+.gloss-card .gc-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 13px;
+  background: var(--accent-tint);
+  border-bottom: 1px solid var(--rule);
+}
+.gloss-card .gc-chip {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--bg-card);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+.gloss-card .gc-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+.gloss-card .gc-body {
+  padding: 11px 13px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink-mute);
+}
+.gloss-card .gc-foot {
+  padding: 8px 13px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+.gloss-card .gc-foot a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.gloss-card .gc-foot a:hover {
+  text-decoration: underline;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gloss > .gloss-card { transition: none; }
 }

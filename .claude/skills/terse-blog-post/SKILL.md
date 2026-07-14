@@ -18,6 +18,11 @@ thing is or is worth. No runway, no background, no throat-clearing.
 **Say why you wrote it and who for.** Usually the second paragraph, one or two
 sentences. This grounds your authority without claiming it.
 
+**Tell a brief story.** Humans remember stories, not specs. Thread one concrete,
+first-person moment to hook the reader: the thing that broke, the number that
+surprised you, the day you switched. Keep it to a sentence or two. The story earns
+attention; it never replaces the teaching, so do not let it run long.
+
 **Write in the first person and own your opinions.** "I wanted", "I was sure",
 "the wire won". Take a side.
 
@@ -71,12 +76,17 @@ section structure carry the logic.
 Length: as long as it needs, up to about three pages. Most posts are shorter. Stop
 when the reader can do the thing. Do not pad to fill, and do not cut what teaches.
 
+Every post carries a **TL;DR bullet list near the top**, right after the intro. A
+skimmer should get the whole thesis from the bullets alone.
+
 A good default arc for a technical post:
 
-1. **The claim**: bolded first line, then why you wrote it and who for.
-2. **What it is**: the thing in one move, two parts, or two files.
-3. **How it works / how you did it**: grounded in examples, code, or a diagram.
-4. **Why it matters / where it stands**: the payoff, plus honest caveats as a short
+1. **The claim**: bolded first line, a brief story, then why you wrote it and who for.
+2. **TL;DR, the learnings**: a short bulleted list, each bullet a **bolded takeaway**
+   plus a one-line gloss. This is the load-bearing summary; the sections below expand it.
+3. **What it is**: the thing in one move, two parts, or two files.
+4. **How it works / how you did it**: grounded in examples, code, or a diagram.
+5. **Why it matters / where it stands**: the payoff, plus honest caveats as a short
    bullet list.
 
 End with a `Source:` line and a forward push: the next step, the door you just
@@ -99,6 +109,22 @@ simple, robust trick: give the whole SVG a light panel background so all text re
 on either theme.
 
 Reference from Markdown: `![alt text](assets/name.svg)`.
+
+## Glossary callouts
+
+Gloss jargon inline so a general reader is never lost. A glossed term gets a dashed
+underline and a small `i` badge; on hover or keyboard focus a card reveals a
+definition and an optional source link. Pure CSS, keyboard-accessible, both themes
+handled, so it survives the Markdown pipeline.
+
+Use them on any term a general engineer may not immediately know, **first occurrence
+only**, curated so they teach without littering. Named tools/products get a **source
+link** in the footer; plain concepts (idempotency, composition, cgroups) get a
+**definition only**. Do not gloss inside the TL;DR, headings, or the bolded lead.
+
+The exact one-line raw-HTML pattern and the `.gloss` / `.gc-*` classes live in the
+project `CLAUDE.md` under "Inline glossary callouts". Author each callout on a single
+line (a blank line inside breaks the Markdown HTML block).
 
 ## Before / after (the edits this voice encodes)
 
@@ -124,10 +150,13 @@ Reference from Markdown: `![alt text](assets/name.svg)`.
 
 A post is a directory under `content/<slug>/`:
 
-- `meta.nix`: `{ slug; title; date; tags; summary; authors; }`. The `title` and
-  `summary` are the single source of truth (the H1 in `post.md` should match the
-  title). `summary` is the listing/OG blurb.
-- `post.md`: CommonMark + GFM. Start with the `# H1` matching the title.
+- `meta.nix`: `{ slug; title; date; tags; summary; authors; title_icon?; }`. The
+  `title` and `summary` are the single source of truth. `summary` is the listing/OG
+  blurb. `title_icon` names the sprite in `assets/` (see CLAUDE.md).
+- `post.md`: CommonMark + GFM. Do **not** put an `# H1` in it: the template injects
+  the title from `meta.nix` (and demotes your Markdown headings one level, so a `##`
+  renders as `<h3>`). Start `post.md` with the bolded claim; a leading H1 would
+  duplicate the title. Use `##` for top-level sections, `###` for subsections.
 - `assets/`: optional, copied verbatim (put SVGs here).
 
 niche discovers any `content/<dir>/` that contains a `meta.nix`. There is **no
