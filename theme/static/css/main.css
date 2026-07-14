@@ -230,7 +230,7 @@ html, body {
   font-size: 0.9375rem;
 }
 
-.sidebar-group { margin-bottom: 12px; }
+.sidebar-group { margin-bottom: 5px; }
 .sidebar-group:last-child { margin-bottom: 0; }
 
 /* The whole group is a <details>; <summary> is the clickable header. */
@@ -239,7 +239,7 @@ html, body {
   align-items: center;
   gap: 8px;
   margin: 0;
-  padding: 6px 0;
+  padding: 2.5px 0;
   border-bottom: 1px solid var(--rule);
   font-size: 0.6875rem;
   font-weight: 600;
@@ -283,8 +283,8 @@ html, body {
 
 /* "All <tag> posts →" link at the bottom of an expanded group. */
 .sidebar-group-link {
-  margin-top: 4px;
-  padding-top: 4px;
+  margin-top: 1.5px;
+  padding-top: 1.5px;
   border-top: 1px dashed var(--rule);
 }
 .sidebar-group-link a {
@@ -297,18 +297,18 @@ html, body {
 .sidebar-list {
   list-style: none;
   margin: 0;
-  padding: 6px 0 0;
+  padding: 2.5px 0 0;
 }
-.sidebar-list li { margin: 0 0 4px; }
+.sidebar-list li { margin: 0 0 1.5px; }
 .sidebar-list a {
   display: block;
-  padding: 4px 8px;
+  padding: 1.5px 8px;
   margin-left: -8px;
   border-radius: 4px;
   color: var(--ink-mute);
   text-decoration: none;
   font-size: 0.875rem;
-  line-height: 1.4;
+  line-height: 1.3;
 }
 .sidebar-list a:hover {
   background: var(--bg-soft);
@@ -319,6 +319,83 @@ html, body {
   color: var(--accent);
   font-weight: 500;
 }
+
+/* Sidebar scrollbar: thin, muted, theme-aware (only shows when it overflows). */
+.sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--ink-faint) 40%, transparent) transparent;
+}
+.sidebar::-webkit-scrollbar { width: 8px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--ink-faint) 38%, transparent);
+  border-radius: 4px;
+}
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--ink-faint) 68%, transparent);
+}
+
+/* Topic icons. Each is a currentColor mask, so it follows the label colour in
+   both themes. Related tags share an icon to keep the set small and maintainable. */
+.sidebar {
+  --ic-snow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2v20M3.5 7l17 10M20.5 7l-17 10'/%3E%3C/svg%3E");
+  --ic-gear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1'/%3E%3C/svg%3E");
+  --ic-branch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='7' cy='5' r='2.4'/%3E%3Ccircle cx='7' cy='19' r='2.4'/%3E%3Ccircle cx='17' cy='9' r='2.4'/%3E%3Cpath d='M7 7.4v9.2M7 13c0-3 1-5 4-6l2.5-1'/%3E%3C/svg%3E");
+  --ic-term: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Cpath d='M7 9l3 3-3 3M13 15h4'/%3E%3C/svg%3E");
+  --ic-window: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='1'/%3E%3Cpath d='M3 9h18M11 9v11'/%3E%3C/svg%3E");
+  --ic-cube: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2.5l8.5 4.8v9.4L12 21.5l-8.5-4.8V7.3z'/%3E%3Cpath d='M12 12V2.5M3.5 7.3L12 12l8.5-4.7'/%3E%3C/svg%3E");
+  --ic-layers: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2.5l9 5-9 5-9-5z'/%3E%3Cpath d='M3 12.5l9 5 9-5M3 16.5l9 5 9-5'/%3E%3C/svg%3E");
+  --ic-chip: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='6' width='12' height='12' rx='1'/%3E%3Cpath d='M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4'/%3E%3C/svg%3E");
+  --ic-shield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2.5l7.5 3v5.5c0 5-3.2 8-7.5 9.5-4.3-1.5-7.5-4.5-7.5-9.5V5.5z'/%3E%3C/svg%3E");
+  --ic-sigma: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17.5 4.5H6.5l6 7.5-6 7.5h11'/%3E%3C/svg%3E");
+  --ic-lambda: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 4.5l8 15M12.5 12L6 19.5'/%3E%3C/svg%3E");
+  --ic-pipe: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='9' width='18' height='6' rx='3'/%3E%3Cpath d='M9 9v6M15 9v6'/%3E%3C/svg%3E");
+  --ic-doc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 3h7l4 4v14h-11z'/%3E%3Cpath d='M13.5 3v4h4M9 12h6M9 16h5'/%3E%3C/svg%3E");
+}
+.sidebar-group-label { --ti: var(--ic-doc); }
+.sidebar-group-label::before {
+  content: "";
+  display: inline-block;
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  vertical-align: -2px;
+  background-color: currentColor;
+  opacity: 0.72;
+  -webkit-mask: var(--ti) center / contain no-repeat;
+  mask: var(--ti) center / contain no-repeat;
+}
+.sidebar-group-label[data-topic="nix"],
+.sidebar-group-label[data-topic="nixos"],
+.sidebar-group-label[data-topic="iac"]                 { --ti: var(--ic-snow); }
+.sidebar-group-label[data-topic="rust"],
+.sidebar-group-label[data-topic="build-systems"]       { --ti: var(--ic-gear); }
+.sidebar-group-label[data-topic="git"]                 { --ti: var(--ic-branch); }
+.sidebar-group-label[data-topic="just"],
+.sidebar-group-label[data-topic="shell"],
+.sidebar-group-label[data-topic="tooling"],
+.sidebar-group-label[data-topic="workflow"],
+.sidebar-group-label[data-topic="zellij"],
+.sidebar-group-label[data-topic="linux"]               { --ti: var(--ic-term); }
+.sidebar-group-label[data-topic="windows"],
+.sidebar-group-label[data-topic="xfce"]                { --ti: var(--ic-window); }
+.sidebar-group-label[data-topic="virtualbox"]          { --ti: var(--ic-cube); }
+.sidebar-group-label[data-topic="caching"],
+.sidebar-group-label[data-topic="ci"]                  { --ti: var(--ic-layers); }
+.sidebar-group-label[data-topic="compilers"],
+.sidebar-group-label[data-topic="parallelism"],
+.sidebar-group-label[data-topic="embedded"],
+.sidebar-group-label[data-topic="petri-nets"]          { --ti: var(--ic-chip); }
+.sidebar-group-label[data-topic="privacy"],
+.sidebar-group-label[data-topic="reverse-engineering"],
+.sidebar-group-label[data-topic="wireguard"],
+.sidebar-group-label[data-topic="tuya"],
+.sidebar-group-label[data-topic="iot"]                 { --ti: var(--ic-shield); }
+.sidebar-group-label[data-topic="mathjax"],
+.sidebar-group-label[data-topic="proof"]               { --ti: var(--ic-sigma); }
+.sidebar-group-label[data-topic="Haskell"]             { --ti: var(--ic-lambda); }
+.sidebar-group-label[data-topic="pipes"]               { --ti: var(--ic-pipe); }
 
 /* --- Main content column ------------------------------------------------ */
 

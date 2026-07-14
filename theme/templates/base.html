@@ -93,7 +93,7 @@
       {% endfor %}
       <details class="sidebar-group"{% if group_open %} open{% endif %}>
         <summary class="sidebar-group-title">
-          <span class="sidebar-group-label">{{ tag }}</span>
+          <span class="sidebar-group-label" data-topic="{{ tag }}">{{ tag }}</span>
           <span class="sidebar-group-count">{{ count }}</span>
         </summary>
         <ul class="sidebar-list">
