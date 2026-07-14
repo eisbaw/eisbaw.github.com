@@ -19,22 +19,31 @@ build:
 stop:
     -pkill -f "http.server {{port}}"
 
-# Stop a prior preview, rebuild, then serve ./result on {{port}} (Ctrl-C to quit).
+# Kill any prior server, rebuild, then (re)start a background server on {{port}}.
 serve: stop build
-    @echo "Serving http://127.0.0.1:{{port}}/ — Ctrl-C to stop"
-    cd result && python3 -m http.server {{port}} --bind 127.0.0.1
+    #!/usr/bin/env bash
+    set -euo pipefail
+    setsid python3 -m http.server {{port}} --bind 127.0.0.1 --directory result \
+      >"/tmp/blog-serve-{{port}}.log" 2>&1 < /dev/null &
+    disown
+    # Block until it actually answers, so dependents (preview) can rely on it.
+    curl -sf --retry 50 --retry-delay 1 --retry-connrefused -o /dev/null "http://127.0.0.1:{{port}}/"
+    echo "Serving http://127.0.0.1:{{port}}/ (background; log: /tmp/blog-serve-{{port}}.log)"
 
 # Open the served site in the browser (serve must be running).
 open:
     xdg-open "http://127.0.0.1:{{port}}/" 2>/dev/null || true
 
-# Render URL in Brave with a throwaway, cache-disabled profile (fresh fetch; defaults to local server root — run `just serve` first).
-preview url=("http://127.0.0.1:" + port + "/"):
+# Render URL in Brave with a throwaway, cache-disabled profile (fresh fetch; (re)starts the server first via `serve`).
+preview url=("http://127.0.0.1:" + port + "/"): serve
     #!/usr/bin/env bash
     set -euo pipefail
     mkdir -p "{{preview-dir}}"
     profile=$(mktemp -d "{{preview-dir}}/profile.XXXXXX")
-    setsid brave \
+    # Drop any ephemeral TMPDIR (nix-shell / nix develop set one and delete it on
+    # exit). The detached browser outlives this shell and needs a persistent temp
+    # dir for its ProcessSingleton socket, or it aborts before opening a window.
+    env -u TMPDIR setsid brave \
       --user-data-dir="$profile" \
       --disk-cache-dir=/dev/null --disk-cache-size=1 \
       --no-first-run --no-default-browser-check \

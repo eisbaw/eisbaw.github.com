@@ -1,8 +1,9 @@
 {
   slug = "about";
-  title = "about:blog";
+  title = "about:mark";
   date = "2012-05-03";
   tags = [ "meta" ];
-  summary = "What this blog is: notes, code, CS, and homework miscellanea.";
+  title_icon = "sprite.svg";
+  summary = "Who I am: an engineer from the schematic to the type system. Compilers, embedded firmware, and owning your own machines.";
   authors = [ "eisbaw" ];
 }
