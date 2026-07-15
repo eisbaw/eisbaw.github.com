@@ -282,6 +282,76 @@
       });
       head.appendChild(btn);
     });
+
+    // Click-to-zoom figures: one shared lightbox, opened by clicking (or
+    // keyboard-activating) any figure in the post body. Close with the ×, a
+    // click on the scrim, or Esc. The Markdown ![…] alt becomes the visible
+    // caption and the dialog's accessible name.
+    (function () {
+      const content = document.querySelector('.post-content');
+      // Only zoom real figures — standalone images not wrapped in a link.
+      const figures = content
+        ? [...content.querySelectorAll('img')].filter((i) => !i.closest('a'))
+        : [];
+      if (!figures.length) return;               // nothing to zoom → no overlay
+
+      const box = document.createElement('div');
+      box.className = 'lightbox';
+      box.hidden = true;
+      box.setAttribute('role', 'dialog');
+      box.setAttribute('aria-modal', 'true');
+      box.innerHTML =
+        '<button type="button" class="lb-close" aria-label="Close">×</button>' +
+        '<div class="lb-inner"><img alt=""><figcaption id="lb-cap"></figcaption></div>';
+      const big = box.querySelector('img');
+      const cap = box.querySelector('figcaption');
+      const closeBtn = box.querySelector('.lb-close');
+      document.body.appendChild(box);
+
+      let opener = null;                         // element to restore focus to
+      const onKey = (e) => { if (e.key === 'Escape') close(); };
+      const close = () => {
+        box.hidden = true;
+        big.src = '';
+        document.removeEventListener('keydown', onKey);
+        if (opener) opener.focus();
+        opener = null;
+      };
+      const open = (img) => {
+        big.src = img.currentSrc || img.src;
+        // Set an explicit aspect-ratio from the figure's own dimensions so the
+        // enlarged img sizes independently of its (fixed, flex) container —
+        // these SVGs carry a viewBox but no intrinsic width/height.
+        if (img.naturalWidth && img.naturalHeight) {
+          big.style.aspectRatio = img.naturalWidth + ' / ' + img.naturalHeight;
+        }
+        big.alt = '';                            // caption carries the text; don't double-announce
+        cap.textContent = img.alt || '';
+        cap.hidden = !img.alt;
+        // Name the dialog from the caption when present, else a generic label.
+        if (img.alt) box.setAttribute('aria-labelledby', 'lb-cap');
+        else { box.removeAttribute('aria-labelledby'); box.setAttribute('aria-label', 'Enlarged figure'); }
+        opener = document.activeElement;
+        box.hidden = false;
+        document.addEventListener('keydown', onKey);
+        closeBtn.focus();                        // move focus into the modal
+      };
+
+      // Figures are focusable and open on click or Enter/Space.
+      figures.forEach((img) => {
+        img.tabIndex = 0;
+        img.setAttribute('role', 'button');
+        img.addEventListener('click', () => open(img));
+        img.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img); }
+        });
+      });
+      // Any click inside the scrim closes, except one that lands on the figure
+      // itself (so you can't accidentally dismiss while inspecting it).
+      box.addEventListener('click', (e) => {
+        if (e.target !== big) close();
+      });
+    })();
   </script>
 
 </body>

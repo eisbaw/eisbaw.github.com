@@ -576,6 +576,94 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
 .post-header-text h1 { margin: 0 0 8px; }
 .post-content { font-size: 1rem; line-height: 1.625; }
 .post-content img { max-width: 100%; height: auto; }
+/* Figures are click-to-zoom (the script makes them focusable buttons). The
+   header sprite and site logo live outside .post-content, so they are
+   untouched. */
+.post-content img { cursor: zoom-in; }
+.post-content img:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Full-screen lightbox for a zoomed figure. Injected once by base.html and
+   toggled with [hidden]; the dark scrim suits both themes because every figure
+   carries its own light background. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: auto;
+  overscroll-behavior: contain;      /* don't chain scroll to the page behind */
+  background: rgba(15, 18, 24, 0.86);
+  backdrop-filter: blur(4px);
+  cursor: zoom-out;
+  animation: lb-fade 0.16s ease-out;
+}
+.lightbox[hidden] { display: none; }
+/* The flex centering lives on a STATIC inner wrapper, not on the fixed scrim:
+   Firefox collapses an aspect-ratio-only SVG (viewBox, no width/height) to
+   zero when its flex parent is position:fixed. A static flex parent sizes it
+   correctly. */
+.lb-inner {
+  /* content-box, not border-box: border-box + min-height:100% + padding makes
+     Firefox collapse the aspect-ratio-only SVG to zero at small viewports. The
+     figure's own max-height/width caps supply the margins, so no padding here. */
+  box-sizing: content-box;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.lightbox img {
+  /* These figures carry a viewBox but no intrinsic width/height, so a box with
+     only max-* and width:auto collapses to nothing, and object-fit paints
+     nothing (Firefox needs an intrinsic size). A DEFINITE width makes the
+     browser derive the height from the viewBox ratio; max-height then caps tall
+     figures and the ratio is preserved. This scales small figures UP to fill. */
+  width: min(96vw, 1500px);
+  height: auto;
+  max-height: 86vh;
+  border-radius: 10px;
+  /* box-shadow, NOT filter: drop-shadow — the latter, combined with the scrim's
+     backdrop-filter, makes Firefox drop the SVG paint entirely. */
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.55);
+  animation: lb-pop 0.18s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.lightbox figcaption {
+  max-width: min(96vw, 70ch);
+  margin: 0;
+  color: #e7eaf0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: center;
+}
+.lightbox .lb-close {
+  position: fixed;
+  top: 14px;
+  right: 18px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  line-height: 1;
+  color: #e7eaf0;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.lightbox .lb-close:hover { background: rgba(255, 255, 255, 0.18); }
+@keyframes lb-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes lb-pop {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lightbox, .lightbox img { animation: none; }
+}
 
 /* GitBook-style hover anchor. niche emits an empty <a class="anchor" id=…>
    as the first child of each heading; we render a "#" in the left gutter and
