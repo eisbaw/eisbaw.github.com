@@ -6,7 +6,7 @@ I run this <span class="gloss" tabindex="0">MX4200<span class="gloss-card"><span
 
 ## TL;DR
 
-- **A bounded object count can pin an unbounded amount of memory.** The receive rings held a fixed number of buffers the whole time. The physical pages under them kept growing.
+- **A bounded object count can pin far more memory than its nominal size suggests.** The receive rings held a fixed number of buffers while the physical pages under them kept growing toward a much higher cap.
 - **The allocator was the amplifier, not a leaker.** `dev_alloc_skb()` cut fragments from a shared per-CPU page cache. One long-lived fragment keeps a whole 32 KiB page alive.
 - **Pointer-only traces lied.** Reused addresses look like immortal objects. You need generation-safe identity before you trust a single "never freed" claim.
 - **The fix matches allocator lifetime to ring lifetime.** Give each receive ring its own page-fragment cache so unrelated lifetimes stop co-packing onto one page.
@@ -34,7 +34,7 @@ Here is the mechanism. The buffer heads were not one independently freeable allo
 
 That is allocator amplification, or page stranding. It is not a missing final free. The count is honest; the physical footprint is pathological anyway.
 
-Think of a filing drawer packed with twelve folders. Eleven are processed and pulled fast; one belongs to a slow queue. The eleven empty slots cannot be returned as a drawer, because the one slow folder pins it. Rotate a fixed number of folders through that pattern forever and the number of live folders stays flat while the number of occupied drawers climbs.
+Think of a filing drawer packed with twelve folders. Eleven are processed and pulled fast; one belongs to a slow queue. The eleven empty slots cannot be returned as a drawer, because the one slow folder pins it. Rotate a fixed number of folders through that pattern and the number of live folders stays flat while occupied drawers climb toward the expensive limit where almost every survivor pins its own drawer.
 
 ![Before the fix, unrelated receive and control traffic share one page cache and a single survivor pins a mostly empty page. After the fix, each RXDMA ring owns a private cache, so new fragments cannot cross-pack.](assets/root-cause.svg)
 
@@ -46,7 +46,7 @@ A debug kernel with `/proc/allocinfo` gave me the first hard number. Bytes attri
 
 The skb traces lied too, in a more embarrassing way. My first pointer-only analysis showed old, never-freed skbs everywhere. They were ghosts. Three defects made them: the analysis missed `ieee80211_free_txskb()`, it did not separate reused pointers into generations, and some trace files were concatenated or truncated. A pointer is an address, not an identity across time. The same address gets handed out again and looks immortal.
 
-So I built a diagnostic, [`rxown`](assets/rxown-capture.sh), that tracked generations through the whole lifecycle: allocation, <span class="gloss" tabindex="0">IDR<span class="gloss-card"><span class="gc-head"><span class="gc-name">IDR</span></span><span class="gc-body">The kernel's ID-to-pointer map. ath11k uses one per ring to hand each posted buffer a small integer handle for the hardware to return on completion.</span></span></span> insertion, DMA posting, reap, skb release, and physical-page history. Across two independent memory sawtooths, all 26 snapshots passed their integrity gates. Allocations equalled posts. The IDRs stayed bounded. The reaped-but-not-released count stayed at zero. There was no leak to find, because there was no leak.
+So I built a diagnostic, [`rxown`](https://github.com/eisbaw/ath11k-page-frag-fix/blob/main/tools/rxown.c), that tracked generations through the whole lifecycle: allocation, <span class="gloss" tabindex="0">IDR<span class="gloss-card"><span class="gc-head"><span class="gc-name">IDR</span></span><span class="gc-body">The kernel's ID-to-pointer map. ath11k uses one per ring to hand each posted buffer a small integer handle for the hardware to return on completion.</span></span></span> insertion, DMA posting, reap, skb release, and physical-page history. Across two independent memory sawtooths, all 26 snapshots passed their integrity gates. Allocations equalled posts. The IDRs stayed bounded. The reaped-but-not-released count stayed at zero. Within the tracked RXDMA lifecycles, there was no accumulating unmatched-buffer population.
 
 What the tracker *did* find was cross-origin evidence: at the final snapshot of cycle 1, 1,547 of 1,789 tracked pages (86.47%) carried current or historical fragments from more than one owner. Cycle 2 read 1,745 of 2,000 (87.25%).
 
@@ -105,15 +105,15 @@ skb_reserve(skb, PTR_ALIGN(skb->data, 128) - skb->data);
 
 ## Reproducing the mechanism in userland
 
-Live traffic is noisy: packet timing, ring selection, allocator reuse, and memory pressure all move together, so a live run cannot isolate policy from load. So I wrote a deterministic Python model, [`pagefrag_sim.py`](assets/pagefrag_sim.py) (with a [test suite](assets/test_pagefrag_sim.py) pinning its behaviour). It generates one logical stream of allocations, posts, reaps, releases, and cache events, then replays that identical stream through four policies: shared cache, per-ring cache, same-ring-only isolation, and non-page-frag allocation.
+Live traffic is noisy: packet timing, ring selection, allocator reuse, and memory pressure all move together, so a live run cannot isolate policy from load. So I wrote a deterministic Python model, [`pagefrag_sim.py`](https://github.com/eisbaw/ath11k-page-frag-fix/blob/main/simulator/pagefrag_sim.py) (with a [test suite](https://github.com/eisbaw/ath11k-page-frag-fix/blob/main/simulator/test_pagefrag_sim.py) pinning its behaviour). It generates one logical stream of allocations, posts, reaps, releases, and cache events, then replays that identical stream through four policies: shared cache, per-ring cache, same-ring-only isolation, and non-page-frag allocation.
 
-The model implements the Linux 6.12 page-frag behaviour that matters here: 32 KiB order-3 pages, descending offsets, bias and refcount rollover, reuse, drain, pfmemalloc handling, and order-0 fallback. On seed 17 over 300 simulated seconds, with an identical final population of 15,659 live and 15,357 posted buffers, the shared cache stranded **169.688 MiB** and per-ring caches stranded **76.906 MiB**.
+The model implements the Linux 6.12 page-frag behaviour that matters here: 32 KiB order-3 pages, descending offsets, bias and refcount rollover, reuse, drain, pfmemalloc handling, and order-0 fallback. On seed 17 over 300 simulated seconds, with an identical final population of 15,659 live and 15,357 posted buffers, the shared cache retained **169.688 MiB** of total backing with **131.458 MiB** of slack. Per-ring caches retained **76.906 MiB**, including **38.676 MiB** of slack.
 
 Same logical state, less than half the physical backing. That is the mechanism in one line: allocation policy alone moves the byte count while the object count is pinned. The model does not predict the router's exact numbers, and it cannot prove the kernel patch safe. For that I needed a real build on the real box.
 
 ## Live validation
 
-Remote kernel-module surgery can strand a router you cannot walk over to. So the [deploy controller](assets/deploy-ath11k-private-cache.sh) kept the stock modules installed, armed automatic rollback, and staged an on-router [guard](assets/ath11k-private-cache-guard.sh) (with a [liveness check](assets/ath11k-private-cache-liveness.sh)) that gated on module identity, memory, reachability, expected Wi-Fi roles, watchdog state, and fatal kernel logs. A [fault-injection harness](assets/test-ath11k-private-cache-deploy.sh) exercised nineteen failure and recovery cases before the real gate. A [second patch](assets/950-ath11k-mark-private-rxfrag.patch) adds a `private_rxfrag=Y` marker so the guard can prove the candidate module, not the stock one, was loaded.
+Remote kernel-module surgery can strand a router you cannot walk over to. So the [deploy controller](assets/deploy-ath11k-private-cache.sh) kept the stock modules installed, armed automatic rollback, and staged an on-router [guard](assets/ath11k-private-cache-guard.sh) (with a [liveness check](assets/ath11k-private-cache-liveness.sh)) that gated on module identity, memory, reachability, expected Wi-Fi roles, watchdog state, and fatal kernel logs. A [fault-injection harness](assets/test-ath11k-private-cache-deploy.sh) exercised nineteen failure and recovery cases before the real gate. These scripts are published as evidence snapshots of one build-specific deployment: their module paths, hashes, thresholds, and topology placeholders must not be treated as a portable installer. A [second patch](https://github.com/eisbaw/ath11k-page-frag-fix/blob/main/patches/950-wifi-ath11k-mark-private-rxfrag-validation-build.patch) adds a `private_rxfrag=Y` marker so the guard can prove the candidate module, not the stock one, was loaded.
 
 ![Exact memory endpoints from committed evidence: the pre-fix window falls sharply while both candidate windows stay bounded and a later spot check reads healthy.](assets/validation.svg)
 
@@ -158,31 +158,25 @@ First confirm you actually have this bug, because the fix is worthless for a dif
 grep __page_frag_cache_refill /proc/allocinfo
 ```
 
-If that number climbs roughly in step with a falling `MemAvailable`, slab and vmalloc stay flat, and an `ath11k` reload snaps the memory back, you have enough overlap to justify ownership tracing or a guarded A/B test—not proof that the mechanism is identical. The patch is [`949-ath11k-private-page-frag-caches.patch`](assets/949-ath11k-private-page-frag-caches.patch). It touches three files (`core.c`, `dp.h`, `dp_rx.c`) and carries the `skb_reserve` alignment fix with it. This is the whole tested candidate. My tree also has [patch 950](assets/950-ath11k-mark-private-rxfrag.patch), but it only adds the `private_rxfrag=Y` module marker my deploy guard reads; it changes no behaviour, so you do not need it for the fix.
+If that number climbs roughly in step with a falling `MemAvailable`, slab and vmalloc stay flat, and an `ath11k` reload snaps the memory back, you have enough overlap to justify ownership tracing or a guarded A/B test—not proof that the mechanism is identical. The patch is [`949-wifi-ath11k-use-private-page-frag-caches-for-rxdma.patch`](https://github.com/eisbaw/ath11k-page-frag-fix/blob/main/patches/949-wifi-ath11k-use-private-page-frag-caches-for-rxdma.patch). It touches three files (`core.c`, `dp.h`, `dp_rx.c`) and carries the `skb_reserve` alignment fix with it. This is the whole tested candidate. My tree also has [patch 950](https://github.com/eisbaw/ath11k-page-frag-fix/blob/main/patches/950-wifi-ath11k-mark-private-rxfrag-validation-build.patch), but it only adds the `private_rxfrag=Y` module marker my deploy guard reads; it changes no behaviour, so you do not need it for the fix.
 
 On **OpenWrt**, ath11k ships from the mac80211 backports package, so drop the patch in and rebuild that one package:
 
 ```sh
-cp 949-ath11k-private-page-frag-caches.patch \
+cp 949-wifi-ath11k-use-private-page-frag-caches-for-rxdma.patch \
    package/kernel/mac80211/patches/ath11k/
 make package/kernel/mac80211/{clean,compile} V=s
 # then flash the rebuilt kmod-ath11k, or the full image
 ```
 
-On a **mainline or vendor kernel tree**, apply it against the source and rebuild the module:
-
-```sh
-cd linux/            # your kernel source
-git am < 949-ath11k-private-page-frag-caches.patch   # or: patch -p1 <
-make M=drivers/net/wireless/ath/ath11k modules
-```
+The patch was generated and tested against OpenWrt's `backports-6.18.26` ath11k tree on Linux 6.12.87. Do not assume it applies unchanged to a mainline or vendor tree: port the individual source changes to that tree, review its allocator and teardown APIs, and use that tree's normal module build procedure.
 
 Then load the module and re-run the same `allocinfo` check under real traffic. In my workload the refill backing stayed bounded and `MemAvailable` stopped its slide; yours is an experiment until its measurements say the same. Keep a rollback path armed while you test, because a bad ath11k module can take Wi-Fi (and your way back in) down with it. And remember the honest limit: this isolates cross-ring mixing, not stranding inside a single ring. It fixed my measured workload; it is not a proof for yours.
 
 ### If you cannot patch yet
 
-Rebuilding a kernel takes time, and until then the box still needs to stay up. The stopgap is to reload the driver on a timer, because tearing down every ring frees the stranded pages. Two small shell scripts do it. [`ath11k-reload.sh`](assets/ath11k-reload.sh) reloads the whole stack (it drops the uplink for 10 to 20 seconds, so it must run detached or it dies mid-reload when its own SSH path goes away). [`ath11k-memguard.sh`](assets/ath11k-memguard.sh) runs as a service, samples `MemAvailable` every 30 seconds, and calls the reload only when it falls below a threshold, with a minimum gap to stop it thrashing. Keep the hardware watchdog armed underneath as the last resort. This is a crutch, not a fix: it papers over the bleed instead of stopping it, and every reload is a brief outage. Patch when you can.
+Rebuilding a kernel takes time, and until then the box still needs to stay up. The stopgap is to reload the driver on a timer, because tearing down every ring frees the stranded pages. Two small shell scripts do it. [`ath11k-reload.sh`](assets/ath11k-reload.sh) reloads the whole stack (it drops the uplink for 10 to 20 seconds, so it must run detached or it dies mid-reload when its own SSH path goes away). [`ath11k-memguard.sh`](assets/ath11k-memguard.sh) runs as a long-lived loop, samples `MemAvailable` every 30 seconds, and calls the reload only when it falls below a threshold, with a minimum gap to stop it thrashing. Keep the hardware watchdog armed underneath as the last resort. This is a crutch, not a fix: it papers over the bleed instead of stopping it, and every reload is a brief outage. Patch when you can.
 
 If you run any of this and it helps (or does not), that data point is useful.
 
-Source: both patches, the `rxown` tracker, the page-frag simulator, and the deploy harness live in one repo at [github.com/eisbaw/ath11k-page-frag-fix](https://github.com/eisbaw/ath11k-page-frag-fix). Next time your RAM is leaving and nothing is leaking, go count pages, not objects.
+Canonical source and normalized evidence for both patches, `rxown`, and the simulator live at [github.com/eisbaw/ath11k-page-frag-fix](https://github.com/eisbaw/ath11k-page-frag-fix). The deployment, guard, liveness, and fault-injection downloads attached to this post are archival snapshots intentionally omitted from that repository because they encode one build's rollout procedure. Next time your RAM is leaving and nothing is leaking, go count pages, not objects.

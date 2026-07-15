@@ -1,5 +1,5 @@
 #!/bin/sh
-# ath11k-reload.sh - free ath11k's leaked kernel memory by reloading the driver.
+# ath11k-reload.sh - release ath11k-associated page-frag backing by reloading.
 # Reloads ALL wifi including the STA uplink (phy0-sta0), so it briefly drops this
 # box's connectivity (~10-20s). MUST be run detached (setsid, no controlling tty)
 # so it survives its own uplink drop - if launched from an ssh session it would

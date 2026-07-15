@@ -64,7 +64,7 @@ mock_command() {
             fi
             ;;
         ip)
-            printf 'default via 192.168.1.1 dev wlan1\n'
+            printf 'default via 192.0.2.1 dev wlan1\n'
             ;;
         ping)
             [[ $fault != network_failure || $(<"$root/state/candidate_loads") == 0 ]]
@@ -265,7 +265,7 @@ make_fixture() {
         printf "STOCK_AHB_SHA256='%s'\n" "$(sha256sum "$root/run/stock/ath11k_ahb.ko" | awk '{print $1}')"
         printf "CANDIDATE_CORE_SHA256='%s'\n" "$(sha256sum "$root/run/candidate/ath11k.ko" | awk '{print $1}')"
         printf "CANDIDATE_AHB_SHA256='%s'\n" "$(sha256sum "$root/run/candidate/ath11k_ahb.ko" | awk '{print $1}')"
-        printf "EXPECTED_GATEWAY='192.168.1.1'\n"
+        printf "EXPECTED_GATEWAY='192.0.2.1'\n"
         printf "MANAGEMENT_PEER='192.0.2.1'\n"
         printf "VALIDATION_SECONDS='3'\n"
         printf "POST_PERSIST_SECONDS='2'\n"
@@ -431,12 +431,20 @@ probe_pid=$!
 printf '%s\n' "$probe_pid" >"$liveness_root/watchdog.pid"
 printf '%s\n' "$probe_pid" >"$liveness_root/run/guard.lock/pid"
 "$liveness" "$liveness_root/watchdog.pid" "$probe_script" "$liveness_root/run"
+
+expect_liveness_rejection() {
+	if "$liveness" "$@"; then
+		printf 'expected liveness rejection for: %s\n' "$*" >&2
+		return 1
+	fi
+}
+
 printf '%s\n' "$((probe_pid + 1))" >"$liveness_root/run/guard.lock/pid"
-! "$liveness" "$liveness_root/watchdog.pid" "$probe_script" "$liveness_root/run"
+expect_liveness_rejection "$liveness_root/watchdog.pid" "$probe_script" "$liveness_root/run"
 printf '%s\n' "$probe_pid" >"$liveness_root/run/guard.lock/pid"
-! "$liveness" "$liveness_root/watchdog.pid" "$probe_script" "$liveness_root/wrong-run"
+expect_liveness_rejection "$liveness_root/watchdog.pid" "$probe_script" "$liveness_root/wrong-run"
 printf '%s\n' "$$" >"$liveness_root/stale.pid"
-! "$liveness" "$liveness_root/stale.pid" "$probe_script" "$liveness_root/run"
+expect_liveness_rejection "$liveness_root/stale.pid" "$probe_script" "$liveness_root/run"
 kill -TERM "$probe_pid" 2>/dev/null || true
 wait "$probe_pid" 2>/dev/null || true
 printf 'deploy_guard_liveness=shebang_cmdline_and_lock_pass\n'

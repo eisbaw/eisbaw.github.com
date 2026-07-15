@@ -1,7 +1,7 @@
 #!/bin/sh
 # ath11k-memguard.sh - keep the box out of OOM by reloading ath11k before memory
 # is exhausted. Checks MemAvailable every INTERVAL s; when it falls below THRESH,
-# reloads the driver (which frees ath11k's leaked kernel pages). This keeps the
+# reloads the driver (which releases page-frag backing held by its lifetime). This keeps the
 # router up and reachable and avoids the OOM -> watchdog-reset loop, WITHOUT
 # disabling the watchdog (kept as the last-resort safety net).
 #
