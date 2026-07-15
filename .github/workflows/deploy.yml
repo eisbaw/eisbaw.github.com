@@ -1,18 +1,21 @@
 name: Build (Nix) and deploy to GitHub Pages
 
+# Deployment ONLY. Not triggered by pull_request, so a PR can never reach a
+# deploy-capable job. PR validation lives in ci.yml. Deploys happen on push to
+# master or a manual dispatch. Recommend also setting a deployment-branch rule
+# on the github-pages environment (master only) so workflow_dispatch from an
+# arbitrary branch cannot publish it.
 on:
   push:
-    branches: [master]
-  pull_request:
     branches: [master]
   workflow_dispatch:
 
 permissions:
   contents: read
 
-# Allow one concurrent deployment; newer pushes supersede in-flight ones
+# One production deployment at a time; newer pushes supersede in-flight ones.
 concurrency:
-  group: ${{ github.event_name == 'pull_request' && format('pages-pr-{0}', github.event.pull_request.number) || 'pages-production' }}
+  group: pages-production
   cancel-in-progress: true
 
 jobs:
@@ -24,28 +27,24 @@ jobs:
       - name: Install Nix (flakes enabled)
         uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
         with:
-          # Install plain upstream Nix; skip Determinate Nix + FlakeHub login
-          # (the login attempt otherwise emits a harmless warning on every run).
+          # Install plain upstream Nix; skip Determinate Nix + FlakeHub login.
           determinate: false
 
       - name: Build and test the complete site
         run: nix develop --command just e2e
 
       - name: Stage artifact (dereference the /nix/store symlink)
-        if: github.event_name != 'pull_request'
         run: |
           mkdir -p public
           cp -rL result/. public/
           ls -la public
 
       - name: Upload Pages artifact
-        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: public
 
   deploy:
-    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-24.04
     permissions:
