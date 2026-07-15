@@ -1,6 +1,6 @@
 **I juggle a lot of code across many repositories: work, personal, and forks.** Every time I revisit a project, I have to reconstruct my own mental context window before I can be productive: what is this, what does it do, how do I build it, how do I test it? Over the years I learned tricks that shrink that context switch, and they help a human, an AI agent, and CI in the same way.
 
-This is the development half of my stack: Nix, git, and just, kept local-first. The machine it all runs on is a companion post, [My machine: Linux, NixOS, zellij](/posts/my-machine/).
+This is the development half of my stack: Nix, git, just, and backlog, kept local-first, with Claude Code as the AI agent that drives them. The machine it all runs on is a companion post, [My machine: Linux, NixOS, zellij](/posts/my-machine/).
 
 I wrote this for engineers who are tired of "works on my machine" and want to know whether declaring everything actually pays off. It does. I have paid the learning cost, and I will tell you where it still bites, because some of it does. But learning is fun. Do not stop learning, or you would still be on Windows. :)
 
@@ -9,6 +9,8 @@ I wrote this for engineers who are tired of "works on my machine" and want to kn
 - **Define the environment, do not mutate it into being.** Declare it as text, rebuild it, throw it away.
 - **Nix gives you reproducible software on any distro.** Locked dependencies mean the same result on your laptop, on the runner, and next year.
 - **Put every verb in a justfile; let CI call those recipes.** Onboarding and CI both collapse to `just --list`. No CI-only steps.
+- **Track work in git too, not a server.** `backlog` stores tasks as markdown files, so humans and agents capture without racing to a central app, and every task records its why.
+- **Hand the AI agent your tools, not a parallel stack.** Claude Code, but no MCP servers (harness-only, not composable) and no giant third-party stacks. Context engineering plus feedback, task management, and low-friction tooling is what delivers.
 - **Keep the working tree on local disk.** Not NFS, not SSHFS. Build elsewhere with `git push`, not by mounting.
 - **Containers run services; they do not host development.** Reach for podman over Docker when you do want one.
 
@@ -46,6 +48,26 @@ A newcomer types one command and sees every verb the workspace supports, documen
 
 And it composes. A top-level justfile pulls in recipes from subfolders, or from git submodules, so a monorepo or a project-of-projects has one coherent command surface instead of a README full of copy-paste. That is why I reach for it over make every time: make builds artifacts, just runs workflows.
 
+## backlog: tasks in git, shared by humans and agents
+
+**A task tracker does not need a server. <span class="gloss" tabindex="0">backlog<span class="gloss-card"><span class="gc-head"><span class="gc-name">Backlog.md</span></span><span class="gc-body">A task manager that stores each task as a markdown file inside the repository and drives it from the command line, so the backlog lives in git rather than on a server.</span><span class="gc-foot"><a href="https://github.com/MrLesk/Backlog.md" target="_blank" rel="noopener">github.com/MrLesk/Backlog.md</a></span></span></span> keeps every task as a markdown file in the repo.** The plan lives next to the code it describes, moves with `git push`, and branches and merges like anything else.
+
+That kills the thing I hate about Jira and its kin: the race to a server. When a human and an AI agent both want to add a task, they do not queue behind one web app holding a lock. Each writes a file and commits. Conflicts resolve the way code conflicts do. No login, no round trip, no central box that has to be up. It is the same local-first property as git and just, applied to the plan instead of the code.
+
+And a task carries its motivation, not just a title. Each one records a description, its acceptance criteria, and the reason it exists. Six months later the "why" is still in git, instead of evaporated from a chat log or someone's memory.
+
+That last part is what makes it good for an AI agent. **An agent's context window is short and gets compacted; a backlog is durable memory it can trust.** It creates tasks, orders them, ticks off acceptance criteria, and picks up where a prior session dropped the thread, because the state is on disk, not in the conversation. The same file a human reads is the plan the agent works from. Give an agent a good tracker and it organizes its own work instead of losing it.
+
+## Claude Code: the agent that drives the stack
+
+**I run an AI agent on top of all of this, and the stack is what makes it work.** The agent is <span class="gloss" tabindex="0">Claude Code<span class="gloss-card"><span class="gc-head"><span class="gc-name">Claude Code</span></span><span class="gc-body">Anthropic's terminal-based coding agent: it runs in your shell, reads and edits the repository, and runs your commands directly.</span><span class="gc-foot"><a href="https://claude.com/claude-code" target="_blank" rel="noopener">claude.com/claude-code</a></span></span></span>, and it is only as good as the tools you hand it and the context you keep. The local-first, composable pieces above are not incidental to that. They are the point.
+
+I do not use <span class="gloss" tabindex="0">MCP<span class="gloss-card"><span class="gc-head"><span class="gc-name">MCP</span></span><span class="gc-body">Model Context Protocol: a standard for exposing tools and data to an AI model through a dedicated server that the agent's harness connects to.</span><span class="gc-foot"><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">modelcontextprotocol.io</a></span></span></span> servers. They live inside the agent's harness and nowhere else, so they do not compose: I cannot pipe one into the next, call it from a justfile, or run it in CI. A just recipe is the opposite. A human, the agent, and the runner all call the same verb. I would rather hand the agent the exact command surface I use than a parallel one only it can reach.
+
+I also skip the big third-party Claude Code stacks. They are large, someone else's, and opaque. My tooling is small and home-made, so I understand every edge of it and can fix it when it breaks. Borrowed abstraction is the "works on someone's machine" problem wearing a new coat.
+
+What actually gets results is <span class="gloss" tabindex="0">context engineering<span class="gloss-card"><span class="gc-head"><span class="gc-name">Context engineering</span></span><span class="gc-body">Deliberately choosing what information sits in the model's limited context window at each step, instead of dumping everything in and hoping.</span></span></span>, and it is not magic. Understand what the model needs in front of it, then divide and conquer: split the work into tasks, give each a tight feedback loop that says when the agent is wrong, track those tasks somewhere durable, and keep the tooling low-friction so the agent spends its context on the problem, not on the setup. Feedback, task management, low-friction tooling. The backlog is the task management. just is the low-friction surface. Nix and git make the feedback reproducible. Get those right and the agent stops being a demo and starts being a coworker.
+
 ## CI calls just, it does not replace it
 
 **I run my own CI (self-hosted GitLab), and it is not allowed to know anything the terminal does not.** Iterating against CI is slow: push, wait for a runner, read a log, push again. You do not want that loop while developing. You want CI for what it is good at, parallelism and enforcing gates. But it becomes a bottleneck the moment every developer iterates against it, and it is hard to debug.
@@ -76,8 +98,8 @@ When I do want a container, for an isolated service that should stay isolated, I
 
 ## Local first, all the way down
 
-Nix, git, and just share one property: they run on my machine first, and everything else, CI or another builder, is a thin caller. Define the environment, do not mutate it into being, and the same commands work everywhere.
+Nix, git, just, and backlog share one property: they run on my machine first, and everything else, CI or another builder, is a thin caller. Define the environment, do not mutate it into being, and the same commands work everywhere. Claude Code rides on top of that stack rather than beside it: the local-first substrate is exactly what makes the agent effective.
 
 The machine that runs all of this is declared the same way, in one file, in git. That is the companion post: [My machine: Linux, NixOS, zellij](/posts/my-machine/).
 
-Source: [Nix](https://nixos.org/), [just](https://github.com/casey/just), [git](https://git-scm.com/).
+Source: [Nix](https://nixos.org/), [git](https://git-scm.com/), [just](https://github.com/casey/just), [backlog](https://github.com/MrLesk/Backlog.md), [Claude Code](https://claude.com/claude-code).
