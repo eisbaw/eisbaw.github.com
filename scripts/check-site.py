@@ -4,10 +4,15 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 import urllib.parse
+import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
+
+
+CSS_URL = re.compile(r"url\(\s*(['\"]?)(.*?)\1\s*\)", re.IGNORECASE)
 
 
 class Page(HTMLParser):
@@ -39,13 +44,20 @@ def display(root: Path, path: Path) -> str:
     return path.relative_to(root).as_posix()
 
 
-def local_target(root: Path, source: Path, reference: str) -> Path | None:
+def local_target(
+    root: Path,
+    source: Path,
+    reference: str,
+    site_hosts: set[str] | None = None,
+) -> Path | None:
+    site_hosts = site_hosts or set()
     split = urllib.parse.urlsplit(reference)
     if split.scheme:
         if split.scheme not in {"http", "https", "mailto"}:
             raise ValueError(f"unsafe URL scheme {split.scheme}")
-        return None
-    if split.netloc:
+        if split.scheme == "mailto" or split.hostname not in site_hosts:
+            return None
+    elif split.netloc and split.hostname not in site_hosts:
         return None
 
     decoded = urllib.parse.unquote(split.path)
@@ -57,7 +69,10 @@ def local_target(root: Path, source: Path, reference: str) -> Path | None:
         target = source.parent / decoded
 
     target = target.resolve()
-    target.relative_to(root)
+    try:
+        target.relative_to(root)
+    except ValueError as error:
+        raise ValueError("local target escapes site root") from error
     if target.is_dir() or decoded.endswith("/"):
         target /= "index.html"
     return target
@@ -65,10 +80,19 @@ def local_target(root: Path, source: Path, reference: str) -> Path | None:
 
 def check(root: Path) -> list[str]:
     errors: list[str] = []
-    required = (".nojekyll", "CNAME", "archive/index.html", "index.html")
+    required = (
+        ".nojekyll",
+        "CNAME",
+        "archive/index.html",
+        "feed.xml",
+        "index.html",
+    )
     for name in required:
         if not (root / name).is_file():
             errors.append(f"{name}: required generated file is missing")
+
+    cname = root / "CNAME"
+    site_hosts = {cname.read_text(encoding="utf-8").strip()} if cname.is_file() else set()
 
     pages: dict[Path, Page] = {}
     for path in sorted(root.rglob("*.html")):
@@ -87,7 +111,7 @@ def check(root: Path) -> list[str]:
     for source, page in pages.items():
         for attribute, reference in page.references:
             try:
-                target = local_target(root, source, reference)
+                target = local_target(root, source, reference, site_hosts)
             except ValueError as error:
                 errors.append(f"{display(root, source)}: {attribute} {error}")
                 continue
@@ -109,6 +133,41 @@ def check(root: Path) -> list[str]:
                     errors.append(
                         f"{display(root, source)}: missing fragment target {reference}"
                     )
+
+    for path in sorted(root.rglob("*.xml")):
+        try:
+            document = ET.parse(path)
+        except ET.ParseError as error:
+            errors.append(f"{display(root, path)}: XML parse error: {error}")
+            continue
+        for element in document.iter():
+            for attribute in ("href", "src"):
+                reference = element.attrib.get(attribute)
+                if not reference:
+                    continue
+                try:
+                    target = local_target(root, path.resolve(), reference, site_hosts)
+                except ValueError as error:
+                    errors.append(f"{display(root, path)}: {attribute} {error}")
+                    continue
+                if target is not None and not target.is_file():
+                    errors.append(
+                        f"{display(root, path)}: missing {attribute} target {reference}"
+                    )
+
+    for path in sorted(root.rglob("*.css")):
+        text = path.read_text(encoding="utf-8")
+        for match in CSS_URL.finditer(text):
+            reference = match.group(2)
+            if reference.startswith(("#", "data:")):
+                continue
+            try:
+                target = local_target(root, path.resolve(), reference, site_hosts)
+            except ValueError as error:
+                errors.append(f"{display(root, path)}: CSS url {error}")
+                continue
+            if target is not None and not target.is_file():
+                errors.append(f"{display(root, path)}: missing CSS url target {reference}")
 
     return errors
 

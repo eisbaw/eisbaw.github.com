@@ -3,6 +3,7 @@ set -euo pipefail
 
 site_root=${1:-result}
 
+python3 -m unittest discover -s scripts -p 'test_*.py' -v
 python3 scripts/check-site.py "$site_root"
 
 while IFS= read -r -d '' test_file; do
