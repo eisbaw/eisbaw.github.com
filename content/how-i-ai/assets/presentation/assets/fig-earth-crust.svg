@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="earth-crust-title earth-crust-description">
+  <title id="earth-crust-title">Layers emerge under pressure</title>
+  <desc id="earth-crust-description">An analogy between Earth's layers under gravity and
+    neural network representations under training loss. Surface sediment maps to syntax
+    and tokens, sedimentary rock to semantics, deep rock to intent, and magma to reasoning.
+    The paired layers progress from surface input through structural patterns and deep
+    structure to a core foundation. Separation of concerns emerges from compression forces:
+    gravity stratifies rock by density, while training loss stratifies representations
+    by abstraction.</desc>
+  <defs>
+    <marker id="pressure-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#546568"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; text-anchor: middle; }
+      .heading { font-size: 20px; font-weight: 600; }
+      .label { font-size: 17px; }
+      .force { font-size: 17px; font-weight: 600; }
+      .mapping { font-size: 16px; fill: #546568; }
+      .light { fill: #fff; }
+      .insight { font-size: 17px; font-weight: 600; }
+      .note { font-size: 16px; fill: #546568; }
+      .pressure { fill: none; stroke: #546568; stroke-width: 2; }
+      .analogy { fill: none; stroke: #8c9a9c; stroke-width: 1.5; stroke-dasharray: 2 3; }
+    </style>
+  </defs>
+
+  <g id="pressure-forces">
+    <text class="heading" x="103" y="32">Earth Crust</text>
+    <text class="heading" x="447" y="32">Neural Network</text>
+    <text class="force" x="103" y="77">Gravity</text>
+    <text class="force" x="447" y="77">Training Loss</text>
+    <path class="pressure" id="gravity-pressure" d="M 103 88 V 126" marker-end="url(#pressure-arrow)"/>
+    <path class="pressure" id="training-pressure" d="M 447 88 V 126" marker-end="url(#pressure-arrow)"/>
+  </g>
+
+  <!-- Dotted links express analogies, not causal flow. Their gaps keep labels clear. -->
+  <g id="layer-correspondences" class="analogy">
+    <path d="M 198 154 H 215 M 335 154 H 352"/>
+    <path d="M 198 218 H 215 M 335 218 H 352"/>
+    <path d="M 198 282 H 215 M 335 282 H 352"/>
+    <path d="M 198 346 H 215 M 335 346 H 352"/>
+  </g>
+
+  <g id="surface-layer">
+    <rect x="8" y="126" width="190" height="56" rx="6" fill="#e3c69f"/>
+    <text class="label" x="103" y="160">Surface Sediment</text>
+    <text class="mapping" x="275" y="149"><tspan x="275">Surface</tspan><tspan x="275" dy="20">input</tspan></text>
+    <rect x="352" y="126" width="190" height="56" rx="6" fill="#d5e8bd"/>
+    <text class="label" x="447" y="160">Syntax / Tokens</text>
+  </g>
+
+  <g id="structural-patterns-layer">
+    <rect x="8" y="190" width="190" height="56" rx="6" fill="#806644"/>
+    <text class="label light" x="103" y="224">Sedimentary Rock</text>
+    <text class="mapping" x="275" y="213"><tspan x="275">Structure</tspan><tspan x="275" dy="20">patterns</tspan></text>
+    <rect x="352" y="190" width="190" height="56" rx="6" fill="#5c793d"/>
+    <text class="label light" x="447" y="224">Semantics</text>
+  </g>
+
+  <g id="deep-structure-layer">
+    <rect x="8" y="254" width="190" height="56" rx="6" fill="#674e40"/>
+    <text class="label light" x="103" y="288">Deep Rock</text>
+    <text class="mapping" x="275" y="277"><tspan x="275">Deep</tspan><tspan x="275" dy="20">structure</tspan></text>
+    <rect x="352" y="254" width="190" height="56" rx="6" fill="#527b2c"/>
+    <text class="label light" x="447" y="288">Intent</text>
+  </g>
+
+  <g id="core-foundation-layer">
+    <rect x="8" y="318" width="190" height="56" rx="6" fill="#ae4d2b"/>
+    <text class="label light" x="103" y="352">Magma</text>
+    <text class="mapping" x="275" y="341"><tspan x="275">Core</tspan><tspan x="275" dy="20">foundation</tspan></text>
+    <rect x="352" y="318" width="190" height="56" rx="6" fill="#35551f"/>
+    <text class="label light" x="447" y="352">Reasoning</text>
+  </g>
+
+  <g id="shared-insight">
+    <rect x="8" y="397" width="534" height="70" rx="8" fill="#eef2ed"/>
+    <text class="insight" x="275" y="418">Separation of concerns emerges</text>
+    <text class="insight" x="275" y="440">from compression forces.</text>
+    <text class="note" x="275" y="460">Gravity → density · Training loss → abstraction</text>
+  </g>
+</svg>

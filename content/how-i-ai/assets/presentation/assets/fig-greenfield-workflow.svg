@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="520" viewBox="0 0 1160 520"
+     role="img" aria-labelledby="greenfield-title greenfield-description">
+  <title id="greenfield-title">Greenfield workflow from a seed prompt to autonomous execution</title>
+  <desc id="greenfield-description">Six steps: the human writes a half-page seed prompt
+    with vision, goals, constraints, and technology; AI drafts a full PRD; human and AI
+    review and refine the PRD through two or three cycles until aligned; commit the PRD
+    as the source of truth; spawn backlog tasks directly from the PRD or plan phases
+    first; run the backlog-driven Ralph loop with tests and review. Review feeds back
+    to drafting for clarification and refinement. The initial half-page prompt is the
+    human's main creative investment.</desc>
+  <defs>
+    <marker id="workflow-forward-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <marker id="workflow-review-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#416d88"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; text-anchor: middle; }
+      .heading { font-size: 20px; font-weight: 600; }
+      .label { font-size: 18px; }
+      .note { font-size: 18px; fill: #546568; }
+      .number { font-size: 18px; font-weight: 600; fill: #fff; }
+      .human { fill: #eef5f9; stroke: #7898ac; stroke-width: 1.5; }
+      .ai { fill: #e9f2df; stroke: #84a566; stroke-width: 1.5; }
+      .flow { fill: none; stroke: #527b2c; stroke-width: 2; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <g id="responsibilities" class="heading">
+    <text x="100" y="47" style="fill: #416d88">Human</text>
+    <text x="292" y="47" style="fill: #527b2c">AI</text>
+    <text x="484" y="47">Human + AI</text>
+    <text x="868" y="47" style="fill: #527b2c">Commit, plan, execute</text>
+  </g>
+
+  <g id="phase-backgrounds">
+    <rect x="8" y="130" width="184" height="264" rx="12" fill="#f5f9fc" stroke="#d5e1e9"/>
+    <rect x="200" y="130" width="184" height="264" rx="12" fill="#f5f9f0" stroke="#d5e2c9"/>
+    <rect x="392" y="130" width="184" height="264" rx="12" fill="#f3f6f4" stroke="#d5dfd9"/>
+    <rect x="584" y="130" width="568" height="264" rx="12" fill="#f5f9f0" stroke="#d5e2c9"/>
+  </g>
+
+  <!-- Joint review feeds the next draft; the return route stays above all cards. -->
+  <path id="review-to-draft" d="M 484 145 V 86 H 292 V 145" fill="none"
+        stroke="#416d88" stroke-width="2" stroke-linejoin="round" marker-end="url(#workflow-review-arrow)"/>
+  <text class="label" x="388" y="112" style="fill: #416d88">Clarify &amp; refine</text>
+  <g id="forward-flow" class="flow">
+    <path id="seed-to-draft" d="M 182 215 H 210" marker-end="url(#workflow-forward-arrow)"/>
+    <path id="draft-to-review" d="M 374 215 H 402" marker-end="url(#workflow-forward-arrow)"/>
+    <path id="review-to-commit" d="M 566 215 H 594" marker-end="url(#workflow-forward-arrow)"/>
+    <path id="commit-to-backlog" d="M 758 215 H 786" marker-end="url(#workflow-forward-arrow)"/>
+    <path id="backlog-to-execution" d="M 950 215 H 978" marker-end="url(#workflow-forward-arrow)"/>
+  </g>
+
+  <g id="seed-prompt">
+    <rect class="human" x="18" y="145" width="164" height="140" rx="9"/>
+    <circle cx="38" cy="132" r="14" fill="#416d88"/>
+    <text class="number" x="38" y="138">1</text>
+    <text class="heading" x="100" y="183">Human writes</text>
+    <text class="heading" x="100" y="210">half-page</text>
+    <text class="heading" x="100" y="237">seed prompt</text>
+    <text class="note" x="100" y="319">Vision, goals,</text>
+    <text class="note" x="100" y="345">constraints, tech</text>
+  </g>
+  <g id="draft-prd">
+    <rect class="ai" x="210" y="145" width="164" height="140" rx="9"/>
+    <circle cx="230" cy="132" r="14" fill="#527b2c"/>
+    <text class="number" x="230" y="138">2</text>
+    <text class="heading" x="292" y="183">AI drafts</text>
+    <text class="heading" x="292" y="210">full PRD</text>
+    <text class="note" x="292" y="319">Small input,</text>
+    <text class="note" x="292" y="345">large output</text>
+  </g>
+  <g id="joint-prd-review">
+    <rect x="402" y="145" width="164" height="140" rx="9" fill="#eaf1ed" stroke="#7f9b8b" stroke-width="1.5"/>
+    <circle cx="422" cy="132" r="14" fill="#546568"/>
+    <text class="number" x="422" y="138">3</text>
+    <text class="heading" x="484" y="183">Human + AI</text>
+    <text class="heading" x="484" y="210">review &amp;</text>
+    <text class="heading" x="484" y="237">refine PRD</text>
+    <text class="note" x="484" y="319">2–3 review cycles</text>
+    <text class="note" x="484" y="345">until aligned</text>
+  </g>
+  <g id="commit-prd">
+    <rect class="ai" x="594" y="145" width="164" height="140" rx="9"/>
+    <circle cx="614" cy="132" r="14" fill="#527b2c"/>
+    <text class="number" x="614" y="138">4</text>
+    <text class="heading" x="676" y="183">Commit</text>
+    <text class="heading" x="676" y="210">PRD</text>
+    <text class="note" x="676" y="319">git commit</text>
+    <text class="note" x="676" y="345">Source of truth</text>
+  </g>
+  <g id="spawn-backlog">
+    <rect class="ai" x="786" y="145" width="164" height="140" rx="9"/>
+    <circle cx="806" cy="132" r="14" fill="#527b2c"/>
+    <text class="number" x="806" y="138">5</text>
+    <text class="heading" x="868" y="183">Spawn</text>
+    <text class="heading" x="868" y="210">backlog</text>
+    <text class="heading" x="868" y="237">tasks</text>
+    <text class="note" x="868" y="319">(a) From PRD</text>
+    <text class="note" x="868" y="345">(b) Plan phases</text>
+    <text class="note" x="868" y="371">first</text>
+  </g>
+  <g id="ralph-execution">
+    <rect x="978" y="145" width="164" height="140" rx="9" fill="#e2edd6" stroke="#527b2c" stroke-width="1.8"/>
+    <circle cx="998" cy="132" r="14" fill="#527b2c"/>
+    <text class="number" x="998" y="138">6</text>
+    <text class="heading" x="1060" y="183">Ralph</text>
+    <text class="heading" x="1060" y="210">loop</text>
+    <path id="execution-repeat" class="flow" d="M 1076 250 A 17 17 0 1 1 1066 232"
+          marker-end="url(#workflow-forward-arrow)"/>
+    <text class="note" x="1060" y="319">Backlog-driven</text>
+    <text class="note" x="1060" y="345">autonomous work</text>
+    <text class="note" x="1060" y="371">Tests &amp; review</text>
+  </g>
+
+  <text class="heading" x="580" y="449">The half-page seed prompt is the human’s main creative investment.</text>
+  <text class="note" x="580" y="481">Clarify intent together; then execute against the agreed PRD and backlog.</text>
+</svg>

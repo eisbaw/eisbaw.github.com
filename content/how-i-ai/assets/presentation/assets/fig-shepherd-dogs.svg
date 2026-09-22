@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="sled-team-title sled-team-description">
+  <title id="sled-team-title">Human direction and decisions guide an executing agent team</title>
+  <desc id="sled-team-description">A top-down sled team travels upward. Explorer leads,
+    followed by Architect and Reviewer, then Implementer and Tester. Towlines connect
+    the five agent roles to the sled. A human musher on the sled provides direction and
+    decisions; the AI agents provide execution. Fast and powerful, they need a musher.</desc>
+  <defs>
+    <marker id="sled-travel-arrow" viewBox="0 0 10 10" refX="10" refY="5"
+            markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#527b2c"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; }
+      .heading { font-size: 21px; font-weight: 600; }
+      .role { font-size: 18px; font-weight: 600; text-anchor: middle; }
+      .label { font-size: 17px; }
+      .agent { fill: #e9f2df; stroke: #84a566; stroke-width: 1.5; }
+      .towline { fill: none; stroke: #7c8e7f; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <text class="heading" x="275" y="23" text-anchor="middle" style="fill: #527b2c">AI agents: execution</text>
+  <rect id="agent-team-panel" x="95" y="30" width="378" height="333" rx="12" fill="#f5f9f0" stroke="#cbdcbb"/>
+
+  <g id="direction-of-travel">
+    <path d="M 53 352 V 45" fill="none" stroke="#527b2c" stroke-width="2.5"
+          marker-end="url(#sled-travel-arrow)"/>
+    <text class="label" x="27" y="204" text-anchor="middle" font-weight="600"
+          transform="rotate(-90 27 204)">Direction of travel</text>
+  </g>
+
+  <!-- Physical towlines connect to circle boundaries and stay behind the team. -->
+  <g id="sled-team-towlines" class="towline">
+    <path id="central-gangline" d="M 275 120 V 377" stroke-width="3"/>
+    <path id="architect-towline" d="M 206 220 L 275 243"/>
+    <path id="reviewer-towline" d="M 344 220 L 275 243"/>
+    <path id="implementer-towline" d="M 206 337 L 275 363"/>
+    <path id="tester-towline" d="M 344 337 L 275 363"/>
+  </g>
+
+  <g id="explorer-lead-agent">
+    <circle cx="275" cy="77" r="43" fill="#dceacb" stroke="#527b2c" stroke-width="1.8"/>
+    <text class="role" x="275" y="83">Explorer</text>
+  </g>
+  <g id="architect-agent">
+    <circle class="agent" cx="167" cy="181" r="55"/>
+    <text class="role" x="167" y="187">Architect</text>
+  </g>
+  <g id="reviewer-agent">
+    <circle class="agent" cx="383" cy="181" r="55"/>
+    <text class="role" x="383" y="187">Reviewer</text>
+  </g>
+  <g id="implementer-agent">
+    <circle class="agent" cx="167" cy="298" r="55"/>
+    <text class="role" x="167" y="304">Implementer</text>
+  </g>
+  <g id="tester-agent">
+    <circle class="agent" cx="383" cy="298" r="55"/>
+    <text class="role" x="383" y="304">Tester</text>
+  </g>
+
+  <g id="human-musher-and-sled">
+    <g id="sled">
+      <path d="M 222 449 V 391 Q 222 377 237 377 M 328 449 V 391 Q 328 377 313 377"
+            fill="none" stroke="#546568" stroke-width="3" stroke-linecap="round"/>
+      <rect x="232" y="377" width="86" height="66" rx="7" fill="#edf0ed" stroke="#546568" stroke-width="2"/>
+    </g>
+    <g id="human-musher">
+      <circle cx="275" cy="394" r="8" fill="#23373b"/>
+      <path d="M 275 403 V 423 M 257 413 L 275 409 L 293 413 M 275 423 L 265 438 M 275 423 L 285 438"
+            fill="none" stroke="#23373b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text class="heading" x="343" y="399">Human</text>
+    <text class="label" x="343" y="426">Direction + decisions</text>
+  </g>
+
+  <text class="label" x="275" y="469" text-anchor="middle" style="fill: #546568">Fast and powerful, but they need a musher.</text>
+</svg>

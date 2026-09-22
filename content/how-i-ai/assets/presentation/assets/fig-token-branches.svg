@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="branches-title branches-description">
+  <title id="branches-title">Many possible continuations, one emitted path</title>
+  <desc id="branches-description">A branching tree in a many-worlds style illustrates
+    possible token sequences. This is a metaphor for classical sampling, not quantum
+    computation. Gray branches are alternatives; a green branch shows one emitted
+    sequence that continues forward. A separate panel reports OpenRouter's DRACO
+    scores: Opus 4.8 alone at 58.8 percent, versus two independent Opus 4.8 runs
+    synthesized by Opus 4.8 at 65.5 percent.</desc>
+  <defs>
+    <marker id="emitted-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; text-anchor: middle; }
+      .heading { font-size: 21px; font-weight: 600; }
+      .label { font-size: 18px; }
+      .caption { font-size: 16px; fill: #546568; }
+      .alternative { fill: none; stroke: #b9c7cc; stroke-width: 2; }
+      .unselected { fill: #e5ebed; stroke: #9eafb5; stroke-width: 1.3; }
+      .emitted { fill: none; stroke: #527b2c; stroke-width: 4; }
+    </style>
+  </defs>
+
+  <text class="heading" x="275" y="27">Many possible continuations</text>
+  <text class="caption" x="275" y="51">Many-worlds metaphor · classical sampling</text>
+
+  <g id="alternative-sequences" class="alternative">
+    <path d="M 45 175 C 107 175 137 90 200 90"/>
+    <path d="M 45 175 C 107 175 137 265 200 265"/>
+    <path d="M 200 90 C 265 90 298 75 365 75 H 510"/>
+    <path d="M 200 90 C 265 90 298 110 365 110 H 510"/>
+    <path d="M 200 175 C 265 175 298 200 365 200 H 510"/>
+    <path d="M 200 265 C 265 265 298 235 365 235 H 510"/>
+    <path d="M 200 265 C 265 265 298 285 365 285 H 510"/>
+  </g>
+  <g id="alternative-tokens" class="unselected">
+    <circle cx="200" cy="90" r="6"/>
+    <circle cx="200" cy="265" r="6"/>
+    <circle cx="365" cy="75" r="5"/>
+    <circle cx="365" cy="110" r="5"/>
+    <circle cx="365" cy="200" r="5"/>
+    <circle cx="365" cy="235" r="5"/>
+    <circle cx="365" cy="285" r="5"/>
+    <circle cx="510" cy="75" r="4"/>
+    <circle cx="510" cy="110" r="4"/>
+    <circle cx="510" cy="200" r="4"/>
+    <circle cx="510" cy="235" r="4"/>
+    <circle cx="510" cy="285" r="4"/>
+  </g>
+  <g id="emitted-sequence">
+    <path class="emitted" d="M 45 175 H 200 C 265 175 298 150 365 150 H 518"
+          marker-end="url(#emitted-arrow)"/>
+    <circle cx="45" cy="175" r="7" fill="#23373b"/>
+    <circle cx="200" cy="175" r="7" fill="#527b2c"/>
+    <circle cx="365" cy="150" r="7" fill="#527b2c"/>
+    <text class="label" x="49" y="151">Context</text>
+    <text class="label" x="200" y="207" fill="#527b2c">Token B</text>
+    <text class="label" x="365" y="137" fill="#527b2c">Next token</text>
+  </g>
+  <text class="caption" x="200" y="76">Token A</text>
+  <text class="caption" x="200" y="296">Token C</text>
+
+  <g id="branch-legend">
+    <path d="M 30 321 H 55" stroke="#b9c7cc" stroke-width="2"/>
+    <text class="caption" x="139" y="327">Possible alternatives</text>
+    <path d="M 284 321 H 309" stroke="#527b2c" stroke-width="4"/>
+    <text class="caption" x="412" y="327">One emitted sequence</text>
+  </g>
+
+  <g id="fusion-evaluation">
+    <rect x="12" y="348" width="526" height="119" rx="10"
+          fill="#f1f6ec" stroke="#c7d9b7"/>
+    <text class="heading" x="275" y="375">Fusion: sample, compare, synthesize</text>
+    <text class="label" x="275" y="403">Opus 4.8 solo: 58.8%</text>
+    <text class="label" x="275" y="430">Two runs + synthesis: 65.5%</text>
+    <text class="caption" x="275" y="454">DRACO · OpenRouter’s reported evaluation</text>
+  </g>
+</svg>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="520" viewBox="0 0 1160 520"
+     role="img" aria-labelledby="loop-title loop-description">
+  <title id="loop-title">Open-loop climbing versus closed-loop climbing</title>
+  <desc id="loop-description">An open-loop climber proceeds toward a fog-obscured goal
+    without checkpoints or a safety line: no feedback, no recovery, and blind commitment.
+    A closed-loop climber follows individual tasks and milestones toward a visible
+    goal. Tests and adjustments form a feedback loop. Anchors and a belayer
+    illustrate rollback to checkpoints, pausing and resuming, and informed decisions.</desc>
+  <defs>
+    <marker id="closed-loop-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <marker id="open-loop-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#a64137"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; }
+      .heading { font-size: 22px; font-weight: 600; }
+      .label { font-size: 18px; }
+      .muted { fill: #546568; }
+      .risk, .risk text { fill: #a64137; }
+      .grounded, .grounded text { fill: #527b2c; }
+      .person { fill: none; stroke: #23373b; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .flow { fill: none; stroke: #527b2c; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .anchor { fill: #527b2c; stroke: #fff; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <g id="open-loop">
+    <rect x="8" y="8" width="558" height="504" rx="12" fill="#fff8f6" stroke="#e6cbc5"/>
+    <text class="heading risk" x="32" y="39">Open-loop · “Prompt and pray”</text>
+    <text class="label muted" x="32" y="68">No checkpoints or safety line</text>
+
+    <g id="open-mountain">
+      <path d="M 68 366 L 124 291 L 172 240 L 213 169 L 268 104 L 310 167 L 345 234 L 402 300 L 469 366 Z"
+            fill="#e8e9e7" stroke="#b5bdbb" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M 268 104 L 310 167 L 345 234 L 402 300 L 469 366 H 289 Z" fill="#dce0dc"/>
+      <path d="M 238 140 L 268 104 L 297 148 L 281 143 L 270 154 L 257 141 L 246 153 Z" fill="#fff"/>
+      <path d="M 213 169 L 247 218 M 172 240 L 225 295 M 310 167 L 298 229 M 345 234 L 326 308"
+            fill="none" stroke="#c1c8c4" stroke-width="1.3"/>
+    </g>
+
+    <g id="uncertain-goal">
+      <ellipse cx="244" cy="133" rx="102" ry="28" fill="#cbd0cf" opacity="0.94"/>
+      <ellipse cx="287" cy="113" rx="59" ry="22" fill="#cbd0cf" opacity="0.94"/>
+      <ellipse cx="305" cy="147" rx="66" ry="21" fill="#cbd0cf" opacity="0.94"/>
+      <text x="268" y="145" text-anchor="middle" font-size="32" font-weight="600" class="muted">?</text>
+      <text class="label muted" x="387" y="124">Uncertain goal</text>
+    </g>
+
+    <path id="unchecked-progress" d="M 142 344 L 185 298 L 205 248 L 231 194 L 242 175"
+          fill="none" stroke="#a64137" stroke-width="2.5" stroke-dasharray="6 5"
+          stroke-linejoin="round" marker-end="url(#open-loop-arrow)"/>
+    <g id="unsecured-climber">
+      <circle cx="250" cy="236" r="9" fill="#23373b"/>
+      <path class="person" d="M 250 247 V 278 M 250 255 L 230 239 M 250 255 L 269 238
+        M 250 278 L 234 306 M 250 278 L 261 308"/>
+      <path d="M 268 220 L 275 215 M 273 229 L 281 227" fill="none" stroke="#546568" stroke-width="2"/>
+    </g>
+    <g id="no-recovery">
+      <path d="M 404 245 V 286" fill="none" stroke="#a64137" stroke-width="2"
+            marker-end="url(#open-loop-arrow)"/>
+      <path d="M 389 249 L 419 280 M 419 249 L 389 280" fill="none" stroke="#a64137" stroke-width="3"/>
+      <text class="label risk" x="404" y="323" text-anchor="middle">No way back</text>
+    </g>
+
+    <path d="M 32 388 H 542" stroke="#e6cbc5"/>
+    <g id="open-loop-outcomes" class="label risk">
+      <circle cx="39" cy="413" r="4" fill="#a64137"/>
+      <text x="56" y="419">No feedback</text>
+      <circle cx="39" cy="446" r="4" fill="#a64137"/>
+      <text x="56" y="452">No recovery</text>
+      <circle cx="39" cy="479" r="4" fill="#a64137"/>
+      <text x="56" y="485">Blind commitment</text>
+    </g>
+  </g>
+
+  <g id="closed-loop">
+    <rect x="594" y="8" width="558" height="504" rx="12" fill="#f5f9f0" stroke="#cbdcbb"/>
+    <text class="heading grounded" x="618" y="39">Closed-loop · Resumable tasks</text>
+    <text class="label muted" x="618" y="68">Tasks, milestones, and feedback</text>
+
+    <g id="closed-mountain">
+      <path d="M 641 366 L 687 298 L 731 250 L 772 181 L 831 118 L 875 182 L 913 241 L 970 304 L 1032 366 Z"
+            fill="#e5eddc" stroke="#a8be91" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M 831 118 L 875 182 L 913 241 L 970 304 L 1032 366 H 852 Z" fill="#dbe6ce"/>
+      <path d="M 801 151 L 831 118 L 861 162 L 843 157 L 832 168 L 819 155 L 808 167 Z" fill="#fff"/>
+      <path d="M 772 181 L 801 219 M 731 250 L 768 296 M 875 182 L 866 225 M 913 241 L 896 307"
+            fill="none" stroke="#c1d1af" stroke-width="1.3"/>
+    </g>
+
+    <!-- The route remains clear of task and milestone labels; safety lines attach to anchors. -->
+    <g id="secured-route">
+      <path class="flow" d="M 705 347 L 747 303 L 805 259 L 776 203 L 819 163 L 829 128"
+            marker-end="url(#closed-loop-arrow)"/>
+      <path id="belay-rope" d="M 679 344 L 747 303" fill="none" stroke="#997428" stroke-width="2.5"/>
+      <path id="climber-harness" d="M 805 259 L 878 284" fill="none" stroke="#997428" stroke-width="2.5"/>
+    </g>
+    <g id="route-waypoints" class="label">
+      <circle class="anchor" cx="705" cy="347" r="5"/>
+      <text x="722" y="353">Task 1</text>
+      <circle class="anchor" cx="747" cy="303" r="5"/>
+      <text x="765" y="309">Task 2</text>
+      <circle class="anchor" cx="805" cy="259" r="5"/>
+      <text x="787" y="265" text-anchor="end">Milestone 1</text>
+      <circle class="anchor" cx="776" cy="203" r="5"/>
+      <text x="794" y="209">Task 3</text>
+      <circle class="anchor" cx="819" cy="163" r="5"/>
+      <text x="837" y="169">Milestone 2</text>
+    </g>
+    <g id="visible-goal">
+      <path d="M 831 118 V 87 M 831 87 H 855 L 846 96 H 831" fill="#527b2c" stroke="#527b2c" stroke-width="2"/>
+      <circle class="anchor" cx="831" cy="118" r="5"/>
+      <text class="label grounded" x="865" y="105" font-weight="600">Goal</text>
+    </g>
+
+    <g id="secured-climber">
+      <circle cx="878" cy="242" r="9" fill="#23373b"/>
+      <path class="person" d="M 878 253 V 284 M 878 263 L 854 250 M 878 263 L 899 246
+        M 878 284 L 863 309 M 878 284 L 888 312"/>
+      <path d="M 870 282 L 878 287 L 884 282" fill="none" stroke="#997428" stroke-width="3"/>
+    </g>
+    <g id="belayer">
+      <circle cx="670" cy="319" r="8" fill="#23373b"/>
+      <path class="person" d="M 670 328 V 347 M 670 335 L 680 340 L 689 329
+        M 670 347 L 658 365 M 670 347 L 681 365"/>
+    </g>
+
+    <g id="test-adjust-feedback">
+      <text class="label grounded" x="1055" y="113" text-anchor="middle">Feedback</text>
+      <path class="flow" d="M 1055 168 V 205" marker-end="url(#closed-loop-arrow)"/>
+      <path class="flow" d="M 1002 225 H 981 V 148 H 1002" marker-end="url(#closed-loop-arrow)"/>
+      <rect x="1002" y="128" width="106" height="40" rx="7" fill="#fff" stroke="#84a566" stroke-width="1.5"/>
+      <text class="label" x="1055" y="154" text-anchor="middle">Test</text>
+      <rect x="1002" y="205" width="106" height="40" rx="7" fill="#fff" stroke="#84a566" stroke-width="1.5"/>
+      <text class="label" x="1055" y="231" text-anchor="middle">Adjust</text>
+    </g>
+    <g id="pause-and-resume">
+      <rect x="940" y="316" width="186" height="39" rx="7" fill="#fff" stroke="#a8be91"/>
+      <text class="label grounded" x="1033" y="342" text-anchor="middle">Pause &amp; resume</text>
+    </g>
+
+    <path d="M 618 388 H 1128" stroke="#cbdcbb"/>
+    <g id="closed-loop-outcomes" class="label grounded">
+      <circle cx="625" cy="413" r="4" fill="#527b2c"/>
+      <text x="642" y="419">Test at each step</text>
+      <circle cx="625" cy="446" r="4" fill="#527b2c"/>
+      <text x="642" y="452">Rollback to checkpoint</text>
+      <circle cx="625" cy="479" r="4" fill="#527b2c"/>
+      <text x="642" y="485">Informed decisions</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="ralph-title ralph-description">
+  <title id="ralph-title">The Ralph loop: fresh sessions, persistent project state</title>
+  <desc id="ralph-description">Tasks 0001, 0002, 0003 and later task N each run in a fresh
+    agent context. Stable onboarding memory supplies CLAUDE.md, the PRD, design documents
+    and conventions to every task. A persistent workspace and backlog supply task selection
+    and current state. Completed tasks commit durable results back to that workspace.
+    Each task loads context, explores, implements, tests and commits; tests, linters and
+    review ground the work. The sequence is schematic and does not specify durations.</desc>
+  <defs>
+    <marker id="ralph-onboard-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <marker id="ralph-commit-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#467d9c"/>
+    </marker>
+    <marker id="ralph-state-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#71807a"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; }
+      .heading { font-size: 19px; font-weight: 600; }
+      .label { font-size: 16px; text-anchor: middle; }
+      .note { font-size: 16px; fill: #546568; }
+      .onboard { fill: none; stroke: #527b2c; stroke-width: 1.7; }
+      .commit { fill: none; stroke: #467d9c; stroke-width: 1.7; }
+      .state { fill: none; stroke: #71807a; stroke-width: 1.5; stroke-dasharray: 5 4; }
+      .task { fill: #fff6e5; stroke: #b28a4f; stroke-width: 1.3; }
+    </style>
+  </defs>
+
+  <!-- Onboarding feeds the actual task boundaries, not the workspace lane. -->
+  <g id="onboarding-for-every-session" class="onboard">
+    <path d="M 66 92 V 144" marker-end="url(#ralph-onboard-arrow)"/>
+    <path d="M 201 92 V 144" marker-end="url(#ralph-onboard-arrow)"/>
+    <path d="M 336 92 V 144" marker-end="url(#ralph-onboard-arrow)"/>
+    <path d="M 484 92 V 144" marker-end="url(#ralph-onboard-arrow)"/>
+  </g>
+  <text class="label" x="275" y="125" style="fill: #527b2c">Onboard</text>
+
+  <!-- Separate arrows distinguish loading durable state from writing completed results. -->
+  <g id="load-task-and-workspace-state" class="state">
+    <path d="M 47 294 V 207" marker-end="url(#ralph-state-arrow)"/>
+    <path d="M 182 294 V 207" marker-end="url(#ralph-state-arrow)"/>
+    <path d="M 317 294 V 207" marker-end="url(#ralph-state-arrow)"/>
+    <path d="M 465 294 V 207" marker-end="url(#ralph-state-arrow)"/>
+  </g>
+  <g id="commit-completed-task-results" class="commit">
+    <path d="M 85 207 V 294" marker-end="url(#ralph-commit-arrow)"/>
+    <path d="M 220 207 V 294" marker-end="url(#ralph-commit-arrow)"/>
+    <path d="M 355 207 V 294" marker-end="url(#ralph-commit-arrow)"/>
+  </g>
+
+  <g id="persistent-onboarding-memory">
+    <rect x="8" y="8" width="534" height="84" rx="9" fill="#e9f2df" stroke="#84a566" stroke-width="1.4"/>
+    <text class="heading" x="24" y="33">Persistent onboarding memory</text>
+    <text class="note" x="24" y="57">CLAUDE.md · PRD · Design docs</text>
+    <text class="note" x="24" y="80">Stable project knowledge and conventions</text>
+  </g>
+
+  <g id="fresh-agent-sessions">
+    <g id="task-0001">
+      <rect class="task" x="8" y="144" width="116" height="63" rx="7"/>
+      <text class="label" x="66" y="169" font-weight="600">TASK-0001</text>
+      <text class="label" x="66" y="193">Fresh context</text>
+    </g>
+    <g id="task-0002">
+      <rect class="task" x="143" y="144" width="116" height="63" rx="7"/>
+      <text class="label" x="201" y="169" font-weight="600">TASK-0002</text>
+      <text class="label" x="201" y="193">Fresh context</text>
+    </g>
+    <g id="task-0003">
+      <rect class="task" x="278" y="144" width="116" height="63" rx="7"/>
+      <text class="label" x="336" y="169" font-weight="600">TASK-0003</text>
+      <text class="label" x="336" y="193">Fresh context</text>
+    </g>
+    <text class="label" x="410" y="181">…</text>
+    <g id="task-n">
+      <rect class="task" x="426" y="144" width="116" height="63" rx="7"/>
+      <text class="label" x="484" y="169" font-weight="600">TASK-N</text>
+      <text class="label" x="484" y="193">Fresh context</text>
+    </g>
+  </g>
+
+  <g id="sequence-axis">
+    <text class="note" x="275" y="244" text-anchor="middle">Sequence</text>
+    <path d="M 246 260 H 301" fill="none" stroke="#71807a" stroke-width="1.4" marker-end="url(#ralph-state-arrow)"/>
+  </g>
+
+  <g id="persistent-workspace-and-backlog">
+    <rect x="8" y="294" width="534" height="87" rx="9" fill="#e8f0f4" stroke="#8eacbc" stroke-width="1.4"/>
+    <text class="heading" x="24" y="320">Persistent workspace + backlog</text>
+    <text class="note" x="24" y="344">Files evolve · Git commits are checkpoints</text>
+    <text class="note" x="24" y="368">Task outcomes survive each fresh session</text>
+  </g>
+
+  <g id="state-and-commit-legend">
+    <path class="state" d="M 24 403 H 55" marker-end="url(#ralph-state-arrow)"/>
+    <text class="note" x="66" y="409">Select task + load state</text>
+    <path class="commit" d="M 286 403 H 317" marker-end="url(#ralph-commit-arrow)"/>
+    <text class="note" x="328" y="409">Commit results</text>
+  </g>
+  <g id="grounded-task-cycle">
+    <text class="label" x="275" y="435" font-weight="600">Grounding: tests · linters · review</text>
+    <text class="label" x="275" y="461">Load → explore → implement → test → commit</text>
+  </g>
+</svg>

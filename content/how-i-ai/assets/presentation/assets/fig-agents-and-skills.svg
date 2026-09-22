@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="520" viewBox="0 0 1160 520"
+     role="img" aria-labelledby="skills-title skills-description">
+  <title id="skills-title">My agents and skills: from intent to tested work</title>
+  <desc id="skills-description">Three reusable skills form a workflow. Phase 1, PRD Grill,
+    challenges assumptions and refines the intent until the human approves the PRD.
+    Phase 2, Backlog Snowball, defines verification before planning a reviewed backlog.
+    Phase 3, Backlog Ralph, executes tasks with fresh implementers, verification, fixes,
+    and commits. Specialist agents support planning and execution: MPED implements or
+    independently reviews architecture, QA runs checks and reports evidence, and Compass
+    advises task direction and sequencing. The orchestrator selects tasks and owns the
+    loop; Compass advises and never selects or implements. Implementer and reviewer use
+    separate contexts. Deep review is reserved for risk and scheduled checkpoints.</desc>
+  <defs>
+    <marker id="skill-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#3a6ea5"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #1a1715; }
+      .heading { font-size: 24px; font-weight: 600; }
+      .title { font-size: 23px; font-weight: 600; }
+      .body { font-size: 19px; fill: #4a4540; }
+      .slug { font-family: 'Fira Mono', monospace; font-size: 15px; fill: #5c5650; }
+      .output { font-size: 18px; font-weight: 600; fill: #2c5580; }
+      .small { font-size: 17px; fill: #5c5650; }
+      .flow { fill: none; stroke: #3a6ea5; stroke-width: 2.5; }
+    </style>
+  </defs>
+
+  <text class="heading" x="20" y="29">Skills · repeatable workflows</text>
+  <g id="phase-one">
+    <rect x="20" y="50" width="350" height="174" rx="12" fill="#eef3f8" stroke="#b4c9df"/>
+    <text class="title" x="40" y="84">1 · Clarify the intent</text>
+    <text class="slug" x="40" y="111">phase1-prd-grill</text>
+    <text class="body" x="40" y="145">Interview · challenge assumptions</text>
+    <text class="body" x="40" y="171">Human refines and approves PRD</text>
+    <text class="output" x="40" y="205">Output: agreed PRD</text>
+  </g>
+  <g id="phase-two">
+    <rect x="405" y="50" width="350" height="174" rx="12" fill="#eef3f8" stroke="#b4c9df"/>
+    <text class="title" x="425" y="84">2 · Ground the plan</text>
+    <text class="slug" x="425" y="111">phase2-backlog-snowball</text>
+    <text class="body" x="425" y="145">Define verification before tasks</text>
+    <text class="body" x="425" y="171">Dependencies · acceptance criteria</text>
+    <text class="output" x="425" y="205">Output: reviewed backlog</text>
+  </g>
+  <g id="phase-three">
+    <rect x="790" y="50" width="350" height="174" rx="12" fill="#eef3f8" stroke="#b4c9df"/>
+    <text class="title" x="810" y="84">3 · Execute the backlog</text>
+    <text class="slug" x="810" y="111">phase3-backlog-ralph</text>
+    <text class="body" x="810" y="145">Fresh implementer per task</text>
+    <text class="body" x="810" y="171">Implement → verify → fix → commit</text>
+    <text class="output" x="810" y="205">Output: tested work + learnings</text>
+  </g>
+  <path class="flow" d="M 374 137 H 401" marker-end="url(#skill-arrow)"/>
+  <path class="flow" d="M 759 137 H 786" marker-end="url(#skill-arrow)"/>
+
+  <text class="heading" x="20" y="275">Agents · focused roles</text>
+  <text class="small" x="1140" y="275" text-anchor="end">Support planning and execution across phases</text>
+  <g id="mped-agent">
+    <rect x="20" y="294" width="350" height="152" rx="12" fill="#dde8f3" stroke="#3a6ea5"/>
+    <text class="title" x="40" y="328">MPED · Architecture</text>
+    <text class="slug" x="40" y="353">mped-architect</text>
+    <text class="body" x="40" y="383">Implement or independently review</text>
+    <text class="body" x="40" y="410">Composition · data design</text>
+    <text class="body" x="40" y="435">Fail fast · keep state simple</text>
+  </g>
+  <g id="qa-agent">
+    <rect x="405" y="294" width="350" height="152" rx="12" fill="#edf4e6" stroke="#527b2c"/>
+    <text class="title" x="425" y="328">QA · Verification</text>
+    <text class="slug" x="425" y="353">qa-test-runner</text>
+    <text class="body" x="425" y="383">Run build, lint, tests, and e2e</text>
+    <text class="body" x="425" y="410">Nix + just · actual results</text>
+    <text class="body" x="425" y="435">Report failures with evidence</text>
+  </g>
+  <g id="compass-agent">
+    <rect x="790" y="294" width="350" height="152" rx="12" fill="#ede8df" stroke="#806644"/>
+    <text class="title" x="810" y="328">COMPASS · Direction</text>
+    <text class="small" x="810" y="353">Project-direction consultant</text>
+    <text class="body" x="810" y="383">What next, and in what order?</text>
+    <text class="body" x="810" y="410">De-risk the core before broadening</text>
+    <text class="body" x="810" y="435">Advisory only · orchestrator selects</text>
+  </g>
+
+  <text class="body" x="580" y="481" text-anchor="middle">Orchestrator owns the loop · Separate implementer and reviewer contexts</text>
+  <text class="small" x="580" y="507" text-anchor="middle">Lean feature checks · Deeper review for risk and scheduled checkpoints</text>
+</svg>

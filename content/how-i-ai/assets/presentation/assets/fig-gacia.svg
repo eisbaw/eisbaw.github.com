@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="gacia-title gacia-description">
+  <title id="gacia-title">From reactive prompting to autonomous improvement</title>
+  <desc id="gacia-description">Human-prompted work waits for a human to notice a problem
+    and write a prompt; AI then does the work and a human reviews it. GACIA starts with
+    an engineer defining perpetual tasks. Cron triggers an AI agent, which executes,
+    tests, and pushes a branch. A passing CI run automatically creates a merge request.
+    The recurring route returns to the scheduled trigger, independently of the human
+    reviewing the merge request when ready. AI works continuously while humans review
+    at their own pace.</desc>
+  <defs>
+    <marker id="reactive-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#8c9a9c"/>
+    </marker>
+    <marker id="autonomous-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; text-anchor: middle; }
+      .title { font-size: 19px; font-weight: 600; }
+      .heading { font-size: 20px; font-weight: 600; }
+      .label { font-size: 17px; }
+      .note { font-size: 16px; fill: #546568; }
+      .waiting { font-size: 16px; fill: #a64137; text-anchor: start; }
+      .reactive { fill: #a64137; }
+      .autonomous { fill: #527b2c; }
+      .human-step { fill: #f3f5f5; stroke: #8c9a9c; stroke-width: 1.3; }
+      .automated-step { fill: #e9f2df; stroke: #84a566; stroke-width: 1.4; }
+      .reactive-flow { fill: none; stroke: #8c9a9c; stroke-width: 1.8; }
+      .autonomous-flow { fill: none; stroke: #527b2c; stroke-width: 1.8; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <text class="title" x="275" y="26">From reactive prompting to autonomous improvement</text>
+  <g id="comparison-panels">
+    <rect x="8" y="39" width="254" height="411" rx="10" fill="#fff8f6"/>
+    <rect x="282" y="39" width="260" height="411" rx="10" fill="#f5f9f0"/>
+  </g>
+
+  <g id="reactive-flow" class="reactive-flow">
+    <path d="M 135 134 V 184" marker-end="url(#reactive-arrow)"/>
+    <path d="M 135 238 V 288" marker-end="url(#reactive-arrow)"/>
+    <path d="M 135 342 V 385" marker-end="url(#reactive-arrow)"/>
+  </g>
+  <g id="scheduled-flow" class="autonomous-flow">
+    <path d="M 402 134 V 154" marker-end="url(#autonomous-arrow)"/>
+    <path d="M 402 208 V 228" marker-end="url(#autonomous-arrow)"/>
+    <path d="M 402 282 V 302" marker-end="url(#autonomous-arrow)"/>
+    <path id="repeat-on-schedule" d="M 510 329 H 531 V 181 H 510" marker-end="url(#autonomous-arrow)"/>
+    <path id="review-when-ready" d="M 402 356 V 385" stroke-dasharray="4 4" marker-end="url(#autonomous-arrow)"/>
+  </g>
+
+  <g id="human-prompted-work">
+    <text class="heading reactive" x="135" y="64">Human-prompted</text>
+    <g id="notice-problem">
+      <rect class="human-step" x="24" y="80" width="222" height="54" rx="7"/>
+      <text class="label" x="135" y="101">Human notices</text>
+      <text class="label" x="135" y="124">a problem</text>
+    </g>
+    <text class="waiting" x="153" y="163">waiting…</text>
+    <g id="write-prompt">
+      <rect class="human-step" x="24" y="184" width="222" height="54" rx="7"/>
+      <text class="label" x="135" y="205">Human writes</text>
+      <text class="label" x="135" y="228">a prompt</text>
+    </g>
+    <text class="waiting" x="153" y="267">waiting…</text>
+    <g id="reactive-ai-work">
+      <rect class="human-step" x="24" y="288" width="222" height="54" rx="7"/>
+      <text class="label" x="135" y="322">AI does work</text>
+    </g>
+    <g id="reactive-human-review">
+      <rect class="human-step" x="24" y="385" width="222" height="54" rx="7"/>
+      <text class="label" x="135" y="419">Human reviews</text>
+    </g>
+  </g>
+
+  <g id="gacia-work">
+    <text class="heading autonomous" x="402" y="64">GACIA</text>
+    <g id="define-perpetual-tasks">
+      <rect class="automated-step" x="294" y="80" width="216" height="54" rx="7"/>
+      <text class="label" x="402" y="101">Engineer defines</text>
+      <text class="label" x="402" y="124">perpetual tasks</text>
+    </g>
+    <g id="cron-trigger">
+      <rect class="automated-step" x="294" y="154" width="216" height="54" rx="7"/>
+      <text class="label" x="402" y="175">Cron triggers</text>
+      <text class="label" x="402" y="198">AI agent</text>
+    </g>
+    <g id="execute-test-push">
+      <rect class="automated-step" x="294" y="228" width="216" height="54" rx="7"/>
+      <text class="label" x="402" y="249">AI executes, tests,</text>
+      <text class="label" x="402" y="272">pushes branch</text>
+    </g>
+    <g id="ci-gated-merge-request">
+      <rect class="automated-step" x="294" y="302" width="216" height="54" rx="7"/>
+      <text class="label" x="402" y="323">On CI pass:</text>
+      <text class="label" x="402" y="346">auto-create MR</text>
+    </g>
+    <g id="asynchronous-human-review">
+      <rect class="human-step" x="294" y="385" width="216" height="54" rx="7"/>
+      <text class="label" x="402" y="406">Human reviews</text>
+      <text class="label" x="402" y="429">when ready</text>
+    </g>
+  </g>
+
+  <text class="note reactive" x="135" y="468">Human-prompt bottleneck</text>
+  <text class="note autonomous" x="402" y="468">Continuous work, paced review</text>
+</svg>

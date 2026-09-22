@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="520" viewBox="0 0 1160 520"
+     role="img" aria-labelledby="greenfield-brownfield-title greenfield-brownfield-description">
+  <title id="greenfield-brownfield-title">Greenfield and brownfield feed the same backlog-driven workflow</title>
+  <desc id="greenfield-brownfield-description">Greenfield starts fresh: write a half-page
+    prompt, let AI draft a PRD, review and refine it, then commit the PRD. Brownfield starts
+    with an existing codebase: AI explores and audits, distills understanding, a human
+    reviews, and the documents are committed. Both routes lead directly to spawning
+    backlog tasks, then a backlog-driven Ralph loop, then shipping, in a shared row
+    between the greenfield and brownfield lanes. Their starting points
+    differ, but both use the same structured execution workflow.</desc>
+  <defs>
+    <marker id="workflow-arrow" viewBox="0 0 9 9" refX="9" refY="4.5"
+            markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 Z" fill="#527b2c"/>
+    </marker>
+    <marker id="brownfield-arrow" viewBox="0 0 9 9" refX="9" refY="4.5"
+            markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 Z" fill="#8b5e3c"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; text-anchor: middle; }
+      .heading { font-size: 24px; font-weight: 600; }
+      .label { font-size: 21px; }
+      .strong { font-weight: 600; }
+      .note { font-size: 18px; fill: #546568; }
+      .lane-label { text-anchor: start; }
+      .green-step { fill: #e9f2df; stroke: #84a566; stroke-width: 1.5; }
+      .brown-step { fill: #f5e9dc; stroke: #af8a67; stroke-width: 1.5; }
+      .common-step { fill: #e9f2df; stroke: #527b2c; stroke-width: 1.7; }
+      .green-flow { fill: none; stroke: #527b2c; stroke-width: 2; stroke-linejoin: round; }
+      .brown-flow { fill: none; stroke: #8b5e3c; stroke-width: 2; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <g id="lane-backgrounds">
+    <rect x="8" y="8" width="1128" height="150" rx="12" fill="#f5f9f0"/>
+    <rect x="8" y="352" width="1128" height="150" rx="12" fill="#fbf7f2"/>
+    <rect x="8" y="200" width="1128" height="110" rx="12" fill="#f5f9f0"/>
+  </g>
+
+  <!-- Greenfield enters the shared row from above; brownfield enters from below.
+       Both routes stay in the gaps between lanes. -->
+  <g id="greenfield-flow" class="green-flow">
+    <path d="M 190 102 H 214" marker-end="url(#workflow-arrow)"/>
+    <path d="M 422 102 H 446" marker-end="url(#workflow-arrow)"/>
+    <path d="M 620 102 H 644" marker-end="url(#workflow-arrow)"/>
+    <path d="M 888 102 H 912" marker-end="url(#workflow-arrow)"/>
+    <path id="committed-prd-to-backlog" d="M 1016 140 V 180 H 248 V 212" marker-end="url(#workflow-arrow)"/>
+  </g>
+  <g id="brownfield-flow" class="brown-flow">
+    <path d="M 190 446 H 214" marker-end="url(#brownfield-arrow)"/>
+    <path d="M 422 446 H 446" marker-end="url(#brownfield-arrow)"/>
+    <path d="M 620 446 H 644" marker-end="url(#brownfield-arrow)"/>
+    <path d="M 888 446 H 912" marker-end="url(#brownfield-arrow)"/>
+    <path id="committed-docs-to-backlog" d="M 1016 408 V 330 H 248 V 298" marker-end="url(#brownfield-arrow)"/>
+  </g>
+  <g id="common-execution-flow" class="green-flow">
+    <path d="M 408 255 H 464" marker-end="url(#workflow-arrow)"/>
+    <path d="M 798 255 H 854" marker-end="url(#workflow-arrow)"/>
+  </g>
+
+  <g id="greenfield-preparation">
+    <text class="heading lane-label" x="32" y="43">Greenfield</text>
+    <text class="note lane-label" x="220" y="43">Plan from intent</text>
+    <g id="start-fresh">
+      <rect class="green-step" x="24" y="64" width="166" height="76" rx="8"/>
+      <text class="label" x="107" y="110">Start fresh</text>
+    </g>
+    <g id="write-prompt">
+      <rect class="green-step" x="214" y="64" width="208" height="76" rx="8"/>
+      <text class="label" x="318" y="94">Write half-page</text>
+      <text class="label" x="318" y="121">prompt</text>
+    </g>
+    <g id="draft-prd">
+      <rect class="green-step" x="446" y="64" width="174" height="76" rx="8"/>
+      <text class="label" x="533" y="94">AI drafts</text>
+      <text class="label" x="533" y="121">PRD</text>
+    </g>
+    <g id="review-prd">
+      <rect class="green-step" x="644" y="64" width="244" height="76" rx="8"/>
+      <text class="label" x="766" y="94">Human reviews</text>
+      <text class="label" x="766" y="121">and refines</text>
+    </g>
+    <g id="commit-prd">
+      <rect class="green-step" x="912" y="64" width="208" height="76" rx="8"/>
+      <text class="label strong" x="1016" y="94">Commit</text>
+      <text class="label strong" x="1016" y="121">PRD</text>
+    </g>
+  </g>
+
+  <g id="brownfield-preparation">
+    <text class="heading lane-label" x="32" y="387">Brownfield</text>
+    <text class="note lane-label" x="220" y="387">Understand the existing code</text>
+    <g id="existing-codebase">
+      <rect class="brown-step" x="24" y="408" width="166" height="76" rx="8"/>
+      <text class="label" x="107" y="438">Existing</text>
+      <text class="label" x="107" y="465">codebase</text>
+    </g>
+    <g id="explore-codebase">
+      <rect class="brown-step" x="214" y="408" width="208" height="76" rx="8"/>
+      <text class="label" x="318" y="438">AI explores</text>
+      <text class="label" x="318" y="465">and audits</text>
+    </g>
+    <g id="distill-understanding">
+      <rect class="brown-step" x="446" y="408" width="174" height="76" rx="8"/>
+      <text class="label" x="533" y="438">Distill</text>
+      <text class="label" x="533" y="465">understanding</text>
+    </g>
+    <g id="review-understanding">
+      <rect class="brown-step" x="644" y="408" width="244" height="76" rx="8"/>
+      <text class="label" x="766" y="438">Human</text>
+      <text class="label" x="766" y="465">reviews</text>
+    </g>
+    <g id="commit-docs">
+      <rect class="brown-step" x="912" y="408" width="208" height="76" rx="8"/>
+      <text class="label strong" x="1016" y="438">Commit</text>
+      <text class="label strong" x="1016" y="465">docs</text>
+    </g>
+  </g>
+
+  <g id="spawn-backlog-tasks">
+    <rect class="common-step" x="88" y="212" width="320" height="86" rx="8"/>
+    <text class="label strong" x="248" y="246">Spawn backlog</text>
+    <text class="label strong" x="248" y="274">tasks</text>
+  </g>
+  <g id="ralph-loop">
+    <rect class="common-step" x="464" y="212" width="334" height="86" rx="8"/>
+    <text class="label strong" x="631" y="246">Ralph loop</text>
+    <text class="note" x="631" y="274">Backlog-driven execution</text>
+  </g>
+  <g id="ship">
+    <rect x="854" y="212" width="266" height="86" rx="8" fill="#d5e8bd" stroke="#527b2c" stroke-width="1.7"/>
+    <text class="heading" x="987" y="263">Ship</text>
+  </g>
+  <text class="note" x="580" y="514">Different starting points. The same structured, backlog-driven workflow.</text>
+</svg>

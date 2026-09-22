@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="520" viewBox="0 0 1160 520"
+     role="img" aria-labelledby="context-loop-title context-loop-description">
+  <title id="context-loop-title">Context engineering through feedback and grounding</title>
+  <desc id="context-loop-description">Before iteration, a vague prompt about a nearby
+    carwash produces generic prose. The Prompt, Result, Evaluate, Refine cycle returns
+    feedback and grounding to the prompt. After iteration, the prompt supplies a walking
+    task, a known route with landmarks, and a limit of twenty words. The resulting
+    direction is focused, constrained, and auditable against that supplied route.
+    The feedback label occupies its own row between the cycle and the improved example.
+    Success rates of 50% before and 95% after appear beneath the cross and checkmark;
+    these are illustrative examples, not measured results.</desc>
+  <defs>
+    <marker id="context-forward-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#546568"/>
+    </marker>
+    <marker id="context-feedback-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; }
+      .section { font-size: 21px; font-weight: 600; }
+      .heading { font-size: 20px; font-weight: 600; }
+      .label { font-size: 18px; }
+      .note { font-size: 17px; }
+      .rate { font-size: 22px; font-weight: 600; text-anchor: middle; }
+      .rate-label { font-size: 12px; text-anchor: middle; }
+      .risk { fill: #a64137; }
+      .grounded { fill: #527b2c; }
+      .flow { fill: none; stroke: #546568; stroke-width: 2; }
+      .feedback { fill: none; stroke: #527b2c; stroke-width: 2; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <g id="before">
+    <text class="section risk" x="16" y="39">BEFORE</text>
+    <path id="vague-prompt-to-result" class="flow" d="M 692 79 H 740"
+          marker-end="url(#context-forward-arrow)"/>
+    <g id="vague-prompt">
+      <rect x="132" y="8" width="560" height="143" rx="10" fill="#fff8f6" stroke="#d9b7af" stroke-width="1.5"/>
+      <text class="heading" x="150" y="35">Prompt</text>
+      <text class="label" x="150" y="69">“The carwash is 50 m away,</text>
+      <text class="label" x="150" y="94">write something about it.”</text>
+    </g>
+    <g id="generic-result">
+      <rect x="740" y="8" width="400" height="143" rx="10" fill="#fff8f6" stroke="#a64137" stroke-width="1.5"/>
+      <text class="heading" x="760" y="35">Result</text>
+      <path d="M 1105 22 L 1119 36 M 1119 22 L 1105 36" fill="none" stroke="#a64137" stroke-width="3" stroke-linecap="round"/>
+      <text class="rate risk" x="1112" y="61">50%</text>
+      <text class="rate-label risk" x="1112" y="80">success</text>
+      <text class="label" x="760" y="63">“Carwashes are great for keeping</text>
+      <text class="label" x="760" y="86">your car clean. This facility offers</text>
+      <text class="label" x="760" y="109">various packages…”</text>
+      <text class="note risk" x="760" y="137">Generic · unfocused · no clear purpose</text>
+    </g>
+  </g>
+
+  <g id="iteration-cycle">
+    <text class="section grounded" x="16" y="210">ITERATE</text>
+    <g id="cycle-forward-links" class="flow">
+      <path d="M 312 202 H 408" marker-end="url(#context-forward-arrow)"/>
+      <path d="M 588 202 H 684" marker-end="url(#context-forward-arrow)"/>
+      <path d="M 864 202 H 960" marker-end="url(#context-forward-arrow)"/>
+    </g>
+    <path id="refine-to-prompt" class="feedback" d="M 1050 228 V 265 H 222 V 228"
+          marker-end="url(#context-feedback-arrow)"/>
+    <g id="cycle-prompt">
+      <rect x="132" y="176" width="180" height="52" rx="8" fill="#e9f2df" stroke="#84a566" stroke-width="1.5"/>
+      <text class="heading" x="222" y="209" text-anchor="middle">Prompt</text>
+    </g>
+    <g id="cycle-result">
+      <rect x="408" y="176" width="180" height="52" rx="8" fill="#f0f3f2" stroke="#a9b7b1" stroke-width="1.5"/>
+      <text class="heading" x="498" y="209" text-anchor="middle">Result</text>
+    </g>
+    <g id="cycle-evaluate">
+      <rect x="684" y="176" width="180" height="52" rx="8" fill="#f0f3f2" stroke="#a9b7b1" stroke-width="1.5"/>
+      <text class="heading" x="774" y="209" text-anchor="middle">Evaluate</text>
+    </g>
+    <g id="cycle-refine">
+      <rect x="960" y="176" width="180" height="52" rx="8" fill="#e9f2df" stroke="#84a566" stroke-width="1.5"/>
+      <text class="heading" x="1050" y="209" text-anchor="middle">Refine</text>
+    </g>
+    <text class="label grounded" x="636" y="294" text-anchor="middle">feedback + grounding</text>
+  </g>
+
+  <g id="after">
+    <text class="section grounded" x="16" y="348">AFTER</text>
+    <path id="grounded-prompt-to-result" class="flow" d="M 692 399 H 740"
+          marker-end="url(#context-forward-arrow)"/>
+    <g id="grounded-prompt">
+      <rect x="132" y="317" width="560" height="164" rx="10" fill="#f5f9f0" stroke="#84a566" stroke-width="1.5"/>
+      <text class="heading" x="150" y="344">Prompt</text>
+      <text class="label" x="150" y="372">You are a navigation assistant; the user is walking.</text>
+      <text class="label" x="150" y="394">Carwash: 50 m NE. Known route: pass the red mailbox,</text>
+      <text class="label" x="150" y="416">turn right at the oak tree; carwash on the left.</text>
+      <text class="label" x="150" y="438">Give one sentence, ≤20 words. Use landmarks,</text>
+      <text class="label" x="150" y="460">not coordinates.</text>
+    </g>
+    <g id="grounded-result">
+      <rect x="740" y="317" width="400" height="164" rx="10" fill="#f5f9f0" stroke="#527b2c" stroke-width="1.5"/>
+      <text class="heading" x="760" y="344">Result</text>
+      <path d="M 1101 336 L 1108 343 L 1121 329" fill="none" stroke="#527b2c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text class="rate grounded" x="1112" y="368">95%</text>
+      <text class="rate-label grounded" x="1112" y="387">success</text>
+      <text class="label" x="760" y="372">“Walk past the red mailbox, turn</text>
+      <text class="label" x="760" y="394">right at the oak tree, the carwash</text>
+      <text class="label" x="760" y="416">is on your left.”</text>
+      <text class="note grounded" x="760" y="446">Focused · constrained · verifiable</text>
+      <text class="note grounded" x="760" y="470">Auditable against supplied context</text>
+    </g>
+  </g>
+
+  <text class="heading" x="580" y="509" text-anchor="middle">Same task, better quality when context is engineered. <tspan class="note">Success rates are illustrative.</tspan></text>
+</svg>

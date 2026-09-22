@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="soup-title soup-description">
+  <title id="soup-title">Context soup: useful ingredients compete with accumulated noise</title>
+  <desc id="soup-description">Two equally sized bowls represent the same limited context
+    capacity. The clean bowl contains a PRD, a task description and conventions. The polluted
+    bowl mixes those same ingredients with old logs, stale documents, a dump, a full repository,
+    irrelevant material and surface noise, degrading recall. Broth represents base context or
+    the system prompt; chunks represent injected context; clarity represents recall quality.
+    Exploration is expensive; distillation is cheap and prepares clean, fresh context.</desc>
+  <defs>
+    <marker id="soup-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; }
+      .heading { font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .label { font-size: 16px; text-anchor: middle; }
+      .note { font-size: 16px; text-anchor: middle; fill: #546568; }
+      .ingredient { stroke-width: 1; }
+      .prd { fill: #dcebc9; stroke: #84a566; }
+      .task { fill: #dcebf5; stroke: #82a9c3; }
+      .conventions { fill: #ece4f7; stroke: #b7a1ce; }
+      .noise { fill: #f5e2d7; stroke: #cda28e; }
+      .bowl { fill: none; stroke: #71807a; stroke-width: 2; }
+      .flow { fill: none; stroke: #527b2c; stroke-width: 1.7; }
+      .stage { fill: #f5f9f0; stroke: #84a566; stroke-width: 1.2; }
+    </style>
+  </defs>
+
+  <text class="heading" x="275" y="31">Context soup</text>
+  <text class="note" x="275" y="57">Same limited capacity; different recall quality</text>
+
+  <g id="clean-context">
+    <text class="heading" x="142" y="99">Clean context</text>
+    <path id="clear-broth" d="M 30 128 V 266 C 30 316 254 316 254 266 V 128 Z" fill="#faf3df"/>
+    <path d="M 30 128 H 254" fill="none" stroke="#d6c28c" stroke-width="1.5"/>
+    <path class="bowl" d="M 24 120 V 266 C 24 325 260 325 260 266 V 120"/>
+    <g id="clean-prd">
+      <rect class="ingredient prd" x="47" y="152" width="89" height="33" rx="6"/>
+      <text class="label" x="91.5" y="174" font-weight="600">PRD</text>
+    </g>
+    <g id="clean-task">
+      <rect class="ingredient task" x="132" y="200" width="106" height="33" rx="6"/>
+      <text class="label" x="185" y="222">Task desc.</text>
+    </g>
+    <g id="clean-conventions">
+      <rect class="ingredient conventions" x="60" y="248" width="139" height="33" rx="6"/>
+      <text class="label" x="129.5" y="270">Conventions</text>
+    </g>
+    <text class="label" x="142" y="335" font-weight="600" style="fill: #527b2c">Focused: high recall</text>
+  </g>
+
+  <g id="polluted-context">
+    <text class="heading" x="408" y="99">Polluted context</text>
+    <path id="murky-broth" d="M 296 128 V 266 C 296 316 520 316 520 266 V 128 Z" fill="#e8dcc1"/>
+    <path id="surface-noise" d="M 296 128 H 520 V 150 Q 490 141 460 149 T 400 148 T 340 150 T 296 147 Z"
+          fill="#c9bb98"/>
+    <g id="foam-bubbles" fill="#e4d9bd">
+      <circle cx="310" cy="137" r="5"/><circle cx="326" cy="139" r="4"/>
+      <circle cx="485" cy="137" r="5"/><circle cx="504" cy="138" r="4"/>
+    </g>
+    <text class="label" x="408" y="144">Noise</text>
+    <path class="bowl" d="M 290 120 V 266 C 290 325 526 325 526 266 V 120"/>
+    <!-- Crowding is shown through density and broth color; all ingredient labels remain readable. -->
+    <g id="polluted-prd">
+      <rect class="ingredient prd" x="304" y="158" width="102" height="27" rx="4"/>
+      <text class="label" x="355" y="177" font-weight="600">PRD</text>
+    </g>
+    <g id="polluted-task">
+      <rect class="ingredient task" x="414" y="158" width="98" height="27" rx="4"/>
+      <text class="label" x="463" y="177">Task desc.</text>
+    </g>
+    <g id="polluted-conventions">
+      <rect class="ingredient conventions" x="304" y="190" width="102" height="27" rx="4"/>
+      <text class="label" x="355" y="209">Conventions</text>
+    </g>
+    <g id="old-logs">
+      <rect class="ingredient noise" x="414" y="190" width="98" height="27" rx="4"/>
+      <text class="label" x="463" y="209">Old logs</text>
+    </g>
+    <g id="stale-documents">
+      <rect class="ingredient noise" x="304" y="222" width="102" height="27" rx="4"/>
+      <text class="label" x="355" y="241">Stale docs</text>
+    </g>
+    <g id="dump">
+      <rect class="ingredient noise" x="414" y="222" width="98" height="27" rx="4"/>
+      <text class="label" x="463" y="241">Dump</text>
+    </g>
+    <g id="full-repository">
+      <rect class="ingredient noise" x="304" y="254" width="102" height="27" rx="4"/>
+      <text class="label" x="355" y="273">Full repo</text>
+    </g>
+    <g id="irrelevant-material">
+      <rect class="ingredient noise" x="414" y="254" width="98" height="27" rx="4"/>
+      <text class="label" x="463" y="273">Irrelevant</text>
+    </g>
+    <text class="label" x="408" y="335" font-weight="600" style="fill: #a64137">Overloaded: degraded recall</text>
+  </g>
+
+  <g id="exploration-to-fresh-context">
+    <path class="flow" d="M 150 376 H 209" marker-end="url(#soup-arrow)"/>
+    <path class="flow" d="M 322 376 H 385" marker-end="url(#soup-arrow)"/>
+    <g id="explore">
+      <rect class="stage" x="24" y="355" width="126" height="42" rx="7"/>
+      <text class="label" x="87" y="382" font-weight="600">Explore</text>
+      <text class="note" x="87" y="417">Expensive</text>
+    </g>
+    <g id="distill">
+      <rect class="stage" x="209" y="355" width="113" height="42" rx="7"/>
+      <text class="label" x="265.5" y="382" font-weight="600">Distill</text>
+      <text class="note" x="265.5" y="417">Cheap</text>
+    </g>
+    <g id="fresh-context">
+      <rect class="stage" x="385" y="355" width="141" height="42" rx="7"/>
+      <text class="label" x="455.5" y="382" font-weight="600">Fresh context</text>
+      <text class="note" x="455.5" y="417">Clean</text>
+    </g>
+  </g>
+
+  <g id="soup-legend">
+    <text class="note" x="275" y="444">Broth = base context / system prompt</text>
+    <text class="note" x="275" y="467">Pieces = injected context · clarity = recall</text>
+  </g>
+</svg>

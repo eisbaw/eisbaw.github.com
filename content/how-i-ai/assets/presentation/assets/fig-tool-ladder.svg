@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="tool-ladder-title tool-ladder-description">
+  <title id="tool-ladder-title">AI usage levels</title>
+  <desc id="tool-ladder-description">Five rungs show conversation, editor assistance,
+    delegated engineering, backlog-driven execution, and perpetual improvement.
+    ChatGPT, Cursor or Copilot, Claude Code, Ralph loops, and GACIA illustrate these
+    modes of use. Upward arrows indicate increasing autonomy and complexity.
+    The closing analogy cautions against using a Formula 1 car for grocery shopping.</desc>
+  <defs>
+    <marker id="ladder-up-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; }
+      .heading { font-size: 20px; font-weight: 600; }
+      .scope { font-size: 17px; fill: #546568; }
+      .axis { font-size: 17px; font-weight: 600; text-anchor: middle; }
+      .rung { stroke: #84a566; stroke-width: 1.2; }
+    </style>
+  </defs>
+
+  <g id="progression-axes">
+    <path id="increasing-autonomy" d="M 44 424 V 16" fill="none" stroke="#527b2c"
+          stroke-width="2" marker-end="url(#ladder-up-arrow)"/>
+    <text class="axis" x="20" y="222" transform="rotate(-90 20 222)">Increasing autonomy</text>
+    <path id="increasing-complexity" d="M 507 424 V 16" fill="none" stroke="#527b2c"
+          stroke-width="2" marker-end="url(#ladder-up-arrow)"/>
+    <text class="axis" x="536" y="222" transform="rotate(-90 536 222)">Increasing complexity</text>
+  </g>
+
+  <g id="gacia-rung">
+    <rect class="rung" x="101" y="16" width="388" height="73" rx="8" fill="#dceacb"/>
+    <text class="heading" x="115" y="46">Perpetual improvement</text>
+    <text class="scope" x="115" y="72">GACIA · scheduled autonomous work</text>
+  </g>
+  <g id="ralph-loops-rung">
+    <rect class="rung" x="92" y="98" width="397" height="73" rx="8" fill="#e7f0de"/>
+    <text class="heading" x="106" y="128">Backlog-driven execution</text>
+    <text class="scope" x="106" y="154">Ralph loops · one task at a time</text>
+  </g>
+  <g id="claude-code-rung">
+    <rect class="rung" x="83" y="180" width="406" height="73" rx="8" fill="#edf4e6"/>
+    <text class="heading" x="97" y="210">Delegated engineering</text>
+    <text class="scope" x="97" y="236">Claude Code · multi-file tasks + tools</text>
+  </g>
+  <g id="cursor-copilot-rung">
+    <rect class="rung" x="74" y="262" width="415" height="73" rx="8" fill="#f1f6ec"/>
+    <text class="heading" x="88" y="292">Editor assistance</text>
+    <text class="scope" x="88" y="318">Cursor / Copilot · code in context</text>
+  </g>
+  <g id="chatgpt-rung">
+    <rect class="rung" x="65" y="344" width="424" height="73" rx="8" fill="#f5f9f0"/>
+    <text class="heading" x="79" y="374">Conversation</text>
+    <text class="scope" x="79" y="400">ChatGPT · queries and exploration</text>
+  </g>
+
+  <text class="scope" x="275" y="455" text-anchor="middle">Don’t use a Formula 1 car for grocery shopping.</text>
+</svg>

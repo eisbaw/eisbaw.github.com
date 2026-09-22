@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="400" viewBox="0 0 780 400"
+     role="img" aria-labelledby="compression-title compression-description">
+  <title id="compression-title">Compression discovers composing patterns at many levels</title>
+  <desc id="compression-description">Books, code, forums, and images feed a funnel
+    of statistical regularities and recurring patterns, distilled into learned weights.
+    A downward arrow on the left labels this process Pre-training.
+    A side brace groups a four-tier pyramid detailing those patterns, rising
+    from syntax at its base through semantics and intent to domain at its top.
+    These levels compose together. The funnel shows qualitative compression, not
+    a measured compression ratio; the pyramid is a conceptual hierarchy.</desc>
+  <defs>
+    <marker id="compression-flow-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; text-anchor: middle; }
+      .title { font-size: 22px; font-weight: 600; }
+      .heading { font-size: 20px; font-weight: 600; }
+      .label { font-size: 18px; }
+      .source { fill: #fff; stroke: #cad5c7; stroke-width: 1.2; }
+      .flow { fill: none; stroke: #527b2c; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <text class="title" x="210" y="27">Compression is pattern discovery</text>
+  <text class="title" x="610" y="27">Pattern hierarchy</text>
+
+  <g id="pretraining-direction">
+    <path class="flow" d="M 47 170 V 311" marker-end="url(#compression-flow-arrow)"/>
+    <text class="label" x="23" y="241" transform="rotate(-90 23 241)" style="fill: #546568">Pre-training</text>
+  </g>
+
+  <g id="training-funnel">
+    <g id="training-sources">
+      <path d="M 36 44 H 384 V 135 H 36 Z" fill="#f1f4f1"/>
+      <text class="heading" x="210" y="73">Training sources</text>
+      <g id="source-books">
+        <rect class="source" x="48" y="90" width="72" height="30" rx="5"/>
+        <text class="label" x="84" y="112">Books</text>
+      </g>
+      <g id="source-code">
+        <rect class="source" x="132" y="90" width="72" height="30" rx="5"/>
+        <text class="label" x="168" y="112">Code</text>
+      </g>
+      <g id="source-forums">
+        <rect class="source" x="216" y="90" width="72" height="30" rx="5"/>
+        <text class="label" x="252" y="112">Forums</text>
+      </g>
+      <g id="source-images">
+        <rect class="source" x="300" y="90" width="72" height="30" rx="5"/>
+        <text class="label" x="336" y="112">Images</text>
+      </g>
+    </g>
+    <g id="statistical-regularities">
+      <path d="M 36 135 H 384 L 324 220 H 96 Z" fill="#eef3e8"/>
+      <text class="heading" x="210" y="165">Statistical regularities</text>
+      <text class="label" x="210" y="194">Co-occurrence · structure</text>
+    </g>
+    <g id="recurring-patterns">
+      <path d="M 96 220 H 324 L 282 281 H 138 Z" fill="#e0eccf"/>
+      <text class="heading" x="210" y="253">Recurring patterns</text>
+    </g>
+    <path id="funnel-outline" d="M 36 44 H 384 V 135 L 324 220 L 282 281 H 138 L 96 220 L 36 135 Z"
+          fill="none" stroke="#84a566" stroke-width="1.5" stroke-linejoin="round"/>
+    <path id="funnel-separators" d="M 36 135 H 384 M 96 220 H 324"
+          fill="none" stroke="#b5c6a7" stroke-width="1.2" stroke-dasharray="5 4"/>
+  </g>
+
+  <path id="patterns-to-weights" class="flow" d="M 210 283 V 324"
+        marker-end="url(#compression-flow-arrow)"/>
+  <g id="distilled-weights">
+    <rect x="77" y="326" width="266" height="63" rx="9"
+          fill="#e9f2df" stroke="#527b2c" stroke-width="1.5"/>
+    <text class="heading" x="210" y="352">Distilled weights</text>
+    <text class="label" x="210" y="378">Compact parameter space</text>
+  </g>
+
+  <g id="pattern-detail-brace">
+    <path id="hierarchy-brace" transform="translate(-30 0)" d="M 457 63 C 437 63 449 204 432 234 Q 424 250 413 250 Q 424 250 432 266 C 449 296 437 315 457 315"
+          fill="none" stroke="#708e94" stroke-width="2"/>
+  </g>
+
+  <g id="pattern-pyramid">
+    <g id="domain-patterns">
+      <path d="M 559 63 H 661 L 685 126 H 535 Z" fill="#d8e8c2" stroke="#84a566"/>
+      <text class="heading" x="610" y="102">Domain</text>
+    </g>
+    <g id="intent-patterns">
+      <path d="M 535 126 H 685 L 709 189 H 511 Z" fill="#e0eccf" stroke="#84a566"/>
+      <text class="heading" x="610" y="165">Intent</text>
+    </g>
+    <g id="semantic-patterns">
+      <path d="M 511 189 H 709 L 733 252 H 487 Z" fill="#e9f2df" stroke="#84a566"/>
+      <text class="heading" x="610" y="228">Semantics</text>
+    </g>
+    <g id="syntax-patterns">
+      <path d="M 487 252 H 733 L 757 315 H 463 Z" fill="#f1f6ec" stroke="#84a566"/>
+      <text class="heading" x="610" y="291">Syntax</text>
+    </g>
+    <text class="label" x="610" y="353">Patterns compose across levels</text>
+  </g>
+</svg>

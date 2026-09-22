@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="520" viewBox="0 0 1160 520"
+     role="img" aria-labelledby="loops-title loops-description">
+  <title id="loops-title">Inner and outer loops: the art is in the inner testing</title>
+  <desc id="loops-description">A dashed horizontal line preserves the orchestrator's
+    thread and context. For each task, it spawns an implementation subagent below the line,
+    receives its distilled conclusion, then spawns review, testing, and fixes in a fresh
+    context. That subagent retries until checks pass and returns its conclusion to the
+    orchestrator. New tasks and learning feed forward to the next task. In the outer loop,
+    humans inspect the result,
+    try the user experience, attempt falsification, and interrogate assumptions, alongside
+    CI integration checks. Their findings feed new goals and acceptance criteria back
+    to the orchestrator.</desc>
+  <defs>
+    <marker id="task-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#3a6ea5"/>
+    </marker>
+    <marker id="human-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#806644"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #1a1715; }
+      .heading { font-size: 24px; font-weight: 600; }
+      .label { font-size: 21px; font-weight: 600; text-anchor: middle; }
+      .note { font-size: 17px; fill: #4a4540; }
+      .small { font-size: 15px; fill: #4a4540; text-anchor: middle; }
+      .blue { fill: #2c5580; }
+      .flow { fill: none; stroke: #3a6ea5; stroke-width: 2; stroke-linejoin: round; }
+      .outer-flow { fill: none; stroke: #806644; stroke-width: 2.2; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <rect x="8" y="8" width="1144" height="504" rx="16" fill="#ede8df" stroke="#cbbfb1"/>
+  <text class="heading" x="32" y="41">Outer loop · Human + CI</text>
+  <text class="note" x="32" y="68">Try the result. Discover what is good, what is bad, and what the tests missed.</text>
+
+  <rect x="28" y="94" width="854" height="352" rx="14" fill="#ffffff" stroke="#b4c9df"/>
+  <text class="heading blue" x="48" y="126">Inner loop · Per task</text>
+  <text class="note" x="48" y="152">Dashed = continuing context · Down = spawn · Up = distilled conclusion</text>
+
+  <g id="orchestrator-context">
+    <text class="note blue" x="452" y="201" text-anchor="middle">Orchestrator thread / context</text>
+    <path class="flow" d="M 208 228 H 690" stroke-dasharray="7 6" marker-end="url(#task-arrow)"/>
+    <circle cx="220" cy="228" r="3" fill="#3a6ea5"/>
+    <circle cx="404" cy="228" r="3" fill="#3a6ea5"/>
+    <circle cx="426" cy="228" r="3" fill="#3a6ea5"/>
+    <circle cx="674" cy="228" r="3" fill="#3a6ea5"/>
+  </g>
+  <g id="task-flow" class="flow">
+    <path id="spawn-implementer" d="M 220 228 C 220 254 262 254 262 280" marker-end="url(#task-arrow)"/>
+    <path id="implementation-conclusion" d="M 362 280 C 362 254 404 254 404 228" marker-end="url(#task-arrow)"/>
+    <path id="spawn-validation" d="M 426 228 C 426 254 478 254 478 280" marker-end="url(#task-arrow)"/>
+    <path id="validation-conclusion" d="M 632 280 C 632 254 674 254 674 228" marker-end="url(#task-arrow)"/>
+    <path d="M 628 358 V 379 Q 628 391 616 391 H 474 Q 462 391 462 379 V 358"
+          marker-end="url(#task-arrow)"/>
+    <path d="M 772 293 V 401 Q 772 415 758 415 H 143 Q 129 415 129 401 V 267"
+          marker-end="url(#task-arrow)"/>
+  </g>
+  <g id="outer-feedback" class="outer-flow">
+    <path d="M 854 228 H 916" marker-end="url(#human-arrow)"/>
+    <path d="M 1024 328 V 457 Q 1024 471 1010 471 H 32 Q 18 471 18 457 V 184
+      Q 18 170 32 170 H 115 Q 129 170 129 184 V 189" marker-end="url(#human-arrow)"/>
+  </g>
+
+  <g id="orchestrator">
+    <rect x="50" y="189" width="158" height="78" rx="9" fill="#dde8f3" stroke="#3a6ea5"/>
+    <text class="label" x="129" y="222">Orchestrator</text>
+    <text class="small" x="129" y="248">one task at a time</text>
+  </g>
+  <g id="implementation">
+    <rect x="240" y="280" width="144" height="78" rx="9" fill="#eef3f8" stroke="#3a6ea5"/>
+    <text class="label" x="312" y="312">Implement</text>
+    <text class="small" x="312" y="338">new agent context</text>
+  </g>
+  <g id="review-test-fix">
+    <rect x="436" y="280" width="218" height="78" rx="9" fill="#eef3f8" stroke="#3a6ea5"/>
+    <text class="label" x="545" y="312">Review · Test · Fix</text>
+    <text class="small" x="545" y="338">new agent context</text>
+    <text class="small" x="545" y="380">Retry on failure</text>
+  </g>
+  <g id="feed-forward">
+    <rect x="690" y="189" width="164" height="104" rx="9" fill="#eef3f8" stroke="#3a6ea5"/>
+    <text class="label" x="772" y="217">File new tasks</text>
+    <text class="note" x="772" y="244" text-anchor="middle">Feed forward</text>
+    <text class="note" x="772" y="268" text-anchor="middle">learnings</text>
+  </g>
+  <text class="note" x="450" y="436" text-anchor="middle">Next task carries the learning forward</text>
+
+  <g id="human-and-ci">
+    <rect x="916" y="140" width="216" height="188" rx="12" fill="#f5f0e8" stroke="#806644"/>
+    <text class="label" x="1024" y="172">Human + CI</text>
+    <text class="note" x="1024" y="204" text-anchor="middle">Inspection · UX</text>
+    <text class="note" x="1024" y="231" text-anchor="middle">Falsify · interrogate</text>
+    <text class="note" x="1024" y="258" text-anchor="middle">Integration checks</text>
+    <text class="small" x="1024" y="299">Try it. Find what breaks.</text>
+  </g>
+  <text class="note" x="540" y="456" text-anchor="middle">New goals, acceptance criteria, and falsifying examples</text>
+</svg>

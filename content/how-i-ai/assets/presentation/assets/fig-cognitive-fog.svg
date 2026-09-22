@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="cognitive-fog-title cognitive-fog-description">
+  <title id="cognitive-fog-title">Overloaded agent versus focused specialist agents</title>
+  <desc id="cognitive-fog-description">An agent handling security, documentation, performance,
+    style, testing, linting, and architecture at once becomes overloaded and less reliable.
+    A coordinator instead branches the same seven concerns to focused specialist agents,
+    joins their results, and refines the combined work.</desc>
+  <defs>
+    <marker id="overload-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#a64137"/>
+    </marker>
+    <marker id="focused-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; }
+      .heading { font-size: 19px; font-weight: 600; }
+      .label { font-size: 16px; text-anchor: middle; }
+      .note { font-size: 15px; text-anchor: middle; fill: #546568; }
+      .overload-ink { fill: #a64137; }
+      .stage { fill: #e9f2df; stroke: #527b2c; stroke-width: 1.5; }
+      .specialist { fill: #fff; stroke: #84a566; stroke-width: 1.2; }
+      .flow { fill: none; stroke: #527b2c; stroke-width: 1.5; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <g id="overloaded">
+    <rect x="8" y="8" width="534" height="162" rx="12" fill="#fff8f6" stroke="#e6cbc5"/>
+    <text class="heading overload-ink" x="24" y="34">Overloaded: every concern at once</text>
+
+    <g id="simultaneous-concerns">
+      <rect x="24" y="51" width="278" height="99" rx="8" fill="#fff" stroke="#d8bbb4"/>
+      <text class="label" x="163" y="77">
+        <tspan id="concern-security">Security</tspan> · <tspan id="concern-docs">Docs</tspan> · <tspan id="concern-performance">Performance</tspan>
+      </text>
+      <text class="label" x="163" y="104">
+        <tspan id="concern-style">Style</tspan> · <tspan id="concern-testing">Testing</tspan> · <tspan id="concern-linting">Linting</tspan>
+      </text>
+      <text class="label" id="concern-architecture" x="163" y="131">Architecture</text>
+    </g>
+
+    <path id="all-concerns-to-one-agent" d="M 302 100 H 357" fill="none" stroke="#a64137"
+          stroke-width="2" marker-end="url(#overload-arrow)"/>
+    <g id="overloaded-agent">
+      <rect x="357" y="73" width="166" height="54" rx="8" fill="#f8e7e2" stroke="#a64137" stroke-width="1.5"/>
+      <text class="label" x="440" y="106" font-weight="600">One agent</text>
+      <text class="note overload-ink" x="440" y="150">Reliability drops</text>
+    </g>
+  </g>
+
+  <g id="focused">
+    <rect x="8" y="184" width="534" height="283" rx="12" fill="#f5f9f0" stroke="#cbdcbb"/>
+    <text class="heading" x="24" y="211">Focused: branch, join, refine</text>
+    <text class="note" x="275" y="239">One concern per agent</text>
+
+    <!-- Shared buses keep the seven parallel routes clear of every node and label. -->
+    <g id="branch-flow" class="flow">
+      <path id="coordinator-to-branch" d="M 159 343 H 181 M 181 262 V 424"/>
+      <path id="branch-to-security" d="M 181 262 H 205" marker-end="url(#focused-arrow)"/>
+      <path id="branch-to-docs" d="M 181 289 H 205" marker-end="url(#focused-arrow)"/>
+      <path id="branch-to-performance" d="M 181 316 H 205" marker-end="url(#focused-arrow)"/>
+      <path id="branch-to-style" d="M 181 343 H 205" marker-end="url(#focused-arrow)"/>
+      <path id="branch-to-testing" d="M 181 370 H 205" marker-end="url(#focused-arrow)"/>
+      <path id="branch-to-linting" d="M 181 397 H 205" marker-end="url(#focused-arrow)"/>
+      <path id="branch-to-architecture" d="M 181 424 H 205" marker-end="url(#focused-arrow)"/>
+    </g>
+    <g id="join-flow" class="flow">
+      <path id="specialists-to-join-bus" d="M 345 262 H 373 M 345 289 H 373 M 345 316 H 373
+        M 345 343 H 373 M 345 370 H 373 M 345 397 H 373 M 345 424 H 373 M 373 262 V 424"/>
+      <path id="join-bus-to-join" d="M 373 343 H 399" marker-end="url(#focused-arrow)"/>
+      <path id="join-to-refine" d="M 461 365 V 404" marker-end="url(#focused-arrow)"/>
+    </g>
+
+    <g id="coordinator">
+      <text class="note" x="91" y="310">Branch</text>
+      <rect class="stage" x="23" y="321" width="136" height="44" rx="8"/>
+      <text class="label" x="91" y="349" font-weight="600">Coordinator</text>
+    </g>
+
+    <g id="specialist-security">
+      <rect class="specialist" x="205" y="250" width="140" height="24" rx="5"/>
+      <text class="label" x="275" y="268">Security</text>
+    </g>
+    <g id="specialist-docs">
+      <rect class="specialist" x="205" y="277" width="140" height="24" rx="5"/>
+      <text class="label" x="275" y="295">Docs</text>
+    </g>
+    <g id="specialist-performance">
+      <rect class="specialist" x="205" y="304" width="140" height="24" rx="5"/>
+      <text class="label" x="275" y="322">Performance</text>
+    </g>
+    <g id="specialist-style">
+      <rect class="specialist" x="205" y="331" width="140" height="24" rx="5"/>
+      <text class="label" x="275" y="349">Style</text>
+    </g>
+    <g id="specialist-testing">
+      <rect class="specialist" x="205" y="358" width="140" height="24" rx="5"/>
+      <text class="label" x="275" y="376">Testing</text>
+    </g>
+    <g id="specialist-linting">
+      <rect class="specialist" x="205" y="385" width="140" height="24" rx="5"/>
+      <text class="label" x="275" y="403">Linting</text>
+    </g>
+    <g id="specialist-architecture">
+      <rect class="specialist" x="205" y="412" width="140" height="24" rx="5"/>
+      <text class="label" x="275" y="430">Architecture</text>
+    </g>
+
+    <g id="join">
+      <rect class="stage" x="399" y="321" width="124" height="44" rx="8"/>
+      <text class="label" x="461" y="349" font-weight="600">Join</text>
+    </g>
+    <g id="refine">
+      <rect class="stage" x="399" y="404" width="124" height="37" rx="8"/>
+      <text class="label" x="461" y="428" font-weight="600">Refine</text>
+    </g>
+    <text class="note" x="275" y="459">Same concerns, focused passes</text>
+  </g>
+</svg>

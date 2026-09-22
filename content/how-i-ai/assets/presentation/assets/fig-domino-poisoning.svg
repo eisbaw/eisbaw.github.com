@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="domino-title domino-description">
+  <title id="domino-title">Context poisoning: a wrong assumption propagates</title>
+  <desc id="domino-description">Six dominoes show a left-to-right progression from
+    upright to increasingly fallen, from a wrong assumption toward later steps in a
+    session. A dashed green line shows the intended path. The red cascade illustrates how
+    each later step can build on the earlier error, amplifying it while the wrong assumption
+    remains in session context. The degree of amplification is qualitative.</desc>
+  <defs>
+    <marker id="poison-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#a64137"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; }
+      .heading { font-size: 22px; font-weight: 600; }
+      .label { font-size: 18px; text-anchor: middle; }
+      .note { font-size: 16px; fill: #546568; }
+      .error-ink { fill: #a64137; }
+      .flow { fill: none; stroke: #a64137; stroke-width: 1.7; stroke-linejoin: round; }
+      .domino { stroke: #a64137; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <g id="session-panel">
+    <rect x="8" y="8" width="534" height="459" rx="12" fill="#fff8f6" stroke="#e6cbc5"/>
+    <text class="heading" x="24" y="39">Context poisoning</text>
+    <text class="note" x="24" y="67">One wrong assumption can shape every later step.</text>
+  </g>
+
+  <g id="intended-path">
+    <text class="note" x="495" y="144" text-anchor="end" style="fill: #527b2c">Intended path</text>
+    <path d="M 33 176 H 504" fill="none" stroke="#84a566" stroke-width="1.5" stroke-dasharray="6 5"/>
+  </g>
+
+  <g id="wrong-assumption-trigger">
+    <text class="note error-ink" x="24" y="108" font-weight="600">Wrong assumption</text>
+    <path class="flow" d="M 39 116 V 171" marker-end="url(#poison-arrow)"/>
+  </g>
+
+  <g id="domino-cascade">
+    <!-- Tilt increases left-to-right, showing later steps progressively falling. -->
+    <g id="first-step" transform="rotate(0 50 296)">
+      <rect class="domino" x="28" y="176" width="22" height="120" rx="4" fill="#f8e7e2"/>
+    </g>
+    <g id="second-step" transform="rotate(15 120 296)">
+      <rect class="domino" x="98" y="176" width="22" height="120" rx="4" fill="#f2d2cb"/>
+    </g>
+    <g id="third-step" transform="rotate(30 190 296)">
+      <rect class="domino" x="168" y="176" width="22" height="120" rx="4" fill="#ebbbb1"/>
+    </g>
+    <g id="fourth-step" transform="rotate(45 260 296)">
+      <rect class="domino" x="238" y="176" width="22" height="120" rx="4" fill="#e6a699"/>
+    </g>
+    <g id="fifth-step" transform="rotate(60 330 296)">
+      <rect class="domino" x="308" y="176" width="22" height="120" rx="4" fill="#df9183"/>
+    </g>
+    <g id="sixth-step" transform="rotate(75 400 296)">
+      <rect class="domino" x="378" y="176" width="22" height="120" rx="4" fill="#d77b6b"/>
+    </g>
+  </g>
+
+  <g id="cascade-floor">
+    <rect x="24" y="296" width="502" height="10" rx="3" fill="#ece8e5"/>
+    <path d="M 24 296 H 526" fill="none" stroke="#cbbdb6" stroke-width="1"/>
+  </g>
+
+  <g id="error-amplification">
+    <text class="label" x="275" y="338">Each later step builds on the error</text>
+    <text class="label error-ink" x="275" y="374" font-weight="600">Error amplifies</text>
+    <path class="flow" d="M 33 390 H 517" stroke-width="2.2" marker-end="url(#poison-arrow)"/>
+  </g>
+
+  <g id="persistent-session-context">
+    <rect x="24" y="414" width="502" height="38" rx="7" fill="#fff" stroke="#cbbdb6" stroke-dasharray="5 4"/>
+    <text class="note" x="275" y="439" text-anchor="middle">The error stays in session context</text>
+  </g>
+</svg>

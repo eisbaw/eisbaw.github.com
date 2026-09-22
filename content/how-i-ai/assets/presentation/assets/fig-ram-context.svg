@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="ram-context-title ram-context-description">
+  <title id="ram-context-title">Context is volatile RAM; onboarding documents persist outside the session</title>
+  <desc id="ram-context-description">The context window behaves like volatile RAM, without
+    built-in flash carrying session state across a power cycle. External long-term context
+    includes the PRD, CLAUDE.md, architecture documents, and conventions. Short-term context
+    includes the task, motivation, and verification. These documents persist outside the
+    session and load fresh at each boot, like a firmware image. The lifecycle is boot,
+    load documents, work, and session ends. Ending a session wipes its context, while
+    external documents remain available for the next session.</desc>
+  <defs>
+    <marker id="load-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <marker id="wipe-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#a64137"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; text-anchor: middle; }
+      .heading { font-size: 20px; font-weight: 600; }
+      .label { font-size: 17px; }
+      .note { font-size: 16px; fill: #546568; }
+      .strong { font-weight: 600; }
+      .error { fill: #a64137; }
+      .flow { fill: none; stroke: #527b2c; stroke-width: 1.8; }
+      .stage { fill: #e9f2df; stroke: #527b2c; stroke-width: 1.3; }
+    </style>
+  </defs>
+
+  <!-- Onboarding is loaded across the session boundary, never stored as hidden flash. -->
+  <g id="lifecycle-connections" class="flow">
+    <path id="load-external-context" d="M 275 130 V 174" marker-end="url(#load-arrow)"/>
+    <path id="boot-to-load" d="M 80 390 H 110" marker-end="url(#load-arrow)"/>
+    <path id="load-to-work" d="M 247 390 H 277" marker-end="url(#load-arrow)"/>
+    <path id="work-to-end" d="M 371 390 H 401" marker-end="url(#load-arrow)"/>
+    <path id="wipe-and-reboot" d="M 471.5 412 V 442 H 44 V 412" stroke="#a64137"
+          stroke-dasharray="5 4" marker-end="url(#wipe-arrow)"/>
+  </g>
+
+  <g id="external-persistent-context">
+    <rect x="8" y="8" width="534" height="122" rx="10" fill="#f5f9f0" stroke="#cbdcbb"/>
+    <text class="heading" x="275" y="33">External context persists</text>
+    <g id="long-term-context">
+      <rect x="22" y="48" width="244" height="70" rx="6" fill="#fff" stroke="#cbdcbb"/>
+      <text class="label strong" x="144" y="68">Long-term</text>
+      <text class="note" x="144" y="90">PRD · CLAUDE.md</text>
+      <text class="note" x="144" y="112">Architecture · conventions</text>
+    </g>
+    <g id="short-term-context">
+      <rect x="284" y="48" width="244" height="70" rx="6" fill="#fff" stroke="#cbdcbb"/>
+      <text class="label strong" x="406" y="68">Short-term</text>
+      <text class="note" x="406" y="90">Task · motivation</text>
+      <text class="note" x="406" y="112">Verification</text>
+    </g>
+  </g>
+
+  <text class="note" x="292" y="157" style="text-anchor: start">Docs = firmware at boot</text>
+
+  <g id="ai-session-processor">
+    <rect x="8" y="174" width="534" height="176" rx="10" fill="#f3f5f5" stroke="#8c9a9c" stroke-width="1.5"/>
+    <text class="heading" x="275" y="199">AI session processor</text>
+    <g id="volatile-context-window">
+      <rect x="24" y="214" width="280" height="90" rx="7" fill="#e9f2df" stroke="#527b2c" stroke-width="1.5"/>
+      <text class="label strong" x="164" y="239">Context window</text>
+      <text class="label" x="164" y="264">Volatile RAM</text>
+      <g id="ram-cells" fill="#cfdfba" stroke="#84a566" stroke-width="1">
+        <rect x="70" y="280" width="24" height="11"/>
+        <rect x="102" y="280" width="24" height="11"/>
+        <rect x="134" y="280" width="24" height="11"/>
+        <rect x="166" y="280" width="24" height="11"/>
+        <rect x="198" y="280" width="24" height="11"/>
+        <rect x="230" y="280" width="24" height="11"/>
+      </g>
+    </g>
+    <g id="no-internal-persistent-state">
+      <rect x="326" y="214" width="200" height="90" rx="7" fill="#fff8f6" stroke="#a64137" stroke-dasharray="5 4"/>
+      <text class="label strong error" x="426" y="239">No built-in flash</text>
+      <text class="note" x="426" y="264">No persistent state</text>
+      <path d="M 419 280 L 433 294 M 433 280 L 419 294" fill="none" stroke="#a64137" stroke-width="2.5"/>
+    </g>
+    <text class="note" x="275" y="332">A new session starts with an empty context.</text>
+  </g>
+
+  <g id="boot">
+    <rect class="stage" x="8" y="368" width="72" height="44" rx="6"/>
+    <text class="label strong" x="44" y="397">Boot</text>
+  </g>
+  <g id="load-documents">
+    <rect class="stage" x="110" y="368" width="137" height="44" rx="6"/>
+    <text class="label strong" x="178.5" y="397">Load docs</text>
+  </g>
+  <g id="work">
+    <rect class="stage" x="277" y="368" width="94" height="44" rx="6"/>
+    <text class="label strong" x="324" y="397">Work</text>
+  </g>
+  <g id="session-end">
+    <rect x="401" y="368" width="141" height="44" rx="6" fill="#f8e7e2" stroke="#a64137" stroke-width="1.3"/>
+    <text class="label strong" x="471.5" y="397">Session ends</text>
+  </g>
+  <text class="note error" x="275" y="466">Context wiped · external docs remain</text>
+</svg>

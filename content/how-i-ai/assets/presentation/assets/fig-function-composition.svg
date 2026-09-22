@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="175" viewBox="0 0 1160 175"
+     role="img" aria-labelledby="composition-title composition-description">
+  <title id="composition-title">Function composition: g first, then f</title>
+  <desc id="composition-description">Let g map X to Z and f map Z to Y. For an input
+    x in X, first apply g to obtain the intermediate representation z equals g(x)
+    in Z. Then apply f to z, obtaining y equals f(g(x)) in Y. The composition
+    f circle g maps X to Y, and (f circle g)(x) equals f(g(x)). In a neural network,
+    these functions can be learned transformations of vector representations.</desc>
+  <defs>
+    <marker id="composition-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; text-anchor: middle; }
+      .equation { font-size: 30px; font-weight: 600; }
+      .math { font-size: 25px; }
+      .caption { font-size: 18px; fill: #546568; }
+      .arrow { fill: none; stroke: #527b2c; stroke-width: 2; marker-end: url(#composition-arrow); }
+    </style>
+  </defs>
+  <rect id="composition-panel" x="1" y="1" width="1158" height="173" rx="10"
+        fill="#f1f6ec" stroke="#c7d9b7"/>
+  <text id="composition-equation" class="equation" x="580" y="37">(f ∘ g)(x) = f(g(x))</text>
+
+  <g id="input">
+    <text class="math" x="73" y="99">x ∈ X</text>
+    <text class="caption" x="73" y="142">Input</text>
+  </g>
+  <path id="input-to-g" class="arrow" d="M 128 91 H 186"/>
+  <g id="first-function-g">
+    <rect x="188" y="61" width="220" height="59" rx="8" fill="#e0eccf" stroke="#84a566"/>
+    <text class="math" x="298" y="99">g : X → Z</text>
+    <text class="caption" x="298" y="148">Apply g first</text>
+  </g>
+  <path id="g-to-latent" class="arrow" d="M 410 91 H 479"/>
+  <g id="intermediate-representation">
+    <text class="math" x="580" y="99">z = g(x) ∈ Z</text>
+    <text class="caption" x="580" y="142">Latent representation</text>
+  </g>
+  <path id="latent-to-f" class="arrow" d="M 681 91 H 750"/>
+  <g id="second-function-f">
+    <rect x="752" y="61" width="220" height="59" rx="8" fill="#e0eccf" stroke="#84a566"/>
+    <text class="math" x="862" y="99">f : Z → Y</text>
+    <text class="caption" x="862" y="148">Then apply f</text>
+  </g>
+  <path id="f-to-output" class="arrow" d="M 974 91 H 1017"/>
+  <g id="output">
+    <text class="math" x="1084" y="99">y = f(z)</text>
+    <text class="caption" x="1084" y="142">Output in Y</text>
+  </g>
+</svg>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="haystack-title haystack-description">
+  <title id="haystack-title">Needle-in-a-Haystack Recall</title>
+  <desc id="haystack-description">An illustrative heatmap, not benchmark measurements.
+    The source diagram's eight context-length buckets, ten needle-position rows, and
+    eighty illustrative recall values are preserved. Short contexts retain high recall
+    across positions. Longer contexts degrade most in the middle. Context grows from
+    1k to 200k tokens left to right; needle position grows from 0 percent at the bottom
+    to 100 percent at the top. Green means higher illustrative recall, red means lower.</desc>
+  <defs>
+    <linearGradient id="recall-scale" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#b41e1e"/>
+      <stop offset=".5" stop-color="#dca028"/>
+      <stop offset="1" stop-color="#76b900"/>
+    </linearGradient>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; text-anchor: middle; }
+      .heading { font-size: 20px; font-weight: 600; }
+      .label { font-size: 17px; }
+      .tick { font-size: 16px; }
+      .note { font-size: 16px; fill: #546568; }
+      .position-tick { text-anchor: end; }
+      .scale-tick { text-anchor: start; }
+      .cell { stroke: #fff; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <g id="chart-heading">
+    <text class="heading" x="275" y="29">Needle-in-a-Haystack Recall</text>
+    <text class="note" x="275" y="54">Illustrative pattern, not measured results</text>
+  </g>
+
+  <!-- Rectangular cells retain the source's qualitative, illustrative values. -->
+  <g id="recall-heatmap">
+    <g id="needle-position-100">
+      <rect class="cell" x="77" y="100" width="46" height="24" fill="#78b801"><title>1k tokens, 100% position: illustrative 99% recall</title></rect>
+      <rect class="cell" x="123" y="100" width="46" height="24" fill="#7bb802"><title>4k tokens, 100% position: illustrative 98% recall</title></rect>
+      <rect class="cell" x="169" y="100" width="46" height="24" fill="#7db703"><title>8k tokens, 100% position: illustrative 97% recall</title></rect>
+      <rect class="cell" x="215" y="100" width="46" height="24" fill="#81b604"><title>16k tokens, 100% position: illustrative 95% recall</title></rect>
+      <rect class="cell" x="261" y="100" width="46" height="24" fill="#88b507"><title>32k tokens, 100% position: illustrative 92% recall</title></rect>
+      <rect class="cell" x="307" y="100" width="46" height="24" fill="#98b10d"><title>64k tokens, 100% position: illustrative 85% recall</title></rect>
+      <rect class="cell" x="353" y="100" width="46" height="24" fill="#acac15"><title>128k tokens, 100% position: illustrative 76% recall</title></rect>
+      <rect class="cell" x="399" y="100" width="46" height="24" fill="#bfa71c"><title>200k tokens, 100% position: illustrative 68% recall</title></rect>
+    </g>
+    <g id="needle-position-80">
+      <rect class="cell" x="77" y="124" width="46" height="24" fill="#7bb802"><title>1k tokens, 80% position: illustrative 98% recall</title></rect>
+      <rect class="cell" x="123" y="124" width="46" height="24" fill="#7db703"><title>4k tokens, 80% position: illustrative 97% recall</title></rect>
+      <rect class="cell" x="169" y="124" width="46" height="24" fill="#81b604"><title>8k tokens, 80% position: illustrative 95% recall</title></rect>
+      <rect class="cell" x="215" y="124" width="46" height="24" fill="#8db309"><title>16k tokens, 80% position: illustrative 90% recall</title></rect>
+      <rect class="cell" x="261" y="124" width="46" height="24" fill="#9faf10"><title>32k tokens, 80% position: illustrative 82% recall</title></rect>
+      <rect class="cell" x="307" y="124" width="46" height="24" fill="#baa81b"><title>64k tokens, 80% position: illustrative 70% recall</title></rect>
+      <rect class="cell" x="353" y="124" width="46" height="24" fill="#d5a225"><title>128k tokens, 80% position: illustrative 58% recall</title></rect>
+      <rect class="cell" x="399" y="124" width="46" height="24" fill="#d68c26"><title>200k tokens, 80% position: illustrative 48% recall</title></rect>
+    </g>
+    <g id="needle-position-70">
+      <rect class="cell" x="77" y="148" width="46" height="24" fill="#7bb802"><title>1k tokens, 70% position: illustrative 98% recall</title></rect>
+      <rect class="cell" x="123" y="148" width="46" height="24" fill="#7fb704"><title>4k tokens, 70% position: illustrative 96% recall</title></rect>
+      <rect class="cell" x="169" y="148" width="46" height="24" fill="#88b507"><title>8k tokens, 70% position: illustrative 92% recall</title></rect>
+      <rect class="cell" x="215" y="148" width="46" height="24" fill="#9ab00e"><title>16k tokens, 70% position: illustrative 84% recall</title></rect>
+      <rect class="cell" x="261" y="148" width="46" height="24" fill="#b5a919"><title>32k tokens, 70% position: illustrative 72% recall</title></rect>
+      <rect class="cell" x="307" y="148" width="46" height="24" fill="#d5a225"><title>64k tokens, 70% position: illustrative 58% recall</title></rect>
+      <rect class="cell" x="353" y="148" width="46" height="24" fill="#d38326"><title>128k tokens, 70% position: illustrative 45% recall</title></rect>
+      <rect class="cell" x="399" y="148" width="46" height="24" fill="#ca6624"><title>200k tokens, 70% position: illustrative 35% recall</title></rect>
+    </g>
+    <g id="needle-position-60">
+      <rect class="cell" x="77" y="172" width="46" height="24" fill="#7db703"><title>1k tokens, 60% position: illustrative 97% recall</title></rect>
+      <rect class="cell" x="123" y="172" width="46" height="24" fill="#84b605"><title>4k tokens, 60% position: illustrative 94% recall</title></rect>
+      <rect class="cell" x="169" y="172" width="46" height="24" fill="#91b20b"><title>8k tokens, 60% position: illustrative 88% recall</title></rect>
+      <rect class="cell" x="215" y="172" width="46" height="24" fill="#acac15"><title>16k tokens, 60% position: illustrative 76% recall</title></rect>
+      <rect class="cell" x="261" y="172" width="46" height="24" fill="#d1a324"><title>32k tokens, 60% position: illustrative 60% recall</title></rect>
+      <rect class="cell" x="307" y="172" width="46" height="24" fill="#d28026"><title>64k tokens, 60% position: illustrative 44% recall</title></rect>
+      <rect class="cell" x="353" y="172" width="46" height="24" fill="#c65822"><title>128k tokens, 60% position: illustrative 30% recall</title></rect>
+      <rect class="cell" x="399" y="172" width="46" height="24" fill="#bf4121"><title>200k tokens, 60% position: illustrative 22% recall</title></rect>
+    </g>
+    <g id="needle-position-50">
+      <rect class="cell" x="77" y="196" width="46" height="24" fill="#7fb704"><title>1k tokens, 50% position: illustrative 96% recall</title></rect>
+      <rect class="cell" x="123" y="196" width="46" height="24" fill="#86b506"><title>4k tokens, 50% position: illustrative 93% recall</title></rect>
+      <rect class="cell" x="169" y="196" width="46" height="24" fill="#98b10d"><title>8k tokens, 50% position: illustrative 85% recall</title></rect>
+      <rect class="cell" x="215" y="196" width="46" height="24" fill="#baa81b"><title>16k tokens, 50% position: illustrative 70% recall</title></rect>
+      <rect class="cell" x="261" y="196" width="46" height="24" fill="#d89227"><title>32k tokens, 50% position: illustrative 50% recall</title></rect>
+      <rect class="cell" x="307" y="196" width="46" height="24" fill="#c96323"><title>64k tokens, 50% position: illustrative 34% recall</title></rect>
+      <rect class="cell" x="353" y="196" width="46" height="24" fill="#bf4121"><title>128k tokens, 50% position: illustrative 22% recall</title></rect>
+      <rect class="cell" x="399" y="196" width="46" height="24" fill="#b82a1f"><title>200k tokens, 50% position: illustrative 14% recall</title></rect>
+    </g>
+    <g id="needle-position-40">
+      <rect class="cell" x="77" y="220" width="46" height="24" fill="#7fb704"><title>1k tokens, 40% position: illustrative 96% recall</title></rect>
+      <rect class="cell" x="123" y="220" width="46" height="24" fill="#86b506"><title>4k tokens, 40% position: illustrative 93% recall</title></rect>
+      <rect class="cell" x="169" y="220" width="46" height="24" fill="#9ab00e"><title>8k tokens, 40% position: illustrative 84% recall</title></rect>
+      <rect class="cell" x="215" y="220" width="46" height="24" fill="#bfa71c"><title>16k tokens, 40% position: illustrative 68% recall</title></rect>
+      <rect class="cell" x="261" y="220" width="46" height="24" fill="#d68c26"><title>32k tokens, 40% position: illustrative 48% recall</title></rect>
+      <rect class="cell" x="307" y="220" width="46" height="24" fill="#c85e23"><title>64k tokens, 40% position: illustrative 32% recall</title></rect>
+      <rect class="cell" x="353" y="220" width="46" height="24" fill="#bd3b20"><title>128k tokens, 40% position: illustrative 20% recall</title></rect>
+      <rect class="cell" x="399" y="220" width="46" height="24" fill="#b6241e"><title>200k tokens, 40% position: illustrative 12% recall</title></rect>
+    </g>
+    <g id="needle-position-30">
+      <rect class="cell" x="77" y="244" width="46" height="24" fill="#7db703"><title>1k tokens, 30% position: illustrative 97% recall</title></rect>
+      <rect class="cell" x="123" y="244" width="46" height="24" fill="#84b605"><title>4k tokens, 30% position: illustrative 94% recall</title></rect>
+      <rect class="cell" x="169" y="244" width="46" height="24" fill="#96b10c"><title>8k tokens, 30% position: illustrative 86% recall</title></rect>
+      <rect class="cell" x="215" y="244" width="46" height="24" fill="#b5a919"><title>16k tokens, 30% position: illustrative 72% recall</title></rect>
+      <rect class="cell" x="261" y="244" width="46" height="24" fill="#dca028"><title>32k tokens, 30% position: illustrative 55% recall</title></rect>
+      <rect class="cell" x="307" y="244" width="46" height="24" fill="#cd6f24"><title>64k tokens, 30% position: illustrative 38% recall</title></rect>
+      <rect class="cell" x="353" y="244" width="46" height="24" fill="#c14921"><title>128k tokens, 30% position: illustrative 25% recall</title></rect>
+      <rect class="cell" x="399" y="244" width="46" height="24" fill="#bb3520"><title>200k tokens, 30% position: illustrative 18% recall</title></rect>
+    </g>
+    <g id="needle-position-20">
+      <rect class="cell" x="77" y="268" width="46" height="24" fill="#7db703"><title>1k tokens, 20% position: illustrative 97% recall</title></rect>
+      <rect class="cell" x="123" y="268" width="46" height="24" fill="#81b604"><title>4k tokens, 20% position: illustrative 95% recall</title></rect>
+      <rect class="cell" x="169" y="268" width="46" height="24" fill="#8db309"><title>8k tokens, 20% position: illustrative 90% recall</title></rect>
+      <rect class="cell" x="215" y="268" width="46" height="24" fill="#a3ae12"><title>16k tokens, 20% position: illustrative 80% recall</title></rect>
+      <rect class="cell" x="261" y="268" width="46" height="24" fill="#c5a61f"><title>32k tokens, 20% position: illustrative 65% recall</title></rect>
+      <rect class="cell" x="307" y="268" width="46" height="24" fill="#d89227"><title>64k tokens, 20% position: illustrative 50% recall</title></rect>
+      <rect class="cell" x="353" y="268" width="46" height="24" fill="#cd6f24"><title>128k tokens, 20% position: illustrative 38% recall</title></rect>
+      <rect class="cell" x="399" y="268" width="46" height="24" fill="#c45222"><title>200k tokens, 20% position: illustrative 28% recall</title></rect>
+    </g>
+    <g id="needle-position-10">
+      <rect class="cell" x="77" y="292" width="46" height="24" fill="#7bb802"><title>1k tokens, 10% position: illustrative 98% recall</title></rect>
+      <rect class="cell" x="123" y="292" width="46" height="24" fill="#7fb704"><title>4k tokens, 10% position: illustrative 96% recall</title></rect>
+      <rect class="cell" x="169" y="292" width="46" height="24" fill="#86b506"><title>8k tokens, 10% position: illustrative 93% recall</title></rect>
+      <rect class="cell" x="215" y="292" width="46" height="24" fill="#91b20b"><title>16k tokens, 10% position: illustrative 88% recall</title></rect>
+      <rect class="cell" x="261" y="292" width="46" height="24" fill="#a8ad14"><title>32k tokens, 10% position: illustrative 78% recall</title></rect>
+      <rect class="cell" x="307" y="292" width="46" height="24" fill="#c5a61f"><title>64k tokens, 10% position: illustrative 65% recall</title></rect>
+      <rect class="cell" x="353" y="292" width="46" height="24" fill="#d99727"><title>128k tokens, 10% position: illustrative 52% recall</title></rect>
+      <rect class="cell" x="399" y="292" width="46" height="24" fill="#d07a25"><title>200k tokens, 10% position: illustrative 42% recall</title></rect>
+    </g>
+    <g id="needle-position-0">
+      <rect class="cell" x="77" y="316" width="46" height="24" fill="#7bb802"><title>1k tokens, 0% position: illustrative 98% recall</title></rect>
+      <rect class="cell" x="123" y="316" width="46" height="24" fill="#7db703"><title>4k tokens, 0% position: illustrative 97% recall</title></rect>
+      <rect class="cell" x="169" y="316" width="46" height="24" fill="#7fb704"><title>8k tokens, 0% position: illustrative 96% recall</title></rect>
+      <rect class="cell" x="215" y="316" width="46" height="24" fill="#84b605"><title>16k tokens, 0% position: illustrative 94% recall</title></rect>
+      <rect class="cell" x="261" y="316" width="46" height="24" fill="#91b20b"><title>32k tokens, 0% position: illustrative 88% recall</title></rect>
+      <rect class="cell" x="307" y="316" width="46" height="24" fill="#a3ae12"><title>64k tokens, 0% position: illustrative 80% recall</title></rect>
+      <rect class="cell" x="353" y="316" width="46" height="24" fill="#b5a919"><title>128k tokens, 0% position: illustrative 72% recall</title></rect>
+      <rect class="cell" x="399" y="316" width="46" height="24" fill="#c5a61f"><title>200k tokens, 0% position: illustrative 65% recall</title></rect>
+    </g>
+  </g>
+
+  <g id="position-axis">
+    <text class="label" transform="translate(21 220) rotate(-90)">Needle position in context (%)</text>
+    <text class="tick position-tick" x="65" y="117">100</text>
+    <text class="tick position-tick" x="65" y="141">80</text>
+    <text class="tick position-tick" x="65" y="165">70</text>
+    <text class="tick position-tick" x="65" y="189">60</text>
+    <text class="tick position-tick" x="65" y="213">50</text>
+    <text class="tick position-tick" x="65" y="237">40</text>
+    <text class="tick position-tick" x="65" y="261">30</text>
+    <text class="tick position-tick" x="65" y="285">20</text>
+    <text class="tick position-tick" x="65" y="309">10</text>
+    <text class="tick position-tick" x="65" y="333">0</text>
+  </g>
+
+  <g id="context-axis">
+    <text class="tick" x="100" y="365">1k</text>
+    <text class="tick" x="146" y="365">4k</text>
+    <text class="tick" x="192" y="365">8k</text>
+    <text class="tick" x="238" y="365">16k</text>
+    <text class="tick" x="284" y="365">32k</text>
+    <text class="tick" x="330" y="365">64k</text>
+    <text class="tick" x="376" y="365">128k</text>
+    <text class="tick" x="422" y="365">200k</text>
+    <text class="label" x="261" y="390">Context window size (tokens)</text>
+  </g>
+
+  <g id="recall-legend">
+    <rect x="465" y="100" width="16" height="240" fill="url(#recall-scale)"/>
+    <text class="tick scale-tick" x="487" y="106">100</text>
+    <text class="tick scale-tick" x="487" y="132.667">90</text>
+    <text class="tick scale-tick" x="487" y="159.333">80</text>
+    <text class="tick scale-tick" x="487" y="186">70</text>
+    <text class="tick scale-tick" x="487" y="212.667">60</text>
+    <text class="tick scale-tick" x="487" y="239.333">50</text>
+    <text class="tick scale-tick" x="487" y="266">40</text>
+    <text class="tick scale-tick" x="487" y="292.667">30</text>
+    <text class="tick scale-tick" x="487" y="319.333">20</text>
+    <text class="tick scale-tick" x="487" y="346">10</text>
+    <text class="label" transform="translate(536 220) rotate(-90)">Recall accuracy (%)</text>
+  </g>
+
+  <g id="lost-in-the-middle-insight">
+    <rect x="8" y="407" width="534" height="60" rx="8" fill="#eef2ed"/>
+    <text class="heading" x="275" y="432">“Lost in the middle”</text>
+    <text class="note" x="275" y="455">Recall weakens most in middle positions.</text>
+  </g>
+</svg>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="documents-title documents-description">
+  <title id="documents-title">Strategic documents from persistent intent to individual tasks</title>
+  <desc id="documents-description">The hierarchy widens from PRD to Design to Behavior
+    and conventions, the three long-lived persistent layers. PRD defines what and why,
+    the destination, and onboards the agent. Design defines how, the vehicle, architecture,
+    and scope. Behavior defines style, rules, patterns, tools, and testing. Below a gap,
+    the short-lived work journal contains Plan, the route map for when and order, and
+    Tasks, individual work orders with full context. Together these documents guide
+    long-term goals and short-term code changes.</desc>
+  <defs>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; text-anchor: middle; }
+      .heading { font-size: 20px; font-weight: 600; }
+      .label { font-size: 17px; }
+      .lifetime { font-size: 19px; font-weight: 600; }
+      .persistent-tier { stroke: #84a566; stroke-width: 1.2; stroke-linejoin: round; }
+      .journal-tier { stroke: #9babb3; stroke-width: 1.2; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <g id="persistent-documents">
+    <text class="lifetime" x="275" y="29" style="fill: #527b2c">Long-lived · persistent</text>
+    <g id="prd-destination">
+      <path class="persistent-tier" d="M 157 48 H 393 L 429 125 H 121 Z" fill="#f5f9f0"/>
+      <text class="heading" x="275" y="70">PRD</text>
+      <text class="label" x="275" y="94">What &amp; why · destination</text>
+      <text class="label" x="275" y="116">Onboards the agent</text>
+    </g>
+    <g id="design-vehicle">
+      <path class="persistent-tier" d="M 121 125 H 429 L 465 202 H 85 Z" fill="#edf4e5"/>
+      <text class="heading" x="275" y="147">Design</text>
+      <text class="label" x="275" y="171">How · vehicle</text>
+      <text class="label" x="275" y="193">Architecture &amp; scope</text>
+    </g>
+    <g id="behavior-and-conventions">
+      <path class="persistent-tier" d="M 85 202 H 465 L 501 279 H 49 Z" fill="#e2edd6"/>
+      <text class="heading" x="275" y="224">Behavior / conventions</text>
+      <text class="label" x="275" y="248">Style, rules, patterns</text>
+      <text class="label" x="275" y="270">Tools &amp; testing</text>
+    </g>
+  </g>
+
+  <g id="short-lived-journal">
+    <text class="lifetime" x="275" y="307" style="fill: #546568">Short-lived · work journal</text>
+    <g id="plan-route-map">
+      <path class="journal-tier" d="M 40 321 H 510 L 522 379 H 28 Z" fill="#f0f3f4"/>
+      <text class="heading" x="275" y="345">Plan</text>
+      <text class="label" x="275" y="369">When &amp; order · route map</text>
+    </g>
+    <g id="individual-tasks">
+      <path class="journal-tier" d="M 28 379 H 522 L 534 439 H 16 Z" fill="#e3e9ec"/>
+      <text class="heading" x="275" y="403">Tasks</text>
+      <text class="label" x="275" y="428">Individual work orders · full context</text>
+    </g>
+  </g>
+
+  <text class="label" x="275" y="467" style="fill: #546568">Guides long-term goals and short-term code changes</text>
+</svg>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="175" viewBox="0 0 1160 175"
+     role="img" aria-labelledby="feedback-stages-title feedback-stages-description">
+  <title id="feedback-stages-title">Explore, distill, design, implement, test, and review</title>
+  <desc id="feedback-stages-description">Six stages progress from Explore through Distill,
+    Design, Implement, Test, and Review. A feedback path returns from Review to Design,
+    labeled refine and repeat.</desc>
+  <defs>
+    <marker id="stage-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; text-anchor: middle; }
+      .stage-label { font-size: 21px; font-weight: 600; }
+      .stage { fill: #e9f2df; stroke: #84a566; stroke-width: 1.5; }
+      .flow { fill: none; stroke: #527b2c; stroke-width: 2; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <!-- Forward links and the return route attach to node boundaries. -->
+  <g id="forward-progress" class="flow">
+    <path id="explore-to-distill" d="M 167 50 H 209" marker-end="url(#stage-arrow)"/>
+    <path id="distill-to-design" d="M 363 50 H 405" marker-end="url(#stage-arrow)"/>
+    <path id="design-to-implement" d="M 559 50 H 601" marker-end="url(#stage-arrow)"/>
+    <path id="implement-to-test" d="M 755 50 H 797" marker-end="url(#stage-arrow)"/>
+    <path id="test-to-review" d="M 951 50 H 993" marker-end="url(#stage-arrow)"/>
+  </g>
+  <path id="review-to-design" class="flow" d="M 1070 81 V 127 H 482 V 81"
+        marker-end="url(#stage-arrow)"/>
+
+  <g id="explore">
+    <rect class="stage" x="13" y="19" width="154" height="62" rx="9"/>
+    <text class="stage-label" x="90" y="57">Explore</text>
+  </g>
+  <g id="distill">
+    <rect class="stage" x="209" y="19" width="154" height="62" rx="9"/>
+    <text class="stage-label" x="286" y="57">Distill</text>
+  </g>
+  <g id="design">
+    <rect class="stage" x="405" y="19" width="154" height="62" rx="9"/>
+    <text class="stage-label" x="482" y="57">Design</text>
+  </g>
+  <g id="implement">
+    <rect class="stage" x="601" y="19" width="154" height="62" rx="9"/>
+    <text class="stage-label" x="678" y="57">Implement</text>
+  </g>
+  <g id="test">
+    <rect class="stage" x="797" y="19" width="154" height="62" rx="9"/>
+    <text class="stage-label" x="874" y="57">Test</text>
+  </g>
+  <g id="review">
+    <rect class="stage" x="993" y="19" width="154" height="62" rx="9"/>
+    <text class="stage-label" x="1070" y="57">Review</text>
+  </g>
+
+  <text x="776" y="158" font-size="19" style="fill: #546568">refine and repeat</text>
+</svg>

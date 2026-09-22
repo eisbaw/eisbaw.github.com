@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="475" viewBox="0 0 550 475"
+     role="img" aria-labelledby="distillation-title distillation-description">
+  <title id="distillation-title">Explorer, implementer and reviewer use focused contexts</title>
+  <desc id="distillation-description">An explorer works through many tokens in a large
+    context, then distills its findings to one compact line: problem is X, fix Y. An implementer
+    receives this finding in a fresh, small context and produces code and tests. A reviewer
+    receives those artifacts in another fresh context. The wider explorer box indicates a
+    qualitatively larger context, not a measured token count.</desc>
+  <defs>
+    <marker id="distillation-arrow" viewBox="0 0 8 8" refX="8" refY="4"
+            markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#527b2c"/>
+    </marker>
+    <style>
+      text { font-family: 'Fira Sans', Arial, sans-serif; fill: #23373b; }
+      .heading { font-size: 20px; font-weight: 600; text-anchor: middle; }
+      .label { font-size: 18px; text-anchor: middle; }
+      .note { font-size: 16px; fill: #546568; }
+      .agent { fill: #e9f2df; stroke: #84a566; stroke-width: 1.5; }
+      .artifact { fill: #fff; stroke: #9cb885; stroke-width: 1.2; }
+      .flow { fill: none; stroke: #527b2c; stroke-width: 1.7; }
+    </style>
+  </defs>
+
+  <rect x="8" y="8" width="534" height="459" rx="12" fill="#f5f9f0" stroke="#cbdcbb"/>
+
+  <g id="focused-handoffs" class="flow">
+    <path id="exploration-to-findings" d="M 275 88 V 129" marker-end="url(#distillation-arrow)"/>
+    <path id="findings-to-implementer" d="M 275 189 V 232" marker-end="url(#distillation-arrow)"/>
+    <path id="implementation-to-artifacts" d="M 275 300 V 334" marker-end="url(#distillation-arrow)"/>
+    <path id="artifacts-to-reviewer" d="M 275 376 V 417" marker-end="url(#distillation-arrow)"/>
+  </g>
+
+  <g id="explorer">
+    <rect class="agent" x="72" y="18" width="406" height="70" rx="9"/>
+    <text class="heading" x="275" y="46">Explorer</text>
+    <text class="note" x="275" y="71" text-anchor="middle">Large context · many tokens</text>
+  </g>
+  <text class="note" x="300" y="114">Distill</text>
+
+  <g id="distilled-finding">
+    <rect class="artifact" x="130" y="129" width="290" height="60" rx="7"/>
+    <text class="note" x="275" y="152" text-anchor="middle" style="fill: #527b2c">Compact finding · 1 line</text>
+    <text class="label" x="275" y="177">“Problem is X; fix Y”</text>
+  </g>
+  <text class="note" x="300" y="216">Fresh context</text>
+
+  <g id="implementer">
+    <rect class="agent" x="137" y="232" width="276" height="68" rx="9"/>
+    <text class="heading" x="275" y="260">Implementer</text>
+    <text class="note" x="275" y="285" text-anchor="middle">Small context</text>
+  </g>
+
+  <g id="implementation-artifacts">
+    <rect class="artifact" x="176" y="334" width="198" height="42" rx="7"/>
+    <text class="label" x="275" y="361">Code + tests</text>
+  </g>
+  <text class="note" x="300" y="402">Fresh context</text>
+
+  <g id="reviewer">
+    <rect class="agent" x="137" y="417" width="276" height="40" rx="9"/>
+    <text class="heading" x="275" y="444">Reviewer</text>
+  </g>
+</svg>
