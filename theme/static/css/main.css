@@ -899,6 +899,8 @@ thead th a { color: inherit; text-decoration: underline; }
   border-left: 1px solid var(--rule);
 }
 .home-name { font-size: 1rem; font-weight: 600; letter-spacing: -0.012em; }
+/* One line on wider screens (the column widens to fit); may wrap on tiny phones. */
+@media (min-width: 561px) { .home-byline .eyebrow { white-space: nowrap; } }
 
 .home-head {
   display: flex;
