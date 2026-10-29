@@ -55,7 +55,6 @@
   --accent-tint: #3a6ea514;
   --accent-tint-strong: #3a6ea52e;
   --logo-filter: none;
-  --bg-img: none;
 
   /* Gaia table: header bar, zebra stripe, tag chips */
   --bar-bg: #455a64;
@@ -103,7 +102,6 @@
   --rule: #505660;
   --rule-thin: #414752;
   --bg: #2e3440;              /* Nord polar night */
-  --bg-img: linear-gradient(180deg, #3b4252 0, #2e3440 320px);
   --bg-soft: #3b414d;         /* hover, code */
   --bg-card: #353b46;         /* card surfaces */
   --bg-glass: #2e3440d9;
@@ -138,7 +136,6 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-body { background-image: var(--bg-img); background-repeat: no-repeat; }
 
 /* --- Sticky header (translucent, hairline rule) --------------------------- */
 
