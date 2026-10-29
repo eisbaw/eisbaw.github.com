@@ -36,8 +36,9 @@ timeout 90 firefox --headless --new-instance -profile "$prof" \
 - **Phone**: `--window-size=390,844` (iPhone-class). This is the true mobile
   layout, below the site's breakpoints.
 - **Desktop / regular PC**: `--window-size=1280,900` (and optionally
-  `--window-size=1440,900`). Check the three-column layout: sidebar, content, and
-  the "On this page" TOC (TOC appears only on post pages at wide widths).
+  `--window-size=1440,900`). Check the three-column layout on post pages: sidebar,
+  content, and the "On this page" TOC (the TOC appears only at wide widths). The
+  home page has no sidebar: intro, feature card + Recent list, then a tile grid.
 - View the result with the Read tool (it renders images), and/or open it for the
   user with `feh "$SS/phone.png"`.
 
@@ -55,6 +56,11 @@ To review a specific page, point the URL at it, e.g.
 - **The sandbox SIGTERMs GUI launches** unless they are fully detached before the
   shell exits. Launch visible apps as:
   `{ env -u TMPDIR setsid <app> ... >/dev/null 2>&1 </dev/null & disown ; } & sleep 3; echo done`
+- **Dark mode in headless Firefox**: write a `user.js` into the throwaway profile
+  before the screenshot, so the page's pre-paint script picks dark:
+  `printf '%s\n' 'user_pref("ui.systemUsesDarkTheme", 1);' 'user_pref("layout.css.prefers-color-scheme.content-override", 0);' > "$prof/user.js"`.
+  The second pref alone did not switch it here. Compare file hashes: identical
+  light and dark PNGs mean the pref did not take.
 - **Do not combine** a screenshot capture and a viewer (`feh`) launch in the same
   shell script — it tends to get killed. Capture in one step, open `feh` in the next.
 
@@ -87,15 +93,19 @@ Scroll a post page: the left **sidebar** and the right **TOC** must stay stuck.
 ### Sidebar (desktop)
 Topic groups are compact, each with its currentColor mask icon before the label,
 and the overflow scrollbar is thin/muted. On phone the sidebar collapses behind the
-**Menu** toggle.
+**Menu** toggle. The home page has neither sidebar nor Menu: on phone its nav wraps
+under the logo (`.no-sidebar` rules).
 
 ### Themes
 Review **both light and dark**. The toggle stamps `data-theme` on the root; check
 contrast, the accent, callout cards, and figures (figures bake a light panel, so
-they stay bright in dark mode by design).
+they stay bright in dark mode by design). Also check the Gaia-table bars (Recent,
+archive years, post tables), code blocks (syntax colours and their scrollbar), and
+that sprite panels stay light in dark mode.
 
 ### Sprites and figures
-Title sprites render before each post title (index + post page) and animate.
+Title sprites render beside each post title on post pages and on the light
+panels of the home page, and animate.
 Inline SVG figures render and are not clipped.
 
 ## Report

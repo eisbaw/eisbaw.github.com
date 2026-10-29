@@ -9,7 +9,7 @@ I split it on purpose. The content should not know how it is built, and the buil
 The **instance** is this repository. It holds:
 
 - **`content/`** — one directory per post: a `meta.nix` (title, date, tags, summary as a pure Nix attribute set) and a `post.md`. Some posts add an `assets/` dir or a `figures.nix`.
-- **`theme/`** — <span class="gloss" tabindex="0">Tera<span class="gloss-card"><span class="gc-head"><span class="gc-name">Tera</span></span><span class="gc-body">A Rust templating engine with Jinja2-style syntax, used to render HTML pages from data.</span><span class="gc-foot"><a href="https://keats.github.io/tera/" target="_blank" rel="noopener">keats.github.io</a></span></span></span> templates plus CSS and self-hosted fonts. Here that is a local copy of niche's `fancy-sidebar` theme, with a MathJax include bolted on.
+- **`theme/`** — <span class="gloss" tabindex="0">Tera<span class="gloss-card"><span class="gc-head"><span class="gc-name">Tera</span></span><span class="gc-body">A Rust templating engine with Jinja2-style syntax, used to render HTML pages from data.</span><span class="gc-foot"><a href="https://keats.github.io/tera/" target="_blank" rel="noopener">keats.github.io</a></span></span></span> templates plus CSS and self-hosted fonts. Here it started as a local copy of niche's `fancy-sidebar` theme, with a MathJax include bolted on, and has since been restyled into its own look (below).
 - **`flake.nix`** — the wrapper. It calls `niche.lib.mkSite { contentDir = ./content; themeDir = ./theme; siteConfig = ...; }`, then adds the `CNAME` and `.nojekyll` that GitHub Pages needs.
 
 That is the whole instance. No generator code, no pipeline, no Rust. Pull the `niche` input, hand it three arguments, get a site.
@@ -18,7 +18,9 @@ The **engine** is niche: a Rust binary (`post2html`) wrapped by Nix, built as a 
 
 ## Design principles
 
-The visual design is typography-first: generous whitespace, a minimal palette, nothing competing with the text.
+The visual design is typography-first and flat: hairline rules, square corners, a small palette, nothing competing with the text.
+
+- **Two palettes.** Light is parchment paper with slate ink and the table look of <span class="gloss" tabindex="0">Marp<span class="gloss-card"><span class="gc-head"><span class="gc-name">Marp</span></span><span class="gc-body">A tool that turns Markdown into slide decks. Its built-in Gaia theme supplied the solid header bars and striped tables here.</span><span class="gc-foot"><a href="https://marp.app/" target="_blank" rel="noopener">marp.app</a></span></span></span>'s Gaia theme: a solid header bar over striped rows. Dark is <span class="gloss" tabindex="0">Nord<span class="gloss-card"><span class="gc-head"><span class="gc-name">Nord</span></span><span class="gc-body">An arctic, blue-grey colour palette for editors and terminals: dark "polar night" backgrounds, "snow storm" text, "frost" blue accents.</span><span class="gc-foot"><a href="https://www.nordtheme.com/" target="_blank" rel="noopener">nordtheme.com</a></span></span></span>. The pixel-art sprites sit on light panels in both, so they never sink into a dark background.
 
 - **Inter** for body text, **JetBrains Mono** for code. Self-hosted as <span class="gloss" tabindex="0">woff2<span class="gloss-card"><span class="gc-head"><span class="gc-name">WOFF2</span></span><span class="gc-body">Web Open Font Format 2.0: a Brotli-compressed web-font format that shrinks font files for faster page loads.</span></span></span>, no <span class="gloss" tabindex="0">CDN<span class="gloss-card"><span class="gc-head"><span class="gc-name">CDN</span></span><span class="gc-body">Content Delivery Network: geographically distributed servers that cache and serve assets close to the reader.</span></span></span>.
 - **Dark mode** with a small toggle, persisted in `localStorage`, defaulting to your OS preference.
