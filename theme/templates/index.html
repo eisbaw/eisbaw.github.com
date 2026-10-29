@@ -1,27 +1,92 @@
 {% extends "base.html" %}
 
+{# No sidebar here: drop it and its Menu button; "no-sidebar" keeps the nav visible on phones. #}
+{% block body_class %}home no-sidebar{% endblock %}
+{% block sidebar_toggle %}{% endblock sidebar_toggle %}
+{% block sidebar %}{% endblock sidebar %}
+
+{# One sprite tile, shared by the "Earlier" grid and later pages. Panels
+   alternate blue/clay by position. #}
+{% macro tile(p, i) %}
+<a class="tile" href="/posts/{{ p.slug }}/">
+  <div class="panel {% if i is odd %}blue{% else %}clay{% endif %}">
+    {% if p.tags %}<span class="pl tl">{{ p.tags | first }}</span>{% endif %}
+    <span class="pl tr">{{ p.date | truncate(length=7, end="") }}</span>
+    {% if p.title_icon %}<img src="/posts/{{ p.slug }}/assets/{{ p.title_icon }}" alt="">{% endif %}
+  </div>
+  <div class="tile-body">
+    <h3>{{ p.title }}</h3>
+    {% if p.reading_time_minutes %}<span class="eyebrow">{{ p.reading_time_minutes }} min read</span>{% endif %}
+  </div>
+</a>
+{% endmacro tile %}
+
 {% block content %}
-<div class="post-list">
-  {% for p in posts %}
-  <article class="post-summary">
-    {% if p.title_icon %}<img class="post-header-sprite" src="/posts/{{ p.slug }}/assets/{{ p.title_icon }}" alt="" aria-hidden="true">{% endif %}
-    <h2><a href="/posts/{{ p.slug }}/">{{ p.title }}</a></h2>
-    <div class="post-meta">
-      <time datetime="{{ p.date }}">{{ p.date }}</time>
-      {% if p.tags %}
-      <ul class="tag-list">
-        {% for tag in p.tags %}
-        <li><a href="/tags/{{ tag | slugify_tag }}/">{{ tag }}</a></li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-    </div>
-    {% if p.summary %}
-    <p class="summary">{{ p.summary }}</p>
-    {% endif %}
-  </article>
-  {% endfor %}
+{% if pagination.current == 1 and posts %}
+<section class="home-intro">
+  <h1>Engineering notes, from the schematic to the <span class="hl">type system.</span></h1>
+  <div class="home-byline">
+    <div class="home-name">Mark Ruvald Pedersen</div>
+    <div class="eyebrow">Compilers · embedded · Linux · agents</div>
+  </div>
+</section>
+
+{% set lead = posts | first %}
+<div class="home-head">
+  <h2>Latest</h2>
+  <a class="eyebrow" href="/archive/">Archive ↗</a>
 </div>
+<div class="home-latest">
+  <a class="feature" href="/posts/{{ lead.slug }}/">
+    <div class="panel blue">
+      {% if lead.tags %}<span class="pl tl">{{ lead.tags | first }}</span>{% endif %}
+      <span class="pl bl">{{ lead.date }}</span>
+      {% if lead.title_icon %}<img src="/posts/{{ lead.slug }}/assets/{{ lead.title_icon }}" alt="">{% endif %}
+    </div>
+    <div class="feature-body">
+      <span class="eyebrow">Latest post{% if lead.reading_time_minutes %} · {{ lead.reading_time_minutes }} min read{% endif %}</span>
+      <h3>{{ lead.title }}</h3>
+      {% if lead.summary %}<p>{{ lead.summary }}</p>{% endif %}
+    </div>
+  </a>
+
+  {% if posts | length > 1 %}
+  <div class="recent">
+    <div class="gaia-bar"><span>Recent</span><a href="/feed.xml">RSS ↗</a></div>
+    {% for p in posts | slice(start=1, end=4) %}
+    <a class="recent-row" href="/posts/{{ p.slug }}/">
+      <div class="panel {% if loop.index is odd %}clay{% else %}blue{% endif %}">
+        {% if p.title_icon %}<img src="/posts/{{ p.slug }}/assets/{{ p.title_icon }}" alt="">{% endif %}
+      </div>
+      <div class="recent-text">
+        <div class="eyebrow">
+          {% if p.tags %}<span class="chip">{{ p.tags | first }}</span>{% endif %}
+          {% if p.reading_time_minutes %}<span>{{ p.reading_time_minutes }} min</span>{% endif %}
+          <time datetime="{{ p.date }}">{{ p.date }}</time>
+        </div>
+        <h3>{{ p.title }}</h3>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+{% if posts | length > 4 %}
+<div class="home-head">
+  <h2>Earlier</h2>
+  <span class="eyebrow">{% if pagination.next_url %}<a href="{{ pagination.next_url }}">Older posts →</a>{% else %}<a href="/archive/">All posts in the archive →</a>{% endif %}</span>
+</div>
+<div class="tile-grid">
+  {% for p in posts | slice(start=4) %}{{ self::tile(p=p, i=loop.index) }}{% endfor %}
+</div>
+{% endif %}
+
+{% else %}
+<div class="tile-grid">
+  {% for p in posts %}{{ self::tile(p=p, i=loop.index) }}{% endfor %}
+</div>
+{% endif %}
 
 {% if pagination.total_pages > 1 %}
 <nav class="pagination" aria-label="Page navigation">

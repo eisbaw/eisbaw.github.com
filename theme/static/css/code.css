@@ -51,48 +51,49 @@
 .punctuation.separator { color: #1a1a1a; }
 
 /* === Dark mode overrides === */
-@media (prefers-color-scheme: dark) {
-  .source          { color: #e5e5e5; }
-  .comment,
-  .comment.line,
-  .comment.block   { color: #8b949e; }
-  .keyword,
-  .keyword.control,
-  .keyword.operator { color: #ff7b72; }
-  .storage,
-  .storage.type,
-  .storage.modifier { color: #ff7b72; }
-  .string,
-  .string.quoted   { color: #a5d6ff; }
-  .constant,
-  .constant.numeric,
-  .constant.language,
-  .constant.character { color: #79c0ff; }
-  .variable,
-  .variable.parameter,
-  .variable.other  { color: #ffa657; }
-  .support,
-  .support.function,
-  .support.class,
-  .support.type    { color: #d2a8ff; }
-  .entity,
-  .entity.name,
-  .entity.name.function,
-  .entity.name.type,
-  .entity.name.tag { color: #d2a8ff; }
-  .entity.other.attribute-name { color: #79c0ff; }
-  .invalid,
-  .invalid.illegal { color: #ffa198; background: rgba(255, 161, 152, 0.15); }
-  .markup.heading  { color: #79c0ff; }
-  .markup.list     { color: #ffa657; }
-  .markup.raw,
-  .markup.inline.raw { color: #a5d6ff; }
-  .markup.inserted { color: #7ee787; background: rgba(126, 231, 135, 0.15); }
-  .markup.deleted  { color: #ffa198; background: rgba(255, 161, 152, 0.15); }
-  .markup.changed  { color: #ffa657; background: rgba(255, 166, 87, 0.15); }
-  .meta,
-  .meta.function-call { color: #79c0ff; }
-  .punctuation,
-  .punctuation.definition,
-  .punctuation.separator { color: #e5e5e5; }
-}
+/* Keyed to the site toggle (base.html sets data-theme pre-paint from the saved
+   choice or prefers-color-scheme), so a reader who toggles dark gets dark code. */
+[data-theme="dark"] .source          { color: #e5e5e5; }
+[data-theme="dark"] .comment,
+[data-theme="dark"] .comment.line,
+[data-theme="dark"] .comment.block   { color: #8b949e; }
+[data-theme="dark"] .keyword,
+[data-theme="dark"] .keyword.control,
+[data-theme="dark"] .keyword.operator { color: #ff7b72; }
+[data-theme="dark"] .storage,
+[data-theme="dark"] .storage.type,
+[data-theme="dark"] .storage.modifier { color: #ff7b72; }
+[data-theme="dark"] .string,
+[data-theme="dark"] .string.quoted   { color: #a5d6ff; }
+[data-theme="dark"] .constant,
+[data-theme="dark"] .constant.numeric,
+[data-theme="dark"] .constant.language,
+[data-theme="dark"] .constant.character { color: #79c0ff; }
+[data-theme="dark"] .variable,
+[data-theme="dark"] .variable.parameter,
+[data-theme="dark"] .variable.other  { color: #ffa657; }
+[data-theme="dark"] .support,
+[data-theme="dark"] .support.function,
+[data-theme="dark"] .support.class,
+[data-theme="dark"] .support.type    { color: #d2a8ff; }
+[data-theme="dark"] .entity,
+[data-theme="dark"] .entity.name,
+[data-theme="dark"] .entity.name.function,
+[data-theme="dark"] .entity.name.type,
+[data-theme="dark"] .entity.name.tag { color: #d2a8ff; }
+[data-theme="dark"] .entity.other.attribute-name { color: #79c0ff; }
+[data-theme="dark"] .invalid,
+[data-theme="dark"] .invalid.illegal { color: #ffa198; background: rgba(255, 161, 152, 0.15); }
+[data-theme="dark"] .markup.heading  { color: #79c0ff; }
+[data-theme="dark"] .markup.list     { color: #ffa657; }
+[data-theme="dark"] .markup.raw,
+[data-theme="dark"] .markup.inline.raw { color: #a5d6ff; }
+[data-theme="dark"] .markup.inserted { color: #7ee787; background: rgba(126, 231, 135, 0.15); }
+[data-theme="dark"] .markup.deleted  { color: #ffa198; background: rgba(255, 161, 152, 0.15); }
+[data-theme="dark"] .markup.changed  { color: #ffa657; background: rgba(255, 166, 87, 0.15); }
+[data-theme="dark"] .meta,
+[data-theme="dark"] .meta.function-call { color: #79c0ff; }
+[data-theme="dark"] .punctuation,
+[data-theme="dark"] .punctuation.definition,
+[data-theme="dark"] .punctuation.separator { color: #e5e5e5; }
+

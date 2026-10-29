@@ -1,7 +1,9 @@
 /* ---------------------------------------------------------------------------
    sidebar-layout theme
-   Warm cream palette + frosted-glass sticky header + white cards, inspired
-   by ccleaks.com/audit. Inter (body) + JetBrains Mono (code), self-hosted.
+   Light: parchment paper + slate ink + the table look of Marp's Gaia theme
+   (slate header bar, striped rows, blue chips). Dark: Nord with a soft header
+   bar. Flat surfaces, hairline rules, square corners.
+   Inter (body) + JetBrains Mono (labels, code), self-hosted.
    --------------------------------------------------------------------------- */
 
 @font-face {
@@ -34,23 +36,39 @@
 }
 
 :root {
-  color-scheme: light dark;
+  /* Follows the site toggle, not the OS (scrollbars, form controls). */
+  color-scheme: light;
 
-  /* Light palette (default) — warm cream + terminal-green. */
-  --ink: #1a1715;             /* primary text */
-  --ink-mute: #4a4540;        /* secondary text */
-  --ink-faint: #5c5650;       /* tertiary text */
-  --rule: #00000024;          /* visible hairlines */
-  --rule-thin: #00000014;     /* very subtle hairlines */
-  --bg: #f5f0e8;              /* page bg: warm cream */
-  --bg-soft: #ede8df;         /* secondary fills (sidebar hover, code) */
-  --bg-card: #ffffff;         /* card surfaces */
-  --bg-glass: #f5f0e8b8;      /* header bg with alpha */
-  --glass-inner-highlight: #ffffff99;
+  /* Light palette (default) — parchment + Gaia slate ink. */
+  --ink: #455a64;             /* primary text: Gaia slate */
+  --ink-strong: #455a64;      /* heavy rules, outlined buttons */
+  --ink-mute: #4f6169;        /* secondary text */
+  --ink-faint: #52636a;       /* tertiary text, mono labels */
+  --rule: #d0cdc3;            /* visible hairlines */
+  --rule-thin: #ddd6c8;       /* very subtle hairlines */
+  --bg: #f0eadd;              /* page bg: parchment */
+  --bg-soft: #e8e1d2;         /* secondary fills (hover, code) */
+  --bg-card: #f8f4ec;         /* card surfaces */
+  --bg-glass: #f0eaddd9;      /* header bg with alpha */
   --accent: #3a6ea5;          /* Windows-blue (matches logo) */
   --accent-ink: #2c5580;      /* darker blue for hover */
   --accent-tint: #3a6ea514;
   --accent-tint-strong: #3a6ea52e;
+  --logo-filter: none;
+  --bg-img: none;
+
+  /* Gaia table: header bar, zebra stripe, tag chips */
+  --bar-bg: #455a64;
+  --bar-ink: #fff8e1;
+  --stripe: #e6e0d2;
+  --chip-bg: #3a6ea5;
+  --chip-ink: #fff8e1;
+
+  /* Sprite panels (stay light in both themes so sprites keep their contrast) */
+  --tint-blue: #dfe7f0;
+  --tint-blue-ink: #2f5b88;
+  --tint-clay: #f0dccf;
+  --tint-clay-ink: #8a3a1c;
 
   /* Geometry */
   --max-content: 800px;       /* ~712px text measure inside .post padding */
@@ -71,23 +89,38 @@
   --shadow-md: 0 4px 12px #0000000f;
 }
 
-/* Dark palette — Claude warm-gray surface ramp (mirrors Anthropic's
-   [data-theme=claude][data-mode=dark]) with a Windows-blue accent. */
+/* Dark palette — Nord (polar night #2e3440, snow text, frost accents), as on
+   the runway dashboard, with a soft header bar instead of Gaia's bright one.
+   Surfaces are fixed mixes of bg toward ink (3.5% card, 6% stripe, 7% soft,
+   10% thin rule, 18% rule). The logo blue is unreadable here, so text accent
+   is Nord frost. */
 [data-theme="dark"] {
-  --ink: #faf9f5;             /* cream text (Claude text-000) */
-  --ink-mute: #c2c0b6;        /* secondary (Claude text-200) */
-  --ink-faint: #9c9a92;       /* tertiary (Claude text-400) */
-  --rule: #ffffff20;
-  --rule-thin: #ffffff0e;
-  --bg: #1f1e1d;              /* page bg (Claude bg-200) */
-  --bg-soft: #30302e;         /* lightest fill: hover, code, tags (bg-000) */
-  --bg-card: #262624;         /* raised card surface (Claude bg-100) */
-  --bg-glass: #1f1e1db8;      /* header bg with alpha */
-  --glass-inner-highlight: #ffffff14;
-  --accent: #6a9bd0;          /* Windows-blue, lifted for legibility on dark */
-  --accent-ink: #8db8e0;      /* lighter blue for hover */
-  --accent-tint: #6a9bd01f;
-  --accent-tint-strong: #6a9bd03a;
+  color-scheme: dark;
+  --ink: #eceff4;             /* Nord snow storm */
+  --ink-strong: #eceff4;
+  --ink-mute: #dfe2e7;
+  --ink-faint: #d1d5db;
+  --rule: #505660;
+  --rule-thin: #414752;
+  --bg: #2e3440;              /* Nord polar night */
+  --bg-img: linear-gradient(180deg, #3b4252 0, #2e3440 320px);
+  --bg-soft: #3b414d;         /* hover, code */
+  --bg-card: #353b46;         /* card surfaces */
+  --bg-glass: #2e3440d9;
+  --accent: #88c0d0;          /* Nord frost */
+  --accent-ink: #a9d3df;
+  --accent-tint: #88c0d01f;
+  --accent-tint-strong: #88c0d03a;
+  --logo-filter: brightness(1.9) saturate(0.85);
+  --bar-bg: #434c5e;          /* soft bar (Nord polar night 3) */
+  --bar-ink: #eceff4;
+  --stripe: #393f4b;
+  --chip-bg: #81a1c1;         /* Nord frost blue */
+  --chip-ink: #2e3440;
+  --tint-blue: #d6e4ee;
+  --tint-blue-ink: #2a4d73;
+  --tint-clay: #f3dfd2;
+  --tint-clay-ink: #7a3218;
   --shadow-sm: 0 1px 2px #00000033, 0 1px 3px #00000033;
   --shadow-md: 0 4px 12px #00000040;
 }
@@ -105,8 +138,9 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+body { background-image: var(--bg-img); background-repeat: no-repeat; }
 
-/* --- Sticky header (frosted glass, ccleaks-inspired) -------------------- */
+/* --- Sticky header (translucent, hairline rule) --------------------------- */
 
 .site-header {
   position: sticky;
@@ -118,13 +152,9 @@ html, body {
   height: var(--header-h);
   padding: 0 24px;
   background: var(--bg-glass);
-  -webkit-backdrop-filter: blur(60px) saturate(210%) brightness(1.08);
-  backdrop-filter: blur(60px) saturate(210%) brightness(1.08);
-  border-bottom: 0.5px solid var(--rule-thin);
-  box-shadow:
-    inset 0 0.5px var(--glass-inner-highlight),
-    0 1px 2px #0000000a,
-    0 4px 24px #0000000f;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
 }
 
 .site-name {
@@ -141,6 +171,7 @@ html, body {
   height: 30px;
   width: auto;
   display: block;
+  filter: var(--logo-filter);  /* the logo is #3a6ea5; lifted in dark mode */
 }
 
 .top-nav { margin-left: auto; }
@@ -157,7 +188,11 @@ html, body {
   font-size: 0.9375rem;
 }
 .top-nav a:hover { color: var(--ink); }
-.top-nav a[aria-current="page"] { color: var(--accent); }
+.top-nav a[aria-current="page"] {
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 3px;
+}
 
 /* Dark/Light theme toggle button */
 .theme-toggle {
@@ -475,7 +510,7 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
 
 /* --- Post summary cards (index, tag) ------------------------------------ */
 
-.post-list { display: flex; flex-direction: column; gap: 16px; }
+.post-list { display: flex; flex-direction: column; gap: 0; }
 
 /* Card grid: the title sprite spans the title + meta rows; the summary spans
    the full width below. With no sprite the icon column collapses to 0, so
@@ -489,23 +524,18 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
     "summary summary";
   align-items: start;
   background: var(--bg-card);
-  border: 1px solid var(--rule-thin);
-  border-radius: var(--radius-lg);
-  padding: 24px 28px;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.15s ease-out, transform 0.15s ease-out;
+  border: 1px solid var(--rule);
+  padding: 22px 26px;
+  transition: border-color 0.15s ease-out;
 }
-.post-summary > .post-header-sprite { grid-area: icon; margin: 2px 18px 0 0; }
 .post-summary > h2 { grid-area: title; }
 .post-summary > .post-meta { grid-area: meta; }
 .post-summary > .summary { grid-area: summary; }
 /* Let the content column shrink below its content's min-content so a long title
    or the tag row cannot force the card wider than a narrow (phone) viewport. */
 .post-summary > :is(h2, .post-meta, .summary) { min-width: 0; }
-.post-summary:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
-}
+.post-summary:hover { background: var(--bg-soft); }
+.post-list > .post-summary + .post-summary { border-top: none; }
 
 .post-summary h2 { margin: 0 0 8px; font-size: 1.375rem; }
 .post-summary h2 a { color: var(--ink); }
@@ -537,13 +567,15 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
 }
 .tag-list a {
   display: inline-block;
-  padding: 2px 8px;
-  border-radius: 10px;
-  background: var(--bg-soft);
+  padding: 1px 7px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
   color: var(--ink-mute);
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
 }
-.tag-list a:hover { background: var(--rule); text-decoration: none; }
+.tag-list a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 
 .reading-time::before { content: "·"; margin-right: 12px; color: var(--ink-faint); }
 
@@ -551,10 +583,8 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
 
 .post {
   background: var(--bg-card);
-  border: 1px solid var(--rule-thin);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--rule);
   padding: 40px 44px;
-  box-shadow: var(--shadow-sm);
 }
 
 .post-header {
@@ -573,6 +603,13 @@ a:hover { color: var(--accent-ink); text-decoration: underline; }
   image-rendering: pixelated;
 }
 .post-header-text { flex: 1 1 auto; min-width: 0; }
+/* Sprites are mostly #3a6ea5, which sinks into the dark card; give them the
+   same light panel the home page uses. */
+[data-theme="dark"] .post-header-sprite {
+  box-sizing: content-box;   /* pad around the sprite, don't shrink it */
+  background: var(--tint-blue);
+  padding: 6px;
+}
 .post-header-text h1 { margin: 0 0 8px; }
 .post-content { font-size: 1rem; line-height: 1.625; }
 .post-content img { max-width: 100%; height: auto; }
@@ -745,6 +782,9 @@ pre {
   border-radius: 6px;
   padding: 16px;
   overflow-x: auto;
+  /* Themed scrollbar; the platform default paints a light bar in dark mode. */
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--ink-faint) 40%, transparent) transparent;
 }
 pre code { background: none; padding: 0; font-size: 1em; }
 
@@ -754,6 +794,7 @@ hr {
   margin: 32px 0;
 }
 
+/* Tables in posts: Gaia's table look — a solid header bar and zebra rows. */
 table {
   border-collapse: collapse;
   width: 100%;
@@ -765,35 +806,42 @@ th, td {
   text-align: left;
 }
 th { font-weight: 600; }
+thead th {
+  background: var(--bar-bg);
+  color: var(--bar-ink);
+  border-bottom: none;
+}
+tbody tr:nth-child(odd) > :is(td, th) { background: var(--stripe); }
+thead th a { color: inherit; text-decoration: underline; }
+/* The stripe is close to the inline-code fill; outline code in table cells. */
+:is(td, th) code { box-shadow: inset 0 0 0 1px var(--rule); }
 
 /* --- Archive ------------------------------------------------------------ */
 
-.archive-year {
-  margin-bottom: 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--rule-thin);
-  border-radius: var(--radius-lg);
-  padding: 24px 28px;
-  box-shadow: var(--shadow-sm);
-}
+/* Each year is a Gaia table: slate header bar, zebra rows. */
+.archive-year { margin-bottom: 24px; }
 .archive-year h2 {
+  font-family: var(--font-mono);
   font-size: 0.75rem;
+  font-weight: 400;
   letter-spacing: var(--tracking-eyebrow);
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin: 0 0 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--rule-thin);
+  color: var(--bar-ink);
+  background: var(--bar-bg);
+  margin: 0;
+  padding: 8px 12px;
 }
 .archive-list { list-style: none; padding: 0; margin: 0; }
 .archive-list li {
   display: flex;
   gap: 16px;
-  padding: 6px 0;
+  margin: 0;
+  padding: 8px 12px;
   border-bottom: 1px solid var(--rule);
 }
-.archive-list li:last-child { border-bottom: none; }
+.archive-list li:nth-child(odd) { background: var(--stripe); }
 .archive-list time {
+  flex: none;
+  white-space: nowrap;
   color: var(--ink-faint);
   font-variant-numeric: tabular-nums;
   min-width: 90px;
@@ -811,6 +859,179 @@ th { font-weight: 600; }
   font-size: 0.875rem;
 }
 .pagination span { color: var(--ink-faint); }
+
+/* --- Home page ----------------------------------------------------------
+   No sidebar. An intro line, the latest post as a feature card beside a
+   Gaia-table "Recent" list, then every other post on the page as a tile.
+   Sprite panels alternate blue/clay tints. */
+
+.home .layout { grid-template-columns: minmax(0, 1fr); padding-top: 12px; }
+.home .content { max-width: none; }
+.home a:hover { text-decoration: none; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.home-intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px 40px;
+  padding: 12px 0 20px;
+  border-bottom: 1px solid var(--rule);
+}
+.home-intro h1 {
+  flex: 999 1 520px;
+  margin: 0;
+  font-size: clamp(26px, 3vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -0.028em;
+}
+.home-intro .hl { color: var(--accent); }
+.home-byline {
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 20px;
+  border-left: 1px solid var(--rule);
+}
+.home-name { font-size: 1rem; font-weight: 600; letter-spacing: -0.012em; }
+
+.home-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 0 12px;
+}
+.home-head h2 { margin: 0; font-size: 1.0625rem; letter-spacing: -0.012em; }
+.home-head .eyebrow a,
+a.eyebrow { color: var(--ink); border-bottom: 1px solid var(--ink-strong); padding-bottom: 2px; }
+
+/* Sprite panels: light tints in both themes. */
+.panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.panel img { image-rendering: pixelated; }
+.panel.blue { background: var(--tint-blue); color: var(--tint-blue-ink); }
+.panel.clay { background: var(--tint-clay); color: var(--tint-clay-ink); }
+.panel .pl {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+.panel .pl.tl { top: 10px; left: 12px; }
+.panel .pl.tr { top: 10px; right: 12px; }
+.panel .pl.bl { bottom: 10px; left: 12px; }
+
+.home-latest { display: flex; flex-wrap: wrap; gap: 24px 36px; align-items: stretch; }
+
+.feature {
+  flex: 1 1 500px;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+}
+.feature .panel { flex: 1 1 210px; min-height: 210px; }
+.feature .panel img { width: 112px; height: 112px; }
+.feature-body {
+  flex: 999 1 260px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 22px 20px;
+}
+.feature-body h3 { margin: 0; font-size: 1.4375rem; line-height: 1.18; letter-spacing: -0.025em; }
+.feature-body p {
+  margin: 0;
+  font-size: 0.90625rem;
+  line-height: 1.5;
+  color: var(--ink-mute);
+  /* Keep the card about as tall as the Recent list beside it. */
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.recent { flex: 1 1 400px; min-width: 0; }
+.gaia-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--bar-bg);
+  color: var(--bar-ink);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+.gaia-bar a { color: inherit; }
+.recent-row {
+  display: flex;
+  gap: 14px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+}
+.recent-row:nth-child(even) { background: var(--stripe); }  /* child 1 is the bar */
+.recent-row .panel { flex: 0 0 44px; height: 44px; }
+.recent-row .panel img { width: 30px; height: 30px; }
+.recent-text { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.recent-text .eyebrow > * { margin-right: 12px; }
+.chip { background: var(--chip-bg); color: var(--chip-ink); padding: 1px 6px; }
+.recent-text h3 { margin: 0; font-size: 1.03125rem; line-height: 1.28; letter-spacing: -0.012em; }
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+}
+.tile {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+}
+.tile .panel { height: 104px; }
+.tile .panel img { width: 60px; height: 60px; }
+.tile-body { flex: 1 1 auto; display: flex; flex-direction: column; gap: 6px; padding: 12px 16px 14px; }
+.tile-body h3 { margin: 0; font-size: 0.96875rem; line-height: 1.3; letter-spacing: -0.01em; }
+.tile-body .eyebrow { margin-top: auto; }
+
+/* Phones: two tiles per row instead of one long column. */
+@media (max-width: 560px) {
+  .tile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile .panel { height: 84px; }
+  .tile .panel img { width: 44px; height: 44px; }
+  .tile .panel .pl.tl { max-width: calc(100% - 24px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tile .panel .pl.tr { display: none; }
+  .tile-body { padding: 10px 12px 12px; }
+  .tile-body h3 { font-size: 0.875rem; }
+}
+
+:is(.feature, .recent-row, .tile):hover h3 { color: var(--accent); }
+:is(.feature, .recent-row, .tile):focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 
 /* --- Wikilinks ---------------------------------------------------------- */
 
@@ -830,7 +1051,9 @@ th { font-weight: 600; }
   border-top: 1px solid var(--rule);
   padding: 24px;
   color: var(--ink-faint);
-  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
 }
 .footer-copy { margin-right: 4px; }
 .footer-icon {
@@ -867,6 +1090,22 @@ th { font-weight: 600; }
   }
   .top-nav { display: none; }
   .sidebar-toggle { display: inline-block; }
+
+  /* Pages without a sidebar (home) have no Menu button, so the nav stays
+     visible and wraps under the logo. */
+  .no-sidebar .site-header { flex-wrap: wrap; height: auto; padding: 10px 16px; gap: 8px 16px; }
+  .no-sidebar .top-nav { display: block; order: 3; flex: 1 1 100%; margin-left: 0; }
+  .no-sidebar .top-nav ul { flex-wrap: wrap; gap: 4px 16px; }
+  .no-sidebar .theme-toggle { margin-left: auto; }
+}
+
+/* Phones: the post card's desktop padding and side-by-side sprite leave the
+   title a ~140px column. Tighten the card and stack sprite above title. */
+@media (max-width: 560px) {
+  .post { padding: 22px 18px; }
+  .post-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .post-header-sprite { height: 2.6em; }
+  .archive-list li { gap: 4px 12px; flex-wrap: wrap; }
 }
 
 /* ---- inline glossary callouts (hover / focus) ---- */

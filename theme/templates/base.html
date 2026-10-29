@@ -42,12 +42,14 @@
   </script>
   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
 
   <header class="site-header">
     <a class="site-name" href="/"><img src="/static/ruvald.svg" alt="{{ site.site_name }}"></a>
+    {% block sidebar_toggle %}
     <button class="sidebar-toggle" type="button" aria-expanded="false"
             aria-controls="sidebar" aria-label="Toggle navigation">Menu</button>
+    {% endblock sidebar_toggle %}
     <nav class="top-nav">
       <ul>
         {% for item in site.nav %}
@@ -80,6 +82,7 @@
   </header>
 
   <div class="layout{% if post %} has-toc{% endif %}">
+    {% block sidebar %}
     <aside class="sidebar" id="sidebar" aria-label="All posts">
       {# Each tag group is a <details> — collapsed by default. The group that
          contains the current page auto-expands so the reader keeps the "you
@@ -148,6 +151,7 @@
       </details>
       {% endif %}
     </aside>
+    {% endblock sidebar %}
 
     <main class="content">
       {% block content %}{% endblock %}
