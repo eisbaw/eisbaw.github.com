@@ -18,7 +18,7 @@ My keynote at IDA <a href="https://ida.dk/driving-it/talere-og-program/mark-ruva
 
 <!-- Presentation provenance
 Source repository: ai_presentation (private)
-Source git commit: 379a19734ea277dd0faf7b231dd37590f4e455fd
+Source git commit: 22382bb2d0dc998f49e984de04263803a14b9eb0
 Copied artifacts: marp/slides.html and marp/assets/
 -->
 
