@@ -24,6 +24,6 @@ Copied artifacts: marp/slides.html and marp/assets/
 
 <!-- IDA presentation provenance
 Source repository: ai_presentation (private), marp_ida35/
-Source git commit: e4c6908
+Source git commit: c49df66
 Copied artifacts: slides.html and every file it references, by `just copy-to-blog` in marp_ida35/
 -->
